@@ -1,0 +1,303 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+// GRATUIT : accès aux infos publiques, actualités, simulateur CRS, checklist,
+// assistant IA (quota limité).
+// PREMIUM : + forum d'entraide, prise de rendez-vous avec un admin, IA
+// prioritaire. Le forfait Premium est un soutien financier au projet, pas
+// un service de consultation en immigration réglementée (voir Disclaimer).
+enum Tier {
+  FREE
+  PREMIUM
+}
+
+enum UpgradeStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  DECLINED
+  CANCELLED
+}
+
+model User {
+  id              String           @id @default(cuid())
+  email           String           @unique
+  passwordHash    String
+  name            String
+  role            Role             @default(USER)
+  tier            Tier             @default(FREE)
+  tierExpiresAt   DateTime?
+  // Avertissement visible par l'équipe (et à côté du nom dans le forum) pour
+  // un comportement inadéquat, sans aller jusqu'à la suppression du compte.
+  warned          Boolean          @default(false)
+  warningReason   String?
+  // Horodatage de la case cochée à l'inscription ("je reconnais que Route 67
+  // n'est pas un consultant en immigration, je m'inscris pour m'informer").
+  acceptedDisclaimerAt DateTime?
+  // Vérification d'adresse email après inscription (lien envoyé par email).
+  emailVerifiedAt DateTime?
+  // Double authentification (TOTP, type Google Authenticator) — réservée en
+  // pratique aux comptes ADMIN/MODERATOR, mais le champ reste générique.
+  totpSecret      String?
+  totpEnabled     Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+  profile         Profile?
+  checklistItems  ChecklistItem[]
+  forumPosts      ForumPost[]
+  forumTopics     ForumTopic[]
+  appointments    Appointment[]
+  upgradeRequests UpgradeRequest[]
+  verificationTokens VerificationToken[]
+  supportThreads  SupportThread[]
+}
+
+enum VerificationTokenType {
+  EMAIL_VERIFY
+  PASSWORD_RESET
+}
+
+// Jetons à usage unique pour la vérification d'email et la réinitialisation
+// de mot de passe, envoyés par email (voir src/lib/mailer.ts). Expirent
+// après un délai court et sont marqués `usedAt` dès leur consommation pour
+// empêcher toute réutilisation.
+model VerificationToken {
+  id        String                @id @default(cuid())
+  token     String                @unique
+  type      VerificationTokenType
+  userId    String
+  user      User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime              @default(now())
+}
+
+model Profile {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  age              Int?
+  education        String?
+  languageClb      Int?
+  workExperience   Int?
+  hasJobOffer      Boolean  @default(false)
+  hasCanadianStudy Boolean  @default(false)
+  crsScore         Int      @default(0)
+  // Sauvegarde de l'intégralité des réponses du simulateur (grille officielle
+  // SCG complète : conjoint, langues, transférabilité, points supplémentaires)
+  // pour permettre de rouvrir et corriger sa simulation sans tout ressaisir.
+  crsInput         Json?
+  updatedAt        DateTime @updatedAt
+}
+
+// Suivi de la procédure Entrée express, du début (test de langue) jusqu'à
+// l'obtention du visa/statut de résident permanent. `completedAt` est posé
+// automatiquement à la date du jour quand une étape est cochée, pour garder
+// un historique réel de l'avancement (et non une simple case à cocher).
+model ChecklistItem {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label       String
+  description String?
+  done        Boolean   @default(false)
+  completedAt DateTime?
+  order       Int       @default(0)
+}
+
+// Tirages Entrée express - alimentés par un administrateur ou une tâche
+// planifiée qui suit les communiqués officiels d'IRCC.
+model Draw {
+  id          String   @id @default(cuid())
+  number      Int      @unique
+  category    String
+  minScore    Int
+  invitations Int
+  date        DateTime
+  // Date de publication sur Route 67 (distincte de `date`, qui est la date
+  // du tirage lui-même) — utilisée pour trier les notifications
+  // chronologiquement aux côtés des actualités et sujets de forum.
+  createdAt   DateTime @default(now())
+}
+
+// Fil d'actualité affiché en bandeau animé sur la page d'accueil.
+// Alimenté manuellement par un admin, ou pré-rédigé avec l'assistant IA
+// (voir /api/admin/news/ai-draft) puis publié après relecture humaine.
+model NewsItem {
+  id          String   @id @default(cuid())
+  title       String
+  summary     String
+  sourceUrl   String?
+  // Image jointe à la publication (URL directe, ou image encodée en base64
+  // si l'admin téléverse un fichier depuis /admin/actualites — pas de
+  // service de stockage externe branché dans ce MVP, voir README).
+  imageUrl    String?
+  aiGenerated Boolean  @default(false)
+  publishedAt DateTime @default(now())
+}
+
+enum TopicStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// Sujets de forum : les administrateurs créent des sujets directement
+// approuvés ; les membres Premium peuvent aussi en proposer, mais ils
+// restent en attente (PENDING) tant qu'un admin ne les valide pas.
+model ForumTopic {
+  id          String       @id @default(cuid())
+  title       String
+  description String?
+  pinned      Boolean      @default(false)
+  status      TopicStatus  @default(APPROVED)
+  createdAt   DateTime     @default(now())
+  createdById String
+  createdBy   User         @relation(fields: [createdById], references: [id])
+  posts       ForumPost[]
+}
+
+model ForumPost {
+  id        String     @id @default(cuid())
+  content   String
+  createdAt DateTime   @default(now())
+  topicId   String
+  topic     ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
+  // Réponse imbriquée à un autre message (un seul niveau de profondeur,
+  // affiché replié par défaut pour ne pas allonger le fil).
+  parentId  String?
+  parent    ForumPost? @relation("PostReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   ForumPost[] @relation("PostReplies")
+  // Suppression douce par un admin/modérateur : le contenu original reste en
+  // base pour la modération, mais l'affichage montre "Message supprimé" sous
+  // le nom de l'auteur plutôt que de faire disparaître la trace du message.
+  deleted   Boolean    @default(false)
+}
+
+// Créneaux ouverts par les admins pour les rendez-vous Premium, chacun
+// rattaché à une DATE PRÉCISE (et non un jour de semaine récurrent) pour
+// éviter toute ambiguïté sur "quel jour exactement". Heures au format
+// "HH:mm" (heure de Montréal).
+model AvailabilitySlot {
+  id        String   @id @default(cuid())
+  date      DateTime
+  startTime String
+  endTime   String
+  active    Boolean  @default(true)
+}
+
+// Créneau exact retiré des disponibilités après un refus admin — l'admin qui
+// refuse une demande sait qu'il n'est finalement pas libre à cette heure
+// précise, donc ce moment ne doit plus être proposé à personne d'autre,
+// même si la plage horaire d'origine reste ouverte pour ses autres créneaux.
+model BlockedSlot {
+  id       String   @id @default(cuid())
+  datetime DateTime @unique
+}
+
+// Demande de rendez-vous d'un utilisateur Premium avec un administrateur.
+model Appointment {
+  id        String            @id @default(cuid())
+  slot      DateTime
+  status    AppointmentStatus @default(PENDING)
+  note      String?
+  adminNote String?
+  // Lien de visioconférence (Google Meet, WhatsApp, Zoom...) communiqué
+  // manuellement par l'admin à la confirmation — voir /admin/rendez-vous.
+  meetingLink String?
+  createdAt DateTime          @default(now())
+  userId    String
+  user      User              @relation(fields: [userId], references: [id])
+}
+
+// Demande de passage à un forfait payant (Mobile Money : Orange Money / MTN MoMo).
+// Le paiement réel n'étant pas branché dans ce MVP, la demande passe par une
+// confirmation manuelle de l'admin une fois la référence de transaction vérifiée.
+model UpgradeRequest {
+  id             String        @id @default(cuid())
+  requestedTier  Tier
+  momoReference  String?
+  momoOperator   String?
+  // Nom associé au compte Mobile Money ayant servi au paiement — aide l'admin
+  // à faire le lien avec la transaction reçue, en plus de la référence.
+  momoName       String?
+  status         UpgradeStatus @default(PENDING)
+  createdAt      DateTime      @default(now())
+  reviewedAt     DateTime?
+  userId         String
+  user           User          @relation(fields: [userId], references: [id])
+}
+
+enum SupportSender {
+  USER
+  TEAM
+}
+
+// Un fil de discussion par utilisateur connecté (chat persistant avec
+// l'équipe) — ou un fil ponctuel "invité" pour une personne non connectée
+// qui utilise /contact (guestName/guestEmail renseignés, userId absent).
+// Quand l'équipe répond, un email est envoyé (voir src/lib/mailer.ts) ET le
+// message reste visible dans l'espace du compte (`/dashboard/chat`) si la
+// personne est connectée.
+model SupportThread {
+  id         String           @id @default(cuid())
+  subject    String
+  resolved   Boolean          @default(false)
+  userId     String?
+  user       User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  guestName  String?
+  guestEmail String?
+  createdAt  DateTime         @default(now())
+  messages   SupportMessage[]
+}
+
+model SupportMessage {
+  id        String        @id @default(cuid())
+  threadId  String
+  thread    SupportThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  sender    SupportSender
+  content   String
+  createdAt DateTime      @default(now())
+}
+
+// Questions fréquentes, gérées depuis /admin/faq et affichées sur /faq.
+model FaqItem {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+// Historique des campagnes d'emailing envoyées à tout ou partie des
+// utilisateurs (ex. annonce d'un événement) — voir /admin/campagnes.
+// Le contenu peut utiliser le gabarit {{name}}, remplacé par le prénom de
+// chaque destinataire au moment de l'envoi (voir src/lib/mailer.ts).
+model EmailCampaign {
+  id          String   @id @default(cuid())
+  subject     String
+  body        String
+  recipientCount Int   @default(0)
+  sentCount   Int      @default(0)
+  failedCount Int      @default(0)
+  sentByName  String
+  createdAt   DateTime @default(now())
+}
