@@ -86,7 +86,7 @@ export default function TwoFactorSetup({ initialEnabled }: { initialEnabled: boo
           onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
           inputMode="numeric"
           placeholder="123456"
-          className="w-40 rounded-sm border border-charcoal/15 px-3 py-2 text-center font-mono text-lg tracking-widest"
+          className="w-40 rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-center font-mono text-lg tracking-widest transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
         />
         {error && <p role="alert" className="rounded-sm bg-rust/10 px-3 py-2 text-sm text-rust">{error}</p>}
         <div className="flex gap-2">
@@ -115,7 +115,7 @@ export default function TwoFactorSetup({ initialEnabled }: { initialEnabled: boo
           onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
           inputMode="numeric"
           placeholder="123456"
-          className="w-40 rounded-sm border border-charcoal/15 px-3 py-2 text-center font-mono text-lg tracking-widest"
+          className="w-40 rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-center font-mono text-lg tracking-widest transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
         />
         {error && <p role="alert" className="rounded-sm bg-rust/10 px-3 py-2 text-sm text-rust">{error}</p>}
         <div className="flex gap-2">

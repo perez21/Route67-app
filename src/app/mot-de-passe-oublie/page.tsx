@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { inputClasses, labelClasses, primaryButtonClasses, formCardClasses } from "@/lib/formStyles";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -29,30 +30,33 @@ export default function ForgotPasswordPage() {
   return (
     <main>
       <Navbar />
-      <div className="mx-auto max-w-md px-6 py-20">
-        <h1 className="mb-2 font-display text-3xl font-semibold">Mot de passe oublié</h1>
-        <p className="mb-8 text-sm text-charcoal/65">
-          <Link href="/login" className="text-rust underline">← Retour à la connexion</Link>
-        </p>
+      <div className="mx-auto max-w-md px-4 py-16 sm:px-6 sm:py-20">
+        <div className="mb-6 text-center">
+          <h1 className="mb-2 font-display text-2xl font-semibold text-ink sm:text-3xl">Mot de passe oublié</h1>
+          <p className="text-sm text-charcoal/65">
+            <Link href="/login" className="font-semibold text-rust underline">← Retour à la connexion</Link>
+          </p>
+        </div>
 
         {sent ? (
-          <p className="rounded-sm border border-forest/20 bg-forest/5 p-4 text-sm text-forest">{message}</p>
+          <p className="rounded-md border border-forest/20 bg-forest/5 p-5 text-sm text-forest shadow-sm">{message}</p>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className={`space-y-5 ${formCardClasses}`}>
             <div>
-              <label htmlFor="email" className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-charcoal/60">
+              <label htmlFor="email" className={labelClasses}>
                 Email
               </label>
               <input
                 id="email"
                 type="email"
                 required
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+                className={inputClasses}
               />
             </div>
-            <button type="submit" disabled={loading} className="w-full rounded-sm bg-gold py-3 text-sm font-semibold text-ink disabled:opacity-60">
+            <button type="submit" disabled={loading} className={`w-full ${primaryButtonClasses}`}>
               {loading ? "Envoi…" : "Envoyer le lien de réinitialisation"}
             </button>
           </form>

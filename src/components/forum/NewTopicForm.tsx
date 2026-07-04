@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { inputClasses } from "@/lib/formStyles";
 
 export default function NewTopicForm({ isAdmin }: { isAdmin: boolean }) {
   const router = useRouter();
@@ -64,7 +65,7 @@ export default function NewTopicForm({ isAdmin }: { isAdmin: boolean }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-sm border border-charcoal/10 bg-white p-5">
+    <form onSubmit={handleSubmit} className="space-y-3 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm">
       {!isAdmin && (
         <p className="rounded-sm bg-parchment2 px-3 py-2 text-xs text-charcoal/60">
           Ton sujet sera visible de tous une fois validé par l&apos;équipe.
@@ -75,14 +76,14 @@ export default function NewTopicForm({ isAdmin }: { isAdmin: boolean }) {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Titre du sujet"
         required
-        className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+        className={inputClasses}
       />
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description (optionnelle)"
         rows={2}
-        className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+        className={`${inputClasses} resize-y`}
       />
       {isAdmin && (
         <label className="flex items-center gap-2 text-sm">
@@ -92,10 +93,10 @@ export default function NewTopicForm({ isAdmin }: { isAdmin: boolean }) {
       )}
       {error && <p role="alert" className="rounded-sm bg-rust/10 px-3 py-2 text-sm text-rust">{error}</p>}
       <div className="flex gap-2">
-        <button type="submit" disabled={loading} className="rounded-sm bg-gold px-4 py-2 text-sm font-semibold text-ink disabled:opacity-60">
+        <button type="submit" disabled={loading} className="rounded-sm bg-gold px-4 py-2 text-sm font-semibold text-ink transition-opacity hover:opacity-90 disabled:opacity-60">
           {loading ? "Envoi…" : isAdmin ? "Publier le sujet" : "Proposer le sujet"}
         </button>
-        <button type="button" onClick={() => setOpen(false)} className="rounded-sm border border-charcoal/15 px-4 py-2 text-sm">
+        <button type="button" onClick={() => setOpen(false)} className="rounded-sm border border-charcoal/15 px-4 py-2 text-sm transition-colors hover:bg-parchment2/50">
           Annuler
         </button>
       </div>

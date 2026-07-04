@@ -124,7 +124,7 @@ export default function SimulateurPage() {
         <div className="grid gap-7 lg:grid-cols-[1fr_340px]">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Situation familiale */}
-            <section className="rounded-sm border border-charcoal/10 bg-white p-5 sm:p-6">
+            <section className="rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
               <label className="flex items-center justify-between text-sm font-semibold text-ink">
                 <span>Inclure un époux ou conjoint(e) de fait qui t&apos;accompagne</span>
                 <input type="checkbox" checked={hasSpouse} onChange={(e) => setHasSpouse(e.target.checked)} className="h-5 w-5 accent-forest" />
@@ -136,23 +136,23 @@ export default function SimulateurPage() {
             </section>
 
             {/* A. Capital humain */}
-            <section className="space-y-5 rounded-sm border border-charcoal/10 bg-white p-5 sm:p-6">
+            <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="font-display text-lg font-semibold text-ink">A — Capital humain (toi)</h2>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Âge</label>
-                  <input type="number" min={16} max={90} value={age} onChange={(e) => setAge(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm" />
+                  <input type="number" min={16} max={90} value={age} onChange={(e) => setAge(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15" />
                 </div>
                 <div>
                   <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Niveau d&apos;études le plus élevé</label>
-                  <select value={education} onChange={(e) => setEducation(e.target.value)} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm">
+                  <select value={education} onChange={(e) => setEducation(e.target.value)} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15">
                     {EDUCATION_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                   </select>
                 </div>
               </div>
 
-              <label className="flex items-center justify-between rounded-sm border border-charcoal/15 px-3.5 py-3 text-sm">
+              <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
                 <span>Ma première langue officielle déclarée est le français</span>
                 <input type="checkbox" checked={firstLanguageIsFrench} onChange={(e) => setFirstLanguageIsFrench(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
@@ -164,7 +164,7 @@ export default function SimulateurPage() {
                 options={FIRST_LANG_OPTIONS}
               />
 
-              <label className="flex items-center justify-between rounded-sm border border-charcoal/15 px-3.5 py-3 text-sm">
+              <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
                 <span>J&apos;ai aussi passé un test dans ma deuxième langue officielle</span>
                 <input type="checkbox" checked={secondLanguageTested} onChange={(e) => setSecondLanguageTested(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
@@ -179,7 +179,7 @@ export default function SimulateurPage() {
 
               <div>
                 <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Expérience de travail au Canada</label>
-                <select value={canadianWorkExperienceYears} onChange={(e) => setCanadianWorkExperienceYears(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm sm:w-64">
+                <select value={canadianWorkExperienceYears} onChange={(e) => setCanadianWorkExperienceYears(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15 sm:w-64">
                   {CDN_WORK_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                 </select>
               </div>
@@ -187,18 +187,18 @@ export default function SimulateurPage() {
 
             {/* B. Conjoint */}
             {hasSpouse && (
-              <section className="space-y-5 rounded-sm border border-charcoal/10 bg-white p-5 sm:p-6">
+              <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
                 <h2 className="font-display text-lg font-semibold text-ink">B — Facteurs du conjoint</h2>
                 <div>
                   <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Études du conjoint</label>
-                  <select value={spouseEducation} onChange={(e) => setSpouseEducation(e.target.value)} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm">
+                  <select value={spouseEducation} onChange={(e) => setSpouseEducation(e.target.value)} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15">
                     {EDUCATION_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                   </select>
                 </div>
                 <LanguageSkillsSelect label="Langue officielle du conjoint" value={spouseLanguage} onChange={(v) => setSpouseLanguage(v as typeof spouseLanguage)} options={FIRST_LANG_OPTIONS} />
                 <div>
                   <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Expérience de travail au Canada du conjoint</label>
-                  <select value={spouseCanadianWorkExperienceYears} onChange={(e) => setSpouseCanadianWorkExperienceYears(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm sm:w-64">
+                  <select value={spouseCanadianWorkExperienceYears} onChange={(e) => setSpouseCanadianWorkExperienceYears(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15 sm:w-64">
                     {CDN_WORK_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                   </select>
                 </div>
@@ -206,42 +206,42 @@ export default function SimulateurPage() {
             )}
 
             {/* C. Transférabilité */}
-            <section className="space-y-5 rounded-sm border border-charcoal/10 bg-white p-5 sm:p-6">
+            <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="font-display text-lg font-semibold text-ink">C — Transférabilité des compétences</h2>
               <div>
                 <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Expérience de travail à l&apos;étranger</label>
-                <select value={foreignWorkExperienceYears} onChange={(e) => setForeignWorkExperienceYears(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm sm:w-64">
+                <select value={foreignWorkExperienceYears} onChange={(e) => setForeignWorkExperienceYears(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15 sm:w-64">
                   {FOREIGN_WORK_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                 </select>
               </div>
-              <label className="flex items-center justify-between rounded-sm border border-charcoal/15 px-3.5 py-3 text-sm">
+              <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
                 <span>J&apos;ai un certificat de compétence (métier spécialisé)</span>
                 <input type="checkbox" checked={hasCertificateOfQualification} onChange={(e) => setHasCertificateOfQualification(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
             </section>
 
             {/* D. Points supplémentaires */}
-            <section className="space-y-5 rounded-sm border border-charcoal/10 bg-white p-5 sm:p-6">
+            <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
               <h2 className="font-display text-lg font-semibold text-ink">D — Points supplémentaires</h2>
-              <label className="flex items-center justify-between rounded-sm border border-charcoal/15 px-3.5 py-3 text-sm">
+              <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
                 <span>Frère ou sœur (18 ans+) citoyen/résident permanent au Canada</span>
                 <input type="checkbox" checked={hasSiblingInCanada} onChange={(e) => setHasSiblingInCanada(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
               <div>
                 <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Études postsecondaires effectuées au Canada</label>
-                <select value={canadianStudy} onChange={(e) => setCanadianStudy(e.target.value)} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm">
+                <select value={canadianStudy} onChange={(e) => setCanadianStudy(e.target.value)} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15">
                   <option value="NONE">Aucune</option>
                   <option value="ONE_OR_TWO_YEARS">Diplôme d&apos;un ou deux ans</option>
                   <option value="THREE_YEARS_PLUS">Diplôme de trois ans ou plus</option>
                 </select>
               </div>
-              <label className="flex items-center justify-between rounded-sm border border-charcoal/15 px-3.5 py-3 text-sm">
+              <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
                 <span>J&apos;ai une désignation de candidat provincial (PCP)</span>
                 <input type="checkbox" checked={hasProvincialNomination} onChange={(e) => setHasProvincialNomination(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
             </section>
 
-            <button type="submit" disabled={loading} className="w-full rounded-sm bg-gold py-3.5 text-sm font-semibold text-ink disabled:opacity-60">
+            <button type="submit" disabled={loading} className="w-full rounded-sm bg-gold py-3.5 text-sm font-semibold text-ink transition-opacity hover:opacity-90 disabled:opacity-60">
               {loading ? "Calcul en cours…" : "Calculer mon score CRS"}
             </button>
           </form>

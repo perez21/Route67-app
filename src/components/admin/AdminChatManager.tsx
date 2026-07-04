@@ -160,7 +160,7 @@ export default function AdminChatManager({ initialThreads }: { initialThreads: T
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
                     placeholder={`Répondre à ${name}…`}
-                    className="flex-1 rounded-sm border border-charcoal/15 px-3 py-2 text-sm"
+                    className="flex-1 rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
                   />
                   <button onClick={() => sendReply(t.id)} disabled={sending} className="rounded-sm bg-forest px-4 py-2 text-xs font-semibold text-white disabled:opacity-60">
                     {sending ? "Envoi…" : "Répondre"}

@@ -1,6 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Fragment } from "react";
+
+// Rend cliquables les mentions d'URL ou de "canada.ca" dans une réponse de
+// FAQ, sans jamais interpréter le reste comme du HTML (le contenu vient de
+// l'admin, mais on reste prudent : seuls les liens sont générés, rien n'est
+// injecté tel quel).
+function linkifyAnswer(text: string) {
+  const pattern = /(https?:\/\/[^\s)]+|\bcanada\.ca\b)/gi;
+  const parts = text.split(pattern);
+
+  return parts.map((part, i) => {
+    if (!part) return null;
+    const isUrl = /^https?:\/\//i.test(part);
+    const isCanadaCa = /^canada\.ca$/i.test(part);
+    if (isUrl || isCanadaCa) {
+      const href = isUrl ? part : "https://www.canada.ca";
+      return (
+        <a
+          key={i}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-rust underline"
+        >
+          {part}
+        </a>
+      );
+    }
+    return <Fragment key={i}>{part}</Fragment>;
+  });
+}
 
 export default function FaqAccordion({ items }: { items: { id: string; question: string; answer: string }[] }) {
   const [openId, setOpenId] = useState<string | null>(items[0]?.id ?? null);
@@ -25,7 +55,7 @@ export default function FaqAccordion({ items }: { items: { id: string; question:
             </button>
             {isOpen && (
               <div className="px-5 pb-5 text-sm leading-relaxed text-charcoal/70">
-                <p className="whitespace-pre-wrap">{item.answer}</p>
+                <p className="whitespace-pre-wrap">{linkifyAnswer(item.answer)}</p>
               </div>
             )}
           </div>

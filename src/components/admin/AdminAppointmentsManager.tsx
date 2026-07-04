@@ -116,7 +116,7 @@ export default function AdminAppointmentsManager({ initialAppointments, viewerIs
                 value={meetingLink}
                 onChange={(e) => setMeetingLink(e.target.value)}
                 placeholder="Lien de visioconférence (Meet, WhatsApp, Zoom…) — optionnel"
-                className="flex-1 min-w-[220px] rounded-sm border border-charcoal/15 px-3 py-2 text-sm"
+                className="flex-1 min-w-[220px] rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
               />
               <button
                 onClick={() => review(a.id, "CONFIRMED", meetingLink)}

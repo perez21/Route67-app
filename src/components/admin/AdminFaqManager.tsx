@@ -49,7 +49,7 @@ export default function AdminFaqManager({ initialItems }: { initialItems: Item[]
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="Question"
           required
-          className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+          className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
         />
         <textarea
           value={answer}
@@ -57,7 +57,7 @@ export default function AdminFaqManager({ initialItems }: { initialItems: Item[]
           placeholder="Réponse"
           rows={4}
           required
-          className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+          className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
         />
         {error && <p role="alert" className="rounded-sm bg-rust/10 px-3 py-2 text-sm text-rust">{error}</p>}
         <button type="submit" disabled={loading} className="rounded-sm bg-gold px-4 py-2 text-sm font-semibold text-ink disabled:opacity-60">

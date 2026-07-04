@@ -1,10 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-const inputClasses =
-  "w-full rounded-sm border border-charcoal/15 bg-white px-3.5 py-2.5 text-sm text-ink transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15";
-const labelClasses = "mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55";
+import { inputClasses, labelClasses } from "@/lib/formStyles";
 
 export default function ContactForm({ whatsapp, email }: { whatsapp: string; email: string }) {
   const [name, setName] = useState("");

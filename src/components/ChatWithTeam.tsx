@@ -99,9 +99,9 @@ export default function ChatWithTeam() {
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && send()}
           placeholder="Écris ton message…"
-          className="flex-1 rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+          className="flex-1 rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
         />
-        <button onClick={send} disabled={sending} className="rounded-sm bg-gold px-4 py-2.5 text-sm font-semibold text-ink disabled:opacity-60">
+        <button onClick={send} disabled={sending} className="rounded-sm bg-gold px-4 py-2.5 text-sm font-semibold text-ink transition-opacity hover:opacity-90 disabled:opacity-60">
           {sending ? "Envoi…" : "Envoyer"}
         </button>
       </div>

@@ -163,7 +163,7 @@ async function main() {
     {
       question: "Route 67 est-il un cabinet d'immigration agréé ?",
       answer:
-        "Non. Route 67 est un projet d'information indépendant, pas un cabinet ni un consultant en immigration réglementé (CRCIC). Pour un avis qui engage ton dossier, consulte un professionnel agréé ou le site officiel canada.ca.",
+        "Non. Route 67 est un projet d'information indépendant, pas un cabinet ni un consultant en immigration réglementé (CRCIC : Collège des consultants en immigration et en citoyenneté). Pour un avis qui engage ton dossier, contacte un consultant agréé ou consulte le site officiel canada.ca.",
     },
     {
       question: "Le simulateur CRS remplace-t-il le calcul officiel d'IRCC ?",

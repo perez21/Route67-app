@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { inputClasses, primaryButtonClasses, formCardClasses } from "@/lib/formStyles";
 
 type Tier = "FREE" | "PREMIUM";
 
@@ -69,18 +70,18 @@ export default function UpgradePanel({
   const mailtoLink = `mailto:${contact.email}?subject=${encodeURIComponent("Confirmation de don — Route 67")}&body=${encodeURIComponent(confirmationText)}`;
 
   return (
-    <div className="space-y-4 rounded-sm border border-charcoal/10 bg-white p-5">
+    <div className={`space-y-4 ${formCardClasses}`}>
       <p className="text-sm leading-relaxed text-charcoal/70">
         Ce don anonyme (15 000 FCFA ou équivalent/mois) sert à couvrir les frais réels du projet :
         l&apos;hébergement du site pour qu&apos;il reste disponible, la maintenance pour suivre les
         tirages et actualités en temps réel, et un peu de quoi faire vivre l&apos;équipe qui s&apos;en
         occupe. Ce n&apos;est pas un paiement pour un service individualisé de consultation en
         immigration — c&apos;est un soutien volontaire au projet qui, en retour, débloque pendant 1
-        mois le forum d&apos;entraide et les rendez-vous avec l&apos;équipe.
+        mois les rendez-vous avec l&apos;équipe.
       </p>
 
       {step === "idle" && (
-        <button onClick={() => setStep("instructions")} className="w-full rounded-sm bg-gold py-2.5 text-sm font-semibold text-ink">
+        <button onClick={() => setStep("instructions")} className={`w-full ${primaryButtonClasses}`}>
           Faire un don
         </button>
       )}
@@ -103,7 +104,7 @@ export default function UpgradePanel({
 
           <form onSubmit={submitReference} className="space-y-3">
             <p className="text-sm font-semibold text-ink">Une fois le don fait, confirme ici :</p>
-            <select value={operator} onChange={(e) => setOperator(e.target.value as "orange_money" | "mtn_momo" | "paypal")} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm">
+            <select value={operator} onChange={(e) => setOperator(e.target.value as "orange_money" | "mtn_momo" | "paypal")} className={inputClasses}>
               <option value="orange_money">Orange Money</option>
               <option value="mtn_momo">MTN MoMo</option>
               {momo.paypal && <option value="paypal">PayPal</option>}
@@ -113,20 +114,20 @@ export default function UpgradePanel({
               onChange={(e) => setReference(e.target.value)}
               placeholder="Référence de la transaction (SMS ou reçu PayPal)"
               required
-              className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+              className={inputClasses}
             />
             <input
               value={senderName}
               onChange={(e) => setSenderName(e.target.value)}
               placeholder="Nom sur ton compte de paiement (optionnel, aide à retrouver le don)"
-              className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+              className={inputClasses}
             />
             {error && <p role="alert" className="rounded-sm bg-rust/10 px-3 py-2 text-sm text-rust">{error}</p>}
             <div className="flex gap-2">
-              <button type="submit" disabled={loading} className="flex-1 rounded-sm bg-gold py-2.5 text-sm font-semibold text-ink disabled:opacity-60">
+              <button type="submit" disabled={loading} className={`flex-1 ${primaryButtonClasses}`}>
                 {loading ? "Envoi…" : "Envoyer ma demande"}
               </button>
-              <button type="button" onClick={() => setStep("idle")} className="rounded-sm border border-charcoal/15 px-4 py-2.5 text-sm">
+              <button type="button" onClick={() => setStep("idle")} className="rounded-sm border border-charcoal/15 px-4 py-2.5 text-sm transition-colors hover:bg-parchment2/50">
                 Annuler
               </button>
             </div>

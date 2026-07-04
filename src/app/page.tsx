@@ -280,7 +280,8 @@ export default async function HomePage() {
             conseils juridiques individualisés — notre seul projet est de rendre l&apos;information
             officielle plus accessible. Les informations publiées sont vulgarisées à partir des
             sources officielles d&apos;IRCC à titre informatif. Pour un accompagnement personnalisé et
-            réglementé, consulte un consultant agréé (CRCIC) ou un avocat membre d&apos;un barreau.
+            réglementé, contacte un consultant agréé (CRCIC : Collège des consultants en
+            immigration et en citoyenneté) ou un avocat membre d&apos;un barreau.
           </p>
 
           <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-parchment/10 pt-5">

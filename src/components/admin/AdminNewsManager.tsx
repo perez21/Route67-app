@@ -109,7 +109,7 @@ export default function AdminNewsManager({ initialNews }: { initialNews: News[] 
             value={aiTopic}
             onChange={(e) => setAiTopic(e.target.value)}
             placeholder="Ex. Nouveau tirage Catégorie Francophonie du 28 juin"
-            className="flex-1 min-w-[220px] rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+            className="flex-1 min-w-[220px] rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
           />
           <button
             type="button"
@@ -128,7 +128,7 @@ export default function AdminNewsManager({ initialNews }: { initialNews: News[] 
           onChange={(e) => { setTitle(e.target.value); setWasAiDrafted(false); }}
           placeholder="Titre"
           required
-          className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+          className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
         />
         <textarea
           value={summary}
@@ -136,13 +136,13 @@ export default function AdminNewsManager({ initialNews }: { initialNews: News[] 
           placeholder="Résumé"
           rows={3}
           required
-          className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+          className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
         />
         <input
           value={sourceUrl}
           onChange={(e) => setSourceUrl(e.target.value)}
           placeholder="Lien source (optionnel, ex. canada.ca)"
-          className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+          className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
         />
         <div>
           <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">

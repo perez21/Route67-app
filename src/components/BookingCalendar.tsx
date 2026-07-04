@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { inputClasses } from "@/lib/formStyles";
 
 type Appointment = { id: string; slot: string; status: string; note: string | null; meetingLink?: string | null; adminNote?: string | null };
 type SlotInfo = { iso: string; taken: boolean };
@@ -116,7 +117,7 @@ export default function BookingCalendar({ isPremium, initialAppointments }: { is
     <div className="space-y-8">
       {!isPremium && (
         <div className="rounded-sm border border-gold/30 bg-gold/10 p-4 text-sm text-charcoal">
-          La prise de rendez-vous avec un administrateur est réservée au forfait Premium. Tu peux
+          La prise de rendez-vous avec l&apos;équipe est réservée au forfait Premium. Tu peux
           voir les disponibilités ci-dessous, mais réserver nécessite de{" "}
           <a href="/dashboard#don" className="font-semibold text-rust underline">passer à ce forfait</a>.
         </div>
@@ -136,7 +137,7 @@ export default function BookingCalendar({ isPremium, initialAppointments }: { is
               min={toDateInputValue(new Date())}
               onChange={(e) => { setSelectedDate(e.target.value); setSelected(null); }}
               list="route67-available-dates"
-              className="rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+              className="rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
             />
             <datalist id="route67-available-dates">
               {availableDates.map((d) => <option key={d} value={d} />)}
@@ -193,7 +194,7 @@ export default function BookingCalendar({ isPremium, initialAppointments }: { is
       </div>
 
       {selected && isPremium && !weekLimitReached && (
-        <div className="rounded-sm border border-charcoal/10 bg-white p-5">
+        <div className="rounded-md border border-charcoal/10 bg-white p-5 shadow-sm">
           <p className="mb-3 text-sm">
             Créneau choisi :{" "}
             <strong className="capitalize">{formatSlot(selected).day}</strong>, de{" "}
@@ -204,10 +205,10 @@ export default function BookingCalendar({ isPremium, initialAppointments }: { is
             onChange={(e) => setNote(e.target.value)}
             placeholder="Sujet à aborder (optionnel)"
             rows={2}
-            className="mb-3 w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+            className={`mb-3 ${inputClasses} resize-y`}
           />
           {error && <p role="alert" className="mb-3 rounded-sm bg-rust/10 px-3 py-2 text-sm text-rust">{error}</p>}
-          <button onClick={book} disabled={loading} className="rounded-sm bg-gold px-4 py-2.5 text-sm font-semibold text-ink disabled:opacity-60">
+          <button onClick={book} disabled={loading} className="rounded-sm bg-gold px-4 py-2.5 text-sm font-semibold text-ink transition-opacity hover:opacity-90 disabled:opacity-60">
             {loading ? "Réservation…" : "Confirmer ma réservation"}
           </button>
         </div>

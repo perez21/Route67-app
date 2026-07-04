@@ -3,6 +3,7 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { inputClasses, labelClasses, primaryButtonClasses, formCardClasses, inputErrorClasses } from "@/lib/formStyles";
 
 export const dynamic = "force-dynamic";
 
@@ -43,29 +44,41 @@ function ResetPasswordForm() {
     setTimeout(() => router.push("/login"), 2000);
   }
 
+  const mismatch = confirm.length > 0 && confirm !== password;
+
   return (
-    <div className="mx-auto max-w-md px-6 py-20">
-      <h1 className="mb-2 font-display text-3xl font-semibold">Nouveau mot de passe</h1>
-      <p className="mb-8 text-sm text-charcoal/65">
-        <Link href="/login" className="text-rust underline">← Retour à la connexion</Link>
-      </p>
+    <div className="mx-auto max-w-md px-4 py-16 sm:px-6 sm:py-20">
+      <div className="mb-6 text-center">
+        <h1 className="mb-2 font-display text-2xl font-semibold text-ink sm:text-3xl">Nouveau mot de passe</h1>
+        <p className="text-sm text-charcoal/65">
+          <Link href="/login" className="font-semibold text-rust underline">← Retour à la connexion</Link>
+        </p>
+      </div>
       {done ? (
-        <p className="rounded-sm border border-forest/20 bg-forest/5 p-4 text-sm text-forest">
+        <p className="rounded-md border border-forest/20 bg-forest/5 p-5 text-sm text-forest shadow-sm">
           Mot de passe mis à jour — redirection vers la connexion…
         </p>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className={`space-y-5 ${formCardClasses}`}>
           <div>
-            <label className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-charcoal/60">Nouveau mot de passe</label>
-            <input type="password" required minLength={10} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm" />
+            <label className={labelClasses}>Nouveau mot de passe</label>
+            <input type="password" required minLength={10} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} className={inputClasses} />
             <p className="mt-1.5 text-xs text-charcoal/50">Au moins 10 caractères, avec une majuscule et un chiffre.</p>
           </div>
           <div>
-            <label className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-charcoal/60">Confirmer</label>
-            <input type="password" required value={confirm} onChange={(e) => setConfirm(e.target.value)} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm" />
+            <label className={labelClasses}>Confirmer</label>
+            <input
+              type="password"
+              required
+              autoComplete="new-password"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              className={`${inputClasses} ${mismatch ? inputErrorClasses : ""}`}
+            />
+            {mismatch && <p className="mt-1.5 text-xs text-rust">Les mots de passe ne correspondent pas.</p>}
           </div>
           {error && <p role="alert" className="rounded-sm bg-rust/10 px-3 py-2 text-sm text-rust">{error}</p>}
-          <button type="submit" disabled={loading} className="w-full rounded-sm bg-gold py-3 text-sm font-semibold text-ink disabled:opacity-60">
+          <button type="submit" disabled={loading} className={`w-full ${primaryButtonClasses}`}>
             {loading ? "Enregistrement…" : "Réinitialiser le mot de passe"}
           </button>
         </form>

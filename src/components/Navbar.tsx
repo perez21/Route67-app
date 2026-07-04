@@ -7,12 +7,12 @@ import AccountLink from "./AccountLink";
 
 const NAV_LINKS = [
   { href: "/#actualites", label: "Actualités" },
-  { href: "/procedure", label: "Procédure" },
   { href: "/#tirages", label: "Tirages" },
-  { href: "/#tarifs", label: "Soutenir le projet" },
+  { href: "/procedure", label: "Procédure" },
   { href: "/simulateur", label: "Simulateur" },
-  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/#tarifs", label: "Soutenir le projet" },
 ];
 
 export default function Navbar() {

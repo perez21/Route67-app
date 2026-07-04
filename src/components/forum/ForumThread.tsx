@@ -96,7 +96,7 @@ function PostCard({
               value={replyValue}
               onChange={(e) => onReplyChange(post.id, e.target.value)}
               placeholder={`Répondre à ${displayName}…`}
-              className="flex-1 rounded-sm border border-charcoal/15 px-3 py-2 text-sm"
+              className="flex-1 rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
             />
             <button
               onClick={() => onReplySubmit(post.id)}
@@ -266,19 +266,19 @@ export default function ForumThread({
       </div>
 
       {canParticipate ? (
-        <div className="space-y-2">
+        <div className="space-y-2 rounded-md border border-charcoal/10 bg-white p-4 shadow-sm">
           <textarea
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Écris ta réponse…"
             rows={3}
-            className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+            className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
           />
           {error && <p role="alert" className="rounded-sm bg-rust/10 px-3 py-2 text-sm text-rust">{error}</p>}
           <button
             onClick={() => submitPost(newMessage)}
             disabled={posting}
-            className="rounded-sm bg-gold px-4 py-2 text-sm font-semibold text-ink disabled:opacity-60"
+            className="rounded-sm bg-gold px-4 py-2 text-sm font-semibold text-ink transition-opacity hover:opacity-90 disabled:opacity-60"
           >
             {posting ? "Envoi…" : "Répondre"}
           </button>

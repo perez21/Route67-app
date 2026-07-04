@@ -52,14 +52,14 @@ export default function AdminDrawsManager({ initialDraws }: { initialDraws: Draw
   return (
     <div className="space-y-6">
       <form onSubmit={submit} className="grid gap-3 rounded-sm border border-charcoal/10 bg-white p-5 sm:grid-cols-2 lg:grid-cols-5">
-        <input placeholder="N° tirage" required value={form.number} onChange={(e) => setForm({ ...form, number: e.target.value })} className="rounded-sm border border-charcoal/15 px-3 py-2 text-sm" />
-        <select required value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="rounded-sm border border-charcoal/15 px-3 py-2 text-sm">
+        <input placeholder="N° tirage" required value={form.number} onChange={(e) => setForm({ ...form, number: e.target.value })} className="rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15" />
+        <select required value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15">
           <option value="" disabled>Catégorie…</option>
           {EXPRESS_ENTRY_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
-        <input placeholder="Score min." required type="number" value={form.minScore} onChange={(e) => setForm({ ...form, minScore: e.target.value })} className="rounded-sm border border-charcoal/15 px-3 py-2 text-sm" />
-        <input placeholder="Invitations" required type="number" value={form.invitations} onChange={(e) => setForm({ ...form, invitations: e.target.value })} className="rounded-sm border border-charcoal/15 px-3 py-2 text-sm" />
-        <input required type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="rounded-sm border border-charcoal/15 px-3 py-2 text-sm" />
+        <input placeholder="Score min." required type="number" value={form.minScore} onChange={(e) => setForm({ ...form, minScore: e.target.value })} className="rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15" />
+        <input placeholder="Invitations" required type="number" value={form.invitations} onChange={(e) => setForm({ ...form, invitations: e.target.value })} className="rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15" />
+        <input required type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15" />
         <button type="submit" disabled={loading} className="rounded-sm bg-gold px-4 py-2 text-sm font-semibold text-ink disabled:opacity-60 sm:col-span-2 lg:col-span-5">
           {loading ? "Publication…" : "Publier ce tirage"}
         </button>

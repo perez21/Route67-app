@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
+const inputClasses =
+  "w-full rounded-sm border border-charcoal/15 bg-white px-3.5 py-2.5 text-sm text-ink transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15";
+const labelClasses = "mb-1.5 block font-mono text-xs uppercase tracking-wide text-charcoal/60";
+
 export default function RegisterPage() {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -49,18 +53,22 @@ export default function RegisterPage() {
     router.refresh();
   }
 
+  const passwordMismatch = confirmPassword.length > 0 && confirmPassword !== password;
+
   return (
     <main>
       <Navbar />
-      <div className="mx-auto max-w-md px-6 py-20">
-        <h1 className="mb-2 font-display text-3xl font-semibold">Créer mon suivi</h1>
-        <p className="mb-8 text-sm text-charcoal/65">
-          Déjà un compte ? <Link href="/login" className="text-rust underline">Se connecter</Link>
-        </p>
+      <div className="mx-auto max-w-md px-4 py-16 sm:px-6 sm:py-20">
+        <div className="mb-6 text-center">
+          <h1 className="mb-2 font-display text-2xl font-semibold text-ink sm:text-3xl">Créer mon suivi</h1>
+          <p className="text-sm text-charcoal/65">
+            Déjà un compte ? <Link href="/login" className="font-semibold text-rust underline">Se connecter</Link>
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5 rounded-md border border-charcoal/10 bg-white p-6 shadow-sm transition-shadow hover:shadow-md sm:p-8">
           <div>
-            <label htmlFor="name" className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-charcoal/60">
+            <label htmlFor="name" className={labelClasses}>
               Pseudo
             </label>
             <input
@@ -68,26 +76,28 @@ export default function RegisterPage() {
               type="text"
               required
               minLength={2}
+              autoComplete="nickname"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+              className={inputClasses}
             />
           </div>
           <div>
-            <label htmlFor="email" className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-charcoal/60">
+            <label htmlFor="email" className={labelClasses}>
               Email
             </label>
             <input
               id="email"
               type="email"
               required
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+              className={inputClasses}
             />
           </div>
           <div>
-            <label htmlFor="password" className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-charcoal/60">
+            <label htmlFor="password" className={labelClasses}>
               Mot de passe
             </label>
             <input
@@ -95,9 +105,10 @@ export default function RegisterPage() {
               type="password"
               required
               minLength={10}
+              autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+              className={inputClasses}
             />
             <p className="mt-1.5 text-xs text-charcoal/50">
               Au moins 10 caractères, avec une majuscule et un chiffre.
@@ -105,7 +116,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-charcoal/60">
+            <label htmlFor="confirmPassword" className={labelClasses}>
               Confirmer le mot de passe
             </label>
             <input
@@ -113,13 +124,12 @@ export default function RegisterPage() {
               type="password"
               required
               minLength={10}
+              autoComplete="new-password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className={`w-full rounded-sm border px-3 py-2.5 text-sm ${
-                confirmPassword && confirmPassword !== password ? "border-rust/50" : "border-charcoal/15"
-              }`}
+              className={`${inputClasses} ${passwordMismatch ? "border-rust/50 focus:border-rust focus:ring-rust/20" : ""}`}
             />
-            {confirmPassword && confirmPassword !== password && (
+            {passwordMismatch && (
               <p className="mt-1.5 text-xs text-rust">Les mots de passe ne correspondent pas.</p>
             )}
           </div>
@@ -147,13 +157,13 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            disabled={loading || (confirmPassword.length > 0 && confirmPassword !== password)}
-            className="w-full rounded-sm bg-gold py-3 text-sm font-semibold text-ink disabled:opacity-60"
+            disabled={loading || passwordMismatch}
+            className="w-full rounded-sm bg-gold py-3 text-sm font-semibold text-ink transition-opacity hover:opacity-90 disabled:opacity-60"
           >
             {loading ? "Création en cours…" : "Créer mon compte"}
           </button>
 
-          <p className="flex items-start gap-2 text-xs leading-relaxed text-charcoal/50">
+          <p className="flex items-start gap-2 text-xs leading-relaxed text-charcoal/45">
             <span aria-hidden>🔒</span>
             <span>
               Tes données personnelles sont chiffrées et ne sont jamais partagées avec des tiers.

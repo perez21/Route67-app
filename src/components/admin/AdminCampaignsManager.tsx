@@ -62,7 +62,7 @@ export default function AdminCampaignsManager({ initialCampaigns, userCounts }: 
       >
         <div>
           <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Destinataires</label>
-          <select value={audience} onChange={(e) => setAudience(e.target.value as typeof audience)} className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm sm:w-64">
+          <select value={audience} onChange={(e) => setAudience(e.target.value as typeof audience)} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm sm:w-64 transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15">
             <option value="all">Tous les utilisateurs ({userCounts.all})</option>
             <option value="premium">Membres Premium ({userCounts.premium})</option>
             <option value="free">Membres Gratuits ({userCounts.free})</option>
@@ -73,7 +73,7 @@ export default function AdminCampaignsManager({ initialCampaigns, userCounts }: 
           onChange={(e) => setSubject(e.target.value)}
           placeholder="Objet de l'email — ex. Rencontre en ligne Route 67 le 20 juillet"
           required
-          className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+          className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
         />
         <textarea
           value={body}
@@ -81,7 +81,7 @@ export default function AdminCampaignsManager({ initialCampaigns, userCounts }: 
           placeholder={"Bonjour {{name}},\n\nNous organisons..."}
           rows={7}
           required
-          className="w-full rounded-sm border border-charcoal/15 px-3 py-2.5 text-sm"
+          className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
         />
         {error && <p role="alert" className="rounded-sm bg-rust/10 px-3 py-2 text-sm text-rust">{error}</p>}
 
