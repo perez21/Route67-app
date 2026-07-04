@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       <p>Bonjour ${user.name},</p>
       <p>Merci pour ton don ! Nous avons bien reçu ta demande, avec la référence
       <strong>${parsed.data.momoReference}</strong>.</p>
-      <p>Notre équipe vérifie le don et active ton accès Premium (forum + rendez-vous) sous peu.
+      <p>Notre équipe vérifie le don et active ton accès Premium (rendez-vous + chat direct) sous peu.
       Pour toute question, écris-nous à ${contact.email}.</p>
       <p>— L'équipe Route 67</p>
     `,
