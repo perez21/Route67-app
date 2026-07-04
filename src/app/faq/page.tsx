@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import FaqAccordion from "@/components/FaqAccordion";
 import Disclaimer from "@/components/Disclaimer";
 import { prisma } from "@/lib/db";
+export const dynamic = "force-dynamic";
 
 export const revalidate = 300;
 
