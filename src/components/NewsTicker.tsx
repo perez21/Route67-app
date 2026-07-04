@@ -9,24 +9,34 @@ export default function NewsTicker({ news }: { news: NewsItem[] }) {
     );
   }
 
-  // Limité aux 3 actualités les plus récentes, dupliquées pour un défilement
-  // continu sans "trou" visuel quand l'animation boucle (translateX -50%).
+  // Affichage statique (aucun défilement automatique) des dernières
+  // actualités, avec le texte complet de chaque brève, pour que tout le
+  // contenu reste lisible sans avoir à suivre un texte qui bouge.
   const latest = news.slice(0, 3);
-  const loop = [...latest, ...latest];
 
   return (
-    <div className="group relative overflow-hidden border-y border-cmr-yellow/30 bg-ink py-3">
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-ink to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-ink to-transparent" />
-      <div className="flex w-max animate-marquee gap-10 whitespace-nowrap group-hover:[animation-play-state:paused]">
-        {loop.map((item, i) => (
-          <span key={`${item.id}-${i}`} className="flex items-center gap-3 text-sm text-parchment/85">
-            <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cmr-yellow" />
-            <strong className="font-semibold text-parchment">{item.title}</strong>
-            <span className="text-parchment/55">— {item.summary}</span>
-          </span>
+    <div className="border-y border-cmr-yellow/30 bg-ink px-4 py-4 sm:px-6 md:px-10">
+      <ul className="mx-auto max-w-5xl space-y-3">
+        {latest.map((item) => (
+          <li key={item.id} className="flex gap-3 text-sm text-parchment/85">
+            <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cmr-yellow" />
+            <p className="leading-relaxed">
+              <strong className="font-semibold text-parchment">{item.title}</strong>
+              <span className="text-parchment/70"> — {item.summary}</span>
+              {item.sourceUrl && (
+                <a
+                  href={item.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-2 whitespace-nowrap font-semibold text-cmr-yellow underline"
+                >
+                  Source ↗
+                </a>
+              )}
+            </p>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
