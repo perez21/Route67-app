@@ -44,16 +44,7 @@ npx prisma migrate dev --name init
 npm run prisma:seed
 ```
 
-Le seed crée :
-- 3 tirages et 3 actualités de démonstration
-- un sujet de forum de bienvenue
-- des créneaux de disponibilité par défaut (lundi/mercredi/vendredi)
-- un compte **Gratuit** : `demo@route67.app` / `MotDePasse123!`
-- un compte **Premium** : `premium@route67.app` / `PremiumRoute67!`
-- un compte **modérateur** : `moderateur@route67.app` / `ModerateurRoute67!`
-- un compte **administrateur** : `admin@route67.app` / `AdminRoute67!`
 
-⚠️ Change ou supprime ces comptes de démonstration avant tout déploiement public.
 
 ## 3. Lancer en développement
 
@@ -461,10 +452,16 @@ Renseigne les mêmes variables d'environnement que dans `.env` (dont
 `ANTHROPIC_API_KEY` et `RESEND_API_KEY` si tu veux l'IA et l'email en
 production), puis exécute `npx prisma migrate deploy` avant le premier
 déploiement.
-#   R o u t e 6 7  
- #   R o u t e 6 7  
- #   R o u t e 6 7  
- #   R o u t e 6 7  
- #   R o u t e 6 7 - a p p  
- #   R o u t e 6 7 - a p p  
+#   R o u t e 6 7 
+ 
+ #   R o u t e 6 7 
+ 
+ #   R o u t e 6 7 
+ 
+ #   R o u t e 6 7 
+ 
+ #   R o u t e 6 7 - a p p 
+ 
+ #   R o u t e 6 7 - a p p 
+ 
  
