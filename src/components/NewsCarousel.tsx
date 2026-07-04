@@ -1,3 +1,4 @@
+import Link from "next/link";
 import LocalDateTime from "@/components/LocalDateTime";
 
 type NewsItem = { id: string; title: string; summary: string; sourceUrl: string | null; imageUrl?: string | null; aiGenerated: boolean; publishedAt: Date };
@@ -20,31 +21,33 @@ export default function NewsCarousel({ news }: { news: NewsItem[] }) {
           </span>
         </div>
 
+        {/* Seul endroit du site où les actualités sont affichées. Chaque
+            carte est cliquable en entier et mène à la page de lecture
+            complète de la brève (/actualites/[id]). */}
         <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 sm:mx-0 sm:px-0">
           {news.slice(0, 6).map((item, i) => (
-            <article
+            <Link
               key={item.id}
-              className="w-[78%] flex-shrink-0 snap-start overflow-hidden rounded-sm border border-charcoal/10 bg-white shadow-sm sm:w-[340px]"
+              href={`/actualites/${item.id}`}
+              className="block w-[78%] flex-shrink-0 snap-start overflow-hidden rounded-sm border border-charcoal/10 bg-white shadow-sm transition-shadow hover:shadow-md sm:w-[340px]"
             >
-              <div
-                className="h-36 w-full bg-cover bg-center sm:h-40"
-                style={{ backgroundImage: `url(${item.imageUrl || `https://picsum.photos/seed/${SEEDS[i % SEEDS.length]}/640/420`})` }}
-                role="img"
-                aria-label={item.title}
-              />
-              <div className="p-4">
-                <p className="mb-1.5 font-mono text-[10px] uppercase tracking-widest text-rust">
-                  <LocalDateTime iso={item.publishedAt.toISOString()} options={{ day: "numeric", month: "short" }} />
-                </p>
-                <h3 className="mb-1.5 font-display text-base font-semibold leading-snug text-ink">{item.title}</h3>
-                <p className="line-clamp-3 text-sm leading-relaxed text-charcoal/65">{item.summary}</p>
-                {item.sourceUrl && (
-                  <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs font-semibold text-rust underline">
-                    Source ↗
-                  </a>
-                )}
-              </div>
-            </article>
+              <article>
+                <div
+                  className="h-36 w-full bg-cover bg-center sm:h-40"
+                  style={{ backgroundImage: `url(${item.imageUrl || `https://picsum.photos/seed/${SEEDS[i % SEEDS.length]}/640/420`})` }}
+                  role="img"
+                  aria-label={item.title}
+                />
+                <div className="p-4">
+                  <p className="mb-1.5 font-mono text-[10px] uppercase tracking-widest text-rust">
+                    <LocalDateTime iso={item.publishedAt.toISOString()} options={{ day: "numeric", month: "short" }} />
+                  </p>
+                  <h3 className="mb-1.5 font-display text-base font-semibold leading-snug text-ink">{item.title}</h3>
+                  <p className="line-clamp-3 text-sm leading-relaxed text-charcoal/65">{item.summary}</p>
+                  <span className="mt-2 inline-block text-xs font-semibold text-rust underline">Lire la suite →</span>
+                </div>
+              </article>
+            </Link>
           ))}
         </div>
         <p className="mt-2 px-1 text-[11px] text-charcoal/40 sm:hidden">← fais glisser pour voir plus →</p>
