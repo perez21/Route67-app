@@ -21,7 +21,7 @@ export default async function AdminChatPage() {
         userId: string | null;
         guestName: string | null;
         guestEmail: string | null;
-        user: { name: string; email: string; tier: string } | null;
+        user: { name: string; email: string; tier: "FREE" | "PREMIUM" } | null;
         messages: { content: string }[];
         _count: { messages: number };
       }) => ({
