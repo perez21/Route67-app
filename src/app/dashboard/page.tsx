@@ -49,7 +49,7 @@ export default async function DashboardPage() {
           <Link href="/simulateur" className="rounded-sm px-3 py-2.5 text-parchment/70">Simulateur</Link>
           <Link href="/procedure" className="rounded-sm px-3 py-2.5 text-parchment/70">Procédure Entrée express</Link>
           <Link href="/forum" className="rounded-sm px-3 py-2.5 text-parchment/70">
-            Forum {!isPremium && <span className="ml-1 text-[10px] text-gold2">Premium</span>}
+            Forum
           </Link>
           <Link href="/rendez-vous" className="rounded-sm px-3 py-2.5 text-parchment/70">
             Rendez-vous {!isPremium && <span className="ml-1 text-[10px] text-gold2">Premium</span>}
@@ -75,17 +75,14 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* Communauté & accompagnement — en haut de page, c'est ce qui distingue le forfait Premium */}
+        {/* Communauté & accompagnement — forum ouvert à tous les membres ; rendez-vous et chat restent Premium */}
         <div className="mb-6">
           <h2 className="mb-3 font-mono text-xs font-semibold uppercase tracking-wide text-charcoal/55">
             Communauté & accompagnement
           </h2>
           <div className="grid gap-3 rounded-sm border border-charcoal/10 bg-white p-5 text-sm sm:grid-cols-2 lg:grid-cols-4">
             <Link href="/forum" className="flex items-center justify-between rounded-sm border border-charcoal/10 px-3.5 py-3">
-              <span>
-                Forum d&apos;entraide
-                {!isPremium && <span className="ml-2 rounded-full bg-gold/20 px-2 py-0.5 text-[10px] uppercase text-gold">Premium</span>}
-              </span>
+              <span>Forum d&apos;entraide</span>
               <span className="text-rust">→</span>
             </Link>
             <Link href="/rendez-vous" className="flex items-center justify-between rounded-sm border border-charcoal/10 px-3.5 py-3">
