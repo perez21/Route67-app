@@ -25,14 +25,14 @@ export default function AccountLink() {
 
   if (name) {
     return (
-      <Link href="/dashboard" className="hidden text-sm font-semibold text-parchment/80 sm:inline">
+      <Link href="/dashboard" className="max-w-[6rem] truncate text-sm font-semibold text-parchment/80 sm:max-w-none">
         {name.split(" ")[0]}
       </Link>
     );
   }
 
   return (
-    <Link href="/login" className="hidden text-sm font-semibold text-parchment/80 sm:inline">
+    <Link href="/login" className="whitespace-nowrap text-sm font-semibold text-parchment/80">
       Se connecter
     </Link>
   );
