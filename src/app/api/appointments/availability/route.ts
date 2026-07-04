@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+export const dynamic = "force-dynamic";
 
 // Chaque plage ouverte par l'admin (ex. 09:00–12:00 le 14 juillet) est
 // découpée en créneaux de 30 minutes, chacun rattaché à cette date précise.
