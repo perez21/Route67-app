@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import NewsTicker from "@/components/NewsTicker";
 import NewsCarousel from "@/components/NewsCarousel";
 import Accordion from "@/components/Accordion";
 import Disclaimer from "@/components/Disclaimer";
@@ -61,7 +60,6 @@ export default async function HomePage() {
   return (
     <main>
       <Navbar />
-      <NewsTicker news={news} />
 
       {/* Hero — compact et mobile-first, façon "une" de journal */}
       <header className="relative overflow-hidden bg-ink px-4 py-10 text-parchment sm:px-6 sm:py-14 md:px-10 md:py-16">
