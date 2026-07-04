@@ -83,8 +83,9 @@ export default function ProcedurePage() {
         <div className="mt-10 rounded-sm border border-charcoal/10 bg-white p-6 text-sm">
           <p className="mb-2 font-semibold text-ink">Envie d&apos;un accompagnement plus personnalisé ?</p>
           <p className="mb-4 text-charcoal/65">
-            Le forum d&apos;entraide et les rendez-vous avec l&apos;équipe sont réservés aux membres
-            Premium — un soutien qui finance directement le fonctionnement du site.
+            Le forum d&apos;entraide est ouvert à tous les membres inscrits. Les rendez-vous
+            planifiés avec l&apos;équipe restent réservés aux membres Premium — un soutien qui
+            finance directement le fonctionnement du site.
           </p>
           <Link href="/dashboard#don" className="inline-block rounded-sm bg-gold px-5 py-2.5 text-sm font-semibold text-ink">
             Découvrir le forfait Premium
