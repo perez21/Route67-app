@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { verifySessionToken, SESSION_COOKIE } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { isTierAtLeast, expirePremiumIfNeeded, isStaff } from "@/lib/session";
+import { expirePremiumIfNeeded, isStaff } from "@/lib/session";
 import Navbar from "@/components/Navbar";
 import NewTopicForm from "@/components/forum/NewTopicForm";
 import AiAssistantWidget from "@/components/AiAssistantWidget";
@@ -19,28 +19,10 @@ export default async function ForumPage() {
   if (!user) redirect("/login");
 
   const isAdmin = isStaff(user.role);
-  const hasAccess = isAdmin || isTierAtLeast(user.tier, "PREMIUM");
 
-  // Le forum (lecture ET participation) est réservé aux membres Premium —
-  // c'est l'un des avantages concrets du soutien financier au projet.
-  if (!hasAccess) {
-    return (
-      <main>
-        <Navbar />
-        <div className="mx-auto max-w-2xl px-6 py-16 text-center">
-          <p className="mb-2 font-mono text-xs uppercase tracking-widest text-rust">Entraide entre candidats</p>
-          <h1 className="mb-4 font-display text-3xl font-semibold text-ink">Forum Route 67</h1>
-          <div className="mx-auto max-w-md rounded-sm border border-gold/30 bg-gold/10 p-6 text-sm text-charcoal">
-            Le forum d&apos;entraide est réservé aux membres <strong>Premium</strong>, le forfait qui
-            soutient financièrement Route 67 (hébergement, maintenance, temps de l&apos;équipe).
-            <Link href="/dashboard#don" className="mt-4 block rounded-sm bg-gold px-5 py-2.5 font-semibold text-ink">
-              Devenir Premium
-            </Link>
-          </div>
-        </div>
-      </main>
-    );
-  }
+  // Le forum (lecture ET participation) est désormais accessible à tout
+  // membre inscrit et connecté — ce n'est plus un avantage réservé aux
+  // membres Premium.
 
   // Membre non-admin : sujets approuvés + ses propres sujets en attente ou
   // rejetés (pour qu'il suive le statut de sa proposition). Admin : tout.
@@ -56,7 +38,7 @@ export default async function ForumPage() {
       <div className="mx-auto max-w-4xl px-6 py-14">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="mb-2 font-mono text-xs uppercase tracking-widest text-rust">Entraide entre candidats · Premium</p>
+            <p className="mb-2 font-mono text-xs uppercase tracking-widest text-rust">Entraide entre candidats</p>
             <h1 className="font-display text-3xl font-semibold text-ink">Forum Route 67</h1>
           </div>
           {!isAdmin && user.warned ? (
