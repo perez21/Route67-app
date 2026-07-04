@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { verifySessionToken, SESSION_COOKIE } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { isTierAtLeast, expirePremiumIfNeeded, isStaff } from "@/lib/session";
+import { expirePremiumIfNeeded, isStaff } from "@/lib/session";
 import Navbar from "@/components/Navbar";
 import ForumThread from "@/components/forum/ForumThread";
 import AiAssistantWidget from "@/components/AiAssistantWidget";
@@ -19,8 +19,8 @@ export default async function TopicPage({ params }: { params: { id: string } }) 
   if (!user) redirect("/login");
 
   const isAdmin = isStaff(user.role);
-  const hasAccess = isAdmin || isTierAtLeast(user.tier, "PREMIUM");
-  if (!hasAccess) redirect("/forum");
+  // Le forum est désormais accessible à tout membre inscrit et connecté —
+  // ce n'est plus un avantage réservé aux membres Premium.
 
   const topic = await prisma.forumTopic.findUnique({
     where: { id: params.id },
