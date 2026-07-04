@@ -5,9 +5,9 @@
 // ne jamais désynchroniser les deux.
 export const FULL_PROCESS_STEPS: { label: string; description: string }[] = [
   { label: "Test de langue officiel (IELTS, CELPIP, TEF Canada ou TCF Canada)", description: "Résultat valide 2 ans, dans les 4 compétences." },
-  { label: "Évaluation des diplômes d'études (EDE / ECA)", description: "Par un organisme désigné par IRCC (WES, ICAS, IQAS, ICES ou CES)." },
+  { label: "Évaluation des diplômes d'études (EDE / ECA)", description: "Par un organisme désigné par IRCC (Immigration, Réfugiés et Citoyenneté Canada) — WES, ICAS, IQAS, ICES ou CES." },
   { label: "Création du profil Entrée express sur IRCC", description: "Compte GCKey ou partenaire de connexion, informations de profil complètes." },
-  { label: "Calcul et amélioration du score CRS", description: "Utilise le simulateur Route 67 pour situer ton score face aux derniers tirages." },
+  { label: "Calcul et amélioration du score CRS (Comprehensive Ranking System, le système de classement global)", description: "Utilise le simulateur Route 67 pour situer ton score face aux derniers tirages." },
   { label: "Entrée dans le bassin de candidats", description: "Le profil est actif pour 1 an, renouvelable." },
   { label: "Réception d'une invitation à présenter une demande (ITA)", description: "Reçue lors d'un tirage où ton score dépasse le seuil." },
   { label: "Dépôt de la demande complète de résidence permanente", description: "Délai de 60 jours après l'ITA pour soumettre tous les documents." },

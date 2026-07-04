@@ -24,7 +24,8 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   if (!thread) return NextResponse.json({ error: "Fil introuvable." }, { status: 404 });
 
   const message = await prisma.supportMessage.create({
-    data: { threadId: thread.id, sender: "TEAM", content: parsed.data.content },
+    data: { threadId: thread.id, sender: "TEAM", content: parsed.data.content, authorId: admin.id },
+    include: { author: { select: { name: true, role: true } } },
   });
 
   const recipientEmail = thread.user?.email ?? thread.guestEmail;

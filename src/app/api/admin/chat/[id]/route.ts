@@ -9,7 +9,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
   const thread = await prisma.supportThread.findUnique({
     where: { id: params.id },
-    include: { user: { select: { name: true, email: true } }, messages: { orderBy: { createdAt: "asc" } } },
+    include: {
+      user: { select: { name: true, email: true } },
+      messages: { orderBy: { createdAt: "asc" }, include: { author: { select: { name: true, role: true } } } },
+    },
   });
   if (!thread) return NextResponse.json({ error: "Fil introuvable." }, { status: 404 });
 

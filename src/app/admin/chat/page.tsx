@@ -5,7 +5,7 @@ export default async function AdminChatPage() {
   const threads = await prisma.supportThread.findMany({
     orderBy: { createdAt: "desc" },
     include: {
-      user: { select: { name: true, email: true } },
+      user: { select: { name: true, email: true, tier: true } },
       messages: { orderBy: { createdAt: "desc" }, take: 1 },
       _count: { select: { messages: true } },
     },
@@ -21,7 +21,7 @@ export default async function AdminChatPage() {
         userId: string | null;
         guestName: string | null;
         guestEmail: string | null;
-        user: { name: string; email: string } | null;
+        user: { name: string; email: string; tier: string } | null;
         messages: { content: string }[];
         _count: { messages: number };
       }) => ({

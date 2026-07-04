@@ -29,7 +29,7 @@ export default async function ForumPage() {
   const topics = await prisma.forumTopic.findMany({
     where: isAdmin ? undefined : { OR: [{ status: "APPROVED" }, { status: { in: ["PENDING", "REJECTED"] }, createdById: session.userId }] },
     orderBy: [{ pinned: "desc" }, { createdAt: "desc" }],
-    include: { createdBy: { select: { name: true, warned: true } }, _count: { select: { posts: true } } },
+    include: { createdBy: { select: { name: true, role: true, warned: true } }, _count: { select: { posts: true } } },
   });
 
   return (
@@ -57,7 +57,12 @@ export default async function ForumPage() {
               Aucun sujet pour le moment.
             </p>
           ) : (
-            topics.map((topic: { id: string; title: string; description: string | null; pinned: boolean; status: string; createdBy: { name: string; warned: boolean }; _count: { posts: number } }) => (
+            topics.map((topic: { id: string; title: string; description: string | null; pinned: boolean; status: string; createdBy: { name: string; role: string; warned: boolean }; _count: { posts: number } }) => {
+              const creatorIsStaff = topic.createdBy.role === "ADMIN" || topic.createdBy.role === "MODERATOR";
+              const creatorDisplayName = creatorIsStaff
+                ? topic.createdBy.role === "ADMIN" ? "Administrateur" : "Modérateur"
+                : topic.createdBy.name;
+              return (
               <Link
                 key={topic.id}
                 href={`/forum/${topic.id}`}
@@ -72,13 +77,14 @@ export default async function ForumPage() {
                   </div>
                   {topic.description && <p className="text-sm text-charcoal/60">{topic.description}</p>}
                   <p className="mt-1.5 font-mono text-[11px] text-charcoal/40">
-                    Ouvert par {topic.createdBy.name}
+                    Ouvert par {creatorDisplayName}
                     {topic.createdBy.warned && <span className="ml-1.5 text-rust">⚠</span>} · {topic._count.posts} réponse(s)
                   </p>
                 </div>
                 <span className="text-rust">→</span>
               </Link>
-            ))
+              );
+            })
           )}
         </div>
       </div>

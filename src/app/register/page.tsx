@@ -61,7 +61,7 @@ export default function RegisterPage() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <label htmlFor="name" className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-charcoal/60">
-              Nom complet
+              Pseudo
             </label>
             <input
               id="name"
@@ -152,6 +152,14 @@ export default function RegisterPage() {
           >
             {loading ? "Création en cours…" : "Créer mon compte"}
           </button>
+
+          <p className="flex items-start gap-2 text-xs leading-relaxed text-charcoal/50">
+            <span aria-hidden>🔒</span>
+            <span>
+              Tes données personnelles sont chiffrées et ne sont jamais partagées avec des tiers.
+              Elles servent uniquement à faire fonctionner ton suivi Route 67.
+            </span>
+          </p>
         </form>
       </div>
     </main>

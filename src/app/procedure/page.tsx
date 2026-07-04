@@ -25,14 +25,14 @@ const GUIDES = [
     title: "Le test de langue officiel",
     eyebrow: "Étape 1",
     description:
-      "IELTS, CELPIP, TEF Canada, TCF Canada : quel test choisir, comment le préparer, comment convertir ton résultat en niveau CLB/NCLC, et pourquoi le français peut te rapporter des points supplémentaires.",
+      "IELTS (International English Language Testing System), CELPIP (Canadian English Language Proficiency Index Program), TEF Canada (Test d'évaluation de français), TCF Canada (Test de connaissance du français) : quel test choisir, comment le préparer, comment convertir ton résultat en niveau CLB/NCLC (Canadian Language Benchmarks / Niveaux de compétence linguistique canadiens), et pourquoi le français peut te rapporter des points supplémentaires.",
     href: "/procedure/test-de-langue",
   },
   {
     title: "L'équivalence des diplômes (EDE / ECA)",
     eyebrow: "Étape 2",
     description:
-      "Comment faire reconnaître un diplôme obtenu hors du Canada, quel organisme désigné choisir (WES, ICAS, IQAS, ICES, CES), les délais et les coûts à prévoir.",
+      "Comment faire reconnaître un diplôme obtenu hors du Canada, quel organisme désigné choisir (WES : World Education Services, ICAS : International Credential Assessment Service, IQAS : International Qualifications Assessment Service, ICES : International Credential Evaluation Service, CES : Comparative Education Service), les délais et les coûts à prévoir.",
     href: "/procedure/equivalence-diplome",
   },
   {
@@ -88,7 +88,7 @@ export default function ProcedurePage() {
             finance directement le fonctionnement du site.
           </p>
           <Link href="/dashboard#don" className="inline-block rounded-sm bg-gold px-5 py-2.5 text-sm font-semibold text-ink">
-            Découvrir le forfait Premium
+            Devenez membre de Route67
           </Link>
         </div>
       </div>

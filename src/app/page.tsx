@@ -19,19 +19,19 @@ const PROCEDURE_ITEMS = [
   {
     title: "Le test de langue officiel",
     eyebrow: "Étape 1",
-    description: "IELTS, CELPIP, TEF Canada, TCF Canada : lequel choisir, comment convertir ton score en niveau CLB/NCLC, et l'astuce du bonus bilingue.",
+    description: "IELTS (International English Language Testing System), CELPIP (Canadian English Language Proficiency Index Program), TEF Canada (Test d'évaluation de français) et TCF Canada (Test de connaissance du français) : lequel choisir, comment convertir ton score en niveau CLB/NCLC (Canadian Language Benchmarks / Niveaux de compétence linguistique canadiens), et l'astuce du bonus bilingue.",
     href: "/procedure/test-de-langue",
   },
   {
     title: "L'équivalence des diplômes (EDE / ECA)",
     eyebrow: "Étape 2",
-    description: "Organismes désignés (WES, ICAS, IQAS, ICES, CES), documents à fournir, délais et validité de 5 ans.",
+    description: "EDE : évaluation des diplômes d'études (ECA en anglais, Educational Credential Assessment). Organismes désignés — WES (World Education Services), ICAS (International Credential Assessment Service), IQAS (International Qualifications Assessment Service), ICES (International Credential Evaluation Service), CES (Comparative Education Service) —, documents à fournir, délais et validité de 5 ans.",
     href: "/procedure/equivalence-diplome",
   },
   {
     title: "Créer son compte et son profil Entrée express",
     eyebrow: "Étape 3",
-    description: "GCKey, documents à préparer, codes CNP/TEER, et ce qu'il se passe une fois le profil soumis.",
+    description: "GCKey (identifiant unique du gouvernement du Canada pour accéder aux services en ligne), documents à préparer, codes CNP/TEER (Classification nationale des professions / Training, Education, Experience and Responsibilities), et ce qu'il se passe une fois le profil soumis.",
     href: "/procedure/creation-compte",
   },
 ];
@@ -70,8 +70,9 @@ export default async function HomePage() {
             <span aria-hidden className="inline-block align-middle text-3xl sm:text-4xl md:text-6xl">🇨🇦</span>
           </h1>
           <p className="mt-4 max-w-xl animate-fadeUp text-base text-parchment/80 sm:mt-6 sm:text-lg" style={{ animationDelay: "0.1s" }}>
-            Route 67 traduit les tirages d&apos;Entrée express, les seuils CRS et les
-            délais d&apos;IRCC en informations claires — avec un suivi personnalisé pour
+            Route 67 traduit les tirages d&apos;Entrée express, les seuils CRS (Comprehensive Ranking
+            System, le système de classement global) et les délais d&apos;IRCC (Immigration, Réfugiés
+            et Citoyenneté Canada) en informations claires — avec un suivi personnalisé pour
             savoir exactement où vous en êtes.
           </p>
 
@@ -180,7 +181,7 @@ export default async function HomePage() {
           {[
             { title: "Profil en ligne", text: "Test de langue, équivalence de diplôme, puis création du profil sur le système d'IRCC pour obtenir un score CRS." },
             { title: "Entrée dans le bassin", text: "Ton profil rejoint le bassin des candidats, en attente d'une invitation à un tirage." },
-            { title: "Invitation (ITA)", text: "Si ton score dépasse le seuil du tirage, tu reçois une invitation à déposer une demande complète." },
+            { title: "Invitation à présenter une demande (ITA)", text: "Si ton score dépasse le seuil du tirage, tu reçois une invitation à déposer une demande complète." },
             { title: "Dépôt et vérifications", text: "60 jours pour soumettre le dossier, puis biométrie, examen médical, certificat de police et vérifications de sécurité." },
           ].map((step, i) => (
             <div key={step.title}>

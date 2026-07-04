@@ -44,18 +44,19 @@ function PostCard({
   onReplySubmit: (parentId: string) => void;
   posting: boolean;
 }) {
+  const isStaffAuthor = post.user.role === "ADMIN" || post.user.role === "MODERATOR";
+  // Le nom réel de l'auteur n'est jamais affiché publiquement pour un compte
+  // staff — seul son rôle l'est. L'auteur exact reste toutefois traçable
+  // côté admin via le compte utilisé pour publier (userId en base).
+  const displayName = isStaffAuthor ? (post.user.role === "ADMIN" ? "Administrateur" : "Modérateur") : post.user.name;
+
   return (
     <div className={isReply ? "ml-6 mt-3 border-l-2 border-charcoal/10 pl-4" : ""}>
       <div className="rounded-sm border border-charcoal/10 bg-white p-4">
         <div className="mb-1.5 flex flex-wrap items-center gap-2">
-          <span className="font-semibold text-ink">{post.user.name}</span>
+          <span className={`font-semibold ${isStaffAuthor ? "text-cmr-green" : "text-ink"}`}>{displayName}</span>
           {post.user.warned && (
             <span className="rounded-full bg-rust/15 px-2 py-0.5 text-[10px] font-semibold uppercase text-rust">⚠ averti</span>
-          )}
-          {(post.user.role === "ADMIN" || post.user.role === "MODERATOR") && (
-            <span className="rounded-full bg-cmr-green/15 px-2 py-0.5 text-[10px] font-semibold uppercase text-cmr-green">
-              {post.user.role === "ADMIN" ? "Administrateur" : "Modérateur"}
-            </span>
           )}
           <span className="font-mono text-[11px] text-charcoal/40">
             {new Date(post.createdAt).toLocaleDateString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
@@ -79,7 +80,7 @@ function PostCard({
         {!isReply && canParticipate && !post.deleted && (
           <button
             onClick={() => onToggleReplyOpen(post.id)}
-            aria-label={`Répondre à ${post.user.name}`}
+            aria-label={`Répondre à ${displayName}`}
             title="Répondre à ce message"
             className={`mt-2 flex h-6 w-6 items-center justify-center rounded-full border text-sm ${
               replyOpen ? "border-gold bg-gold/20 text-ink" : "border-charcoal/20 text-charcoal/50"
@@ -94,7 +95,7 @@ function PostCard({
             <input
               value={replyValue}
               onChange={(e) => onReplyChange(post.id, e.target.value)}
-              placeholder={`Répondre à ${post.user.name}…`}
+              placeholder={`Répondre à ${displayName}…`}
               className="flex-1 rounded-sm border border-charcoal/15 px-3 py-2 text-sm"
             />
             <button

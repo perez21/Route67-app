@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
-import { getCurrentUser, isTierAtLeast, isStaff } from "@/lib/session";
+import { getCurrentUser, isStaff } from "@/lib/session";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   const user = await getCurrentUser(request);
   if (!user) return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
-
-  const hasAccess = isStaff(user.role) || isTierAtLeast(user.tier, "PREMIUM");
-  if (!hasAccess) {
-    return NextResponse.json({ error: "Le forum est réservé aux membres Premium." }, { status: 403 });
-  }
 
   const posts = await prisma.forumPost.findMany({
     where: { topicId: params.id },
@@ -34,14 +29,6 @@ const createPostSchema = z.object({
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   const user = await getCurrentUser(request);
   if (!user) return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
-
-  const allowed = isStaff(user.role) || isTierAtLeast(user.tier, "PREMIUM");
-  if (!allowed) {
-    return NextResponse.json(
-      { error: "Le forum est réservé aux membres Premium — c'est l'un des avantages du soutien au projet." },
-      { status: 403 }
-    );
-  }
 
   if (user.warned && !isStaff(user.role)) {
     return NextResponse.json(

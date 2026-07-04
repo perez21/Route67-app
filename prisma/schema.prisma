@@ -66,6 +66,9 @@ model User {
   upgradeRequests UpgradeRequest[]
   verificationTokens VerificationToken[]
   supportThreads  SupportThread[]
+  // Réponses envoyées côté équipe dans le chat direct, pour savoir quel
+  // compte staff a rédigé chaque réponse (jamais affiché au visiteur).
+  supportRepliesAuthored SupportMessage[] @relation("SupportMessageAuthor")
 }
 
 enum VerificationTokenType {
@@ -276,6 +279,12 @@ model SupportMessage {
   sender    SupportSender
   content   String
   createdAt DateTime      @default(now())
+  // Compte staff (admin/modérateur) qui a réellement rédigé ce message côté
+  // équipe — jamais affiché au visiteur (qui voit "Équipe Route 67"), mais
+  // consultable dans /admin/chat pour savoir qui a répondu. Nul pour les
+  // messages envoyés par le visiteur (sender = USER).
+  authorId  String?
+  author    User?         @relation("SupportMessageAuthor", fields: [authorId], references: [id])
 }
 
 // Questions fréquentes, gérées depuis /admin/faq et affichées sur /faq.

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-type Message = { id: string; sender: "USER" | "TEAM"; content: string; createdAt: string };
+type Message = { id: string; sender: "USER" | "TEAM"; content: string; createdAt: string; author?: { name: string; role: string } | null };
 type Thread = {
   id: string;
   subject: string;
@@ -11,7 +11,7 @@ type Thread = {
   userId: string | null;
   guestName: string | null;
   guestEmail: string | null;
-  user: { name: string; email: string } | null;
+  user: { name: string; email: string; tier: "FREE" | "PREMIUM" } | null;
   lastMessage: string;
   messageCount: number;
 };
@@ -112,6 +112,15 @@ export default function AdminChatManager({ initialThreads }: { initialThreads: T
                 <p className="font-semibold text-ink">
                   {t.subject}
                   {!t.userId && <span className="ml-2 rounded-full bg-charcoal/10 px-2 py-0.5 text-[10px] uppercase text-charcoal/60">Invité</span>}
+                  {t.userId && (
+                    <span
+                      className={`ml-2 rounded-full px-2 py-0.5 text-[10px] uppercase ${
+                        t.user?.tier === "PREMIUM" ? "bg-gold/20 text-gold2" : "bg-charcoal/10 text-charcoal/60"
+                      }`}
+                    >
+                      {t.user?.tier === "PREMIUM" ? "Premium" : "Gratuit"}
+                    </span>
+                  )}
                 </p>
                 <p className="text-xs text-charcoal/50">
                   {name} · {email} · {t.messageCount} message(s) · dernier : {t.lastMessage.slice(0, 80)}
@@ -138,7 +147,7 @@ export default function AdminChatManager({ initialThreads }: { initialThreads: T
                     {messages.map((m) => (
                       <div key={m.id} className={`max-w-[85%] rounded-sm px-3 py-2 text-sm ${m.sender === "TEAM" ? "ml-auto bg-forest/10 text-charcoal" : "bg-white text-charcoal"}`}>
                         <p className="mb-1 font-mono text-[10px] uppercase text-charcoal/40">
-                          {m.sender === "TEAM" ? "Équipe" : name} · {new Date(m.createdAt).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })}
+                          {m.sender === "TEAM" ? `Équipe${m.author ? ` — ${m.author.name}` : ""}` : name} · {new Date(m.createdAt).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })}
                         </p>
                         <p className="whitespace-pre-wrap">{m.content}</p>
                       </div>

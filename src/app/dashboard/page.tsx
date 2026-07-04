@@ -87,7 +87,7 @@ export default async function DashboardPage() {
             </Link>
             <Link href="/rendez-vous" className="flex items-center justify-between rounded-sm border border-charcoal/10 px-3.5 py-3">
               <span>
-                Échanger avec un administrateur
+                Rencontre virtuelle avec l&apos;équipe
                 {!isPremium && <span className="ml-2 rounded-full bg-gold/20 px-2 py-0.5 text-[10px] uppercase text-gold">Premium</span>}
               </span>
               <span className="text-rust">→</span>
