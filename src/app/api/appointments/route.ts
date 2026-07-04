@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { getCurrentUser, isTierAtLeast } from "@/lib/session";
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   const user = await getCurrentUser(request);
