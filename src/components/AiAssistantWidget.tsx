@@ -50,9 +50,9 @@ export default function AiAssistantWidget() {
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-40">
+    <div className="fixed bottom-5 right-4 z-40 sm:right-5">
       {open && (
-        <div className="mb-3 flex h-[440px] w-[320px] flex-col overflow-hidden rounded-sm border border-charcoal/15 bg-white shadow-xl sm:w-[360px]">
+        <div className="mb-3 flex h-[440px] w-[calc(100vw-2rem)] max-w-[320px] flex-col overflow-hidden rounded-sm border border-charcoal/15 bg-white shadow-xl sm:w-[360px] sm:max-w-none">
           <div className="flex items-center justify-between bg-ink px-4 py-3 text-parchment">
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-cmr-green animate-pulseSoft" />
