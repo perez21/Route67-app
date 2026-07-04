@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+export const dynamic = "force-dynamic";
 
 export default function VerifyEmailPage() {
   const searchParams = useSearchParams();
