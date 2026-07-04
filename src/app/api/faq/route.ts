@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+export const dynamic = "force-dynamic";
 
 // Route publique : FAQ consultable par tous, pas besoin de session.
 export async function GET() {
