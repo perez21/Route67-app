@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+export const dynamic = "force-dynamic";
 
 export default function ResetPasswordPage() {
   const router = useRouter();
