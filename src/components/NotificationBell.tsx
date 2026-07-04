@@ -48,7 +48,7 @@ export default function NotificationBell() {
             kind: "premium",
             label:
               daysLeft === 0
-                ? "Ton forfait Premium expire aujourd'hui — renouvelle-le pour garder l'accès au forum et aux rendez-vous."
+                ? "Ton forfait Premium expire aujourd'hui — renouvelle-le pour garder l'accès aux rendez-vous et au chat direct."
                 : `Ton forfait Premium expire dans ${daysLeft} jour${daysLeft > 1 ? "s" : ""} — pense à le renouveler.`,
             href: "/dashboard",
             at: new Date().toISOString(),
@@ -78,7 +78,7 @@ export default function NotificationBell() {
         if (draws[0] && (!lastSeen || new Date(draws[0].createdAt).getTime() > new Date(lastSeen).getTime())) anyNew = true;
       }
 
-      // Sujets de forum (silencieusement ignoré si non-Premium : 403)
+      // Sujets de forum — accessible à tout membre connecté
       const forumRes = await fetch("/api/forum/topics").catch(() => null);
       if (forumRes && forumRes.ok) {
         const data = await forumRes.json();
