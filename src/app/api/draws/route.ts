@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+export const dynamic = "force-dynamic";
 
 // Route publique : n'importe qui peut consulter les tirages, pas besoin
 // de session. Triée par date de publication (createdAt) plutôt que par date
