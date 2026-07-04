@@ -257,7 +257,6 @@ export default async function HomePage() {
               </span>
               <h3 className="mb-4 font-display text-xl font-semibold">Ce que ton soutien débloque</h3>
               <ul className="mb-6 flex-grow space-y-2 text-sm">
-                <li className="border-t border-parchment/15 pt-2">— Forum d&apos;entraide entre candidats</li>
                 <li className="border-t border-parchment/15 pt-2">— Rendez-vous avec l&apos;équipe (1 par semaine)</li>
                 <li className="border-t border-parchment/15 pt-2">— Chat direct avec l&apos;équipe</li>
                 <li className="border-t border-parchment/15 pt-2">— Assistant IA disponible 24h/24</li>
