@@ -42,7 +42,7 @@ export default function ContactForm({ whatsapp, email }: { whatsapp: string; ema
       <div className="rounded-md border border-forest/20 bg-forest/5 p-8 text-center text-sm text-forest shadow-sm">
         <p className="mb-1 text-2xl">✅</p>
         <p className="font-semibold">Message envoyé</p>
-        <p className="mt-1 text-forest/80">Notre équipe te répond généralement sous 24 à 48 heures — par email et, si tu es connecté, dans ton chat.</p>
+        <p className="mt-1 text-forest/80">Notre équipe te répond généralement sous 24 à 48 heures par email et, si tu es connecté, dans ton chat.</p>
       </div>
     );
   }
@@ -82,7 +82,7 @@ export default function ContactForm({ whatsapp, email }: { whatsapp: string; ema
         </button>
         <p className="flex items-start gap-2 text-xs leading-relaxed text-charcoal/45">
           <span aria-hidden>🔒</span>
-          <span>Tes coordonnées sont chiffrées et servent uniquement à te répondre — elles ne sont jamais partagées avec des tiers.</span>
+          <span>Tes coordonnées sont chiffrées et servent uniquement à te répondre. Elles ne sont jamais partagées avec des tiers.</span>
         </p>
       </form>
 
@@ -109,8 +109,8 @@ export default function ContactForm({ whatsapp, email }: { whatsapp: string; ema
           </div>
         </div>
         <p className="rounded-lg border border-charcoal/10 bg-parchment2/40 p-4 text-xs leading-relaxed text-charcoal/55">
-          Réponse habituelle sous 24 à 48 heures. Pour un accompagnement individualisé et régulier, devenez membre
-          de Route67 pour accéder à des rendez-vous planifiés avec l&apos;équipe.
+          Réponse habituelle sous 24 à 48 heures. Pour un échange individualisé et régulier, devenez membre premium
+          de Route67 pour accéder à des rendez-vous avec l&apos;équipe.
         </p>
       </div>
     </div>
