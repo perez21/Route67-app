@@ -4,7 +4,8 @@ import { getCurrentUser } from "@/lib/session";
 
 // Un utilisateur peut annuler son propre rendez-vous (encore en attente ou
 // confirmé) — ça libère le créneau et rouvre sa place au quota hebdomadaire.
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const user = await getCurrentUser(request);
   if (!user) return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
 

@@ -3,7 +3,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { getCurrentUser, isStaff } from "@/lib/session";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const user = await getCurrentUser(request);
   if (!user) return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
 
@@ -26,7 +27,8 @@ const createPostSchema = z.object({
   parentId: z.string().min(1).optional(),
 });
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const user = await getCurrentUser(request);
   if (!user) return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
 

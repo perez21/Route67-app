@@ -21,7 +21,7 @@ const PROTECTED_PREFIXES = [
   "/api/chat",
 ];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const isProtected = PROTECTED_PREFIXES.some((prefix) =>
     request.nextUrl.pathname.startsWith(prefix)
   );

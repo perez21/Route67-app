@@ -9,8 +9,9 @@ import ForumThread from "@/components/forum/ForumThread";
 import AiAssistantWidget from "@/components/AiAssistantWidget";
 import Disclaimer from "@/components/Disclaimer";
 
-export default async function TopicPage({ params }: { params: { id: string } }) {
-  const token = cookies().get(SESSION_COOKIE.name)?.value;
+export default async function TopicPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  const token = (await cookies()).get(SESSION_COOKIE.name)?.value;
   const session = token ? await verifySessionToken(token) : null;
   if (!session) redirect("/login");
 

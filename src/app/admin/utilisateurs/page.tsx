@@ -8,7 +8,7 @@ import ResendVerificationButton from "@/components/admin/ResendVerificationButto
 const ROLE_ORDER: Record<string, number> = { ADMIN: 0, MODERATOR: 1, USER: 2 };
 
 export default async function AdminUsersPage() {
-  const token = cookies().get(SESSION_COOKIE.name)?.value;
+  const token = (await cookies()).get(SESSION_COOKIE.name)?.value;
   const session = token ? await verifySessionToken(token) : null;
   const viewer = session ? await prisma.user.findUnique({ where: { id: session.userId }, select: { role: true } }) : null;
   const viewerIsAdmin = viewer?.role === "ADMIN";

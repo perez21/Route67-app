@@ -137,6 +137,12 @@ function educationBucket(level: EducationLevel): EduBucket {
       return "SECONDARY_OR_LESS";
     case "ONE_YEAR":
     case "TWO_YEAR":
+    case "BACHELOR":
+      // Un seul diplôme (même un bac de 3-4 ans) reste dans la catégorie
+      // "diplôme postsecondaire d'un an ou plus" pour la transférabilité —
+      // la catégorie supérieure exige explicitement DEUX diplômes ou plus
+      // (dont un de 3 ans+), voir la grille officielle IRCC (section C,
+      // "Skill transferability factors — Education").
       return "POSTSECONDARY_1Y_PLUS";
     case "TWO_OR_MORE":
       return "TWO_OR_MORE_3Y";
@@ -183,17 +189,26 @@ function educationTransferability(education: EducationLevel, firstLanguage: Four
   return Math.min(50, langPoints + cdnPoints);
 }
 
+// Table à double entrée conforme à la grille officielle IRCC (section C,
+// "Foreign work experience"). Les deux sous-tableaux (expérience à
+// l'étranger × langue, et expérience à l'étranger × expérience
+// canadienne) utilisent exactement les mêmes valeurs de points — voir
+// canada.ca/.../express-entry/check-score/crs-criteria.html.
+const FOREIGN_EXPERIENCE_COMBO_POINTS: Record<"none" | "tier1" | "tier2", { none: number; tier1: number; tier2: number }> = {
+  none: { none: 0, tier1: 0, tier2: 0 },
+  tier1: { none: 0, tier1: 13, tier2: 25 },
+  tier2: { none: 0, tier1: 25, tier2: 50 },
+};
+
 function foreignExperienceTransferability(foreignYears: number, firstLanguage: FourSkills<FirstLangLevel>, cdnYears: number): number {
   const foreignTier = foreignYears >= 3 ? "tier2" : foreignYears >= 1 ? "tier1" : "none";
   if (foreignTier === "none") return 0;
 
   const langTier = languageTier(firstLanguage);
-  const langPointsRaw = langTier === "tier2" ? 25 : langTier === "tier1" ? 13 : 0;
-  const langPoints = foreignTier === "tier2" ? (langTier === "tier2" ? 25 : langTier === "tier1" ? 13 : 0) : Math.min(13, langPointsRaw);
+  const langPoints = FOREIGN_EXPERIENCE_COMBO_POINTS[foreignTier][langTier];
 
   const cdnTier = cdnYears >= 2 ? "tier2" : cdnYears >= 1 ? "tier1" : "none";
-  const cdnPointsRaw = cdnTier === "tier2" ? 25 : cdnTier === "tier1" ? 13 : 0;
-  const cdnPoints = foreignTier === "tier2" ? cdnPointsRaw : Math.min(13, cdnPointsRaw);
+  const cdnPoints = FOREIGN_EXPERIENCE_COMBO_POINTS[foreignTier][cdnTier];
 
   return Math.min(50, langPoints + cdnPoints);
 }

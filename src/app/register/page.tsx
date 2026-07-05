@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { inputClasses, inputErrorClasses, labelClasses, primaryButtonClasses, formCardClasses } from "@/lib/formStyles";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 function BrandPanel() {
+  const { t } = useLanguage();
   return (
     <div className="relative hidden overflow-hidden bg-ink px-10 py-16 text-parchment lg:flex lg:w-1/2 lg:flex-col lg:justify-center">
       <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: "radial-gradient(circle at 20% 20%, white 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
@@ -14,8 +16,7 @@ function BrandPanel() {
           <span className="text-cmr-green">Route</span> <span className="text-cmr-yellow">6</span><span className="text-cmr-red">7</span>
         </Link>
         <p className="text-xl leading-relaxed text-parchment/85">
-          Crée ton suivi personnalisé : checklist de la procédure, simulateur de score CRS, et
-          alertes sur les tirages qui te concernent.
+          {t("auth.register.tagline")}
         </p>
       </div>
       <div className="relative mt-10 flex h-1 w-full max-w-md">
@@ -29,6 +30,7 @@ function BrandPanel() {
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { t } = useLanguage();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,12 +44,12 @@ export default function RegisterPage() {
     setError(null);
 
     if (!acceptedDisclaimer) {
-      setError("Merci de cocher la case pour confirmer que tu as compris ce point avant de continuer.");
+      setError(t("auth.register.errorDisclaimer"));
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Les deux mots de passe ne correspondent pas.");
+      setError(t("auth.register.errorMismatch"));
       return;
     }
 
@@ -63,7 +65,7 @@ export default function RegisterPage() {
 
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setError(data.error ?? "Une erreur est survenue. Réessaie.");
+      setError(data.error ?? t("auth.genericError"));
       return;
     }
 
@@ -81,28 +83,28 @@ export default function RegisterPage() {
           <Link href="/" className="mb-6 block text-center font-display text-2xl font-bold text-ink lg:hidden">
             <span className="text-cmr-green">Route</span> <span className="text-cmr-yellow">6</span><span className="text-cmr-red">7</span>
           </Link>
-          <h1 className="mb-1 font-display text-2xl font-bold text-ink">Créer mon compte</h1>
+          <h1 className="mb-1 font-display text-2xl font-bold text-ink">{t("auth.register.title")}</h1>
           <p className="mb-6 text-sm text-charcoal/60">
-            Déjà un compte ? <Link href="/login" className="font-semibold text-rust hover:underline">Se connecter</Link>
+            {t("auth.register.alreadyAccount")} <Link href="/login" className="font-semibold text-rust hover:underline">{t("auth.register.login")}</Link>
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-3.5">
             <div>
-              <label htmlFor="name" className={labelClasses}>Pseudo</label>
+              <label htmlFor="name" className={labelClasses}>{t("auth.register.nameLabel")}</label>
               <input
                 id="name"
                 type="text"
                 required
                 minLength={2}
                 autoComplete="nickname"
-                placeholder="Comment veux-tu qu'on t'appelle ?"
+                placeholder={t("auth.register.namePlaceholder")}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className={inputClasses}
               />
             </div>
             <div>
-              <label htmlFor="email" className={labelClasses}>Email</label>
+              <label htmlFor="email" className={labelClasses}>{t("auth.register.emailLabel")}</label>
               <input
                 id="email"
                 type="email"
@@ -115,36 +117,36 @@ export default function RegisterPage() {
               />
             </div>
             <div>
-              <label htmlFor="password" className={labelClasses}>Mot de passe</label>
+              <label htmlFor="password" className={labelClasses}>{t("auth.register.passwordLabel")}</label>
               <input
                 id="password"
                 type="password"
                 required
                 minLength={10}
                 autoComplete="new-password"
-                placeholder="Au moins 10 caractères"
+                placeholder={t("auth.register.passwordPlaceholder")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={inputClasses}
               />
-              <p className="mt-1.5 text-xs text-charcoal/45">Au moins 10 caractères, avec une majuscule et un chiffre.</p>
+              <p className="mt-1.5 text-xs text-charcoal/45">{t("auth.register.passwordHint")}</p>
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className={labelClasses}>Confirmer le mot de passe</label>
+              <label htmlFor="confirmPassword" className={labelClasses}>{t("auth.register.confirmPasswordLabel")}</label>
               <input
                 id="confirmPassword"
                 type="password"
                 required
                 minLength={10}
                 autoComplete="new-password"
-                placeholder="Retape ton mot de passe"
+                placeholder={t("auth.register.confirmPasswordPlaceholder")}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className={`${inputClasses} ${passwordMismatch ? inputErrorClasses : ""}`}
               />
               {passwordMismatch && (
-                <p className="mt-1.5 text-xs text-rust">Les mots de passe ne correspondent pas.</p>
+                <p className="mt-1.5 text-xs text-rust">{t("auth.register.passwordMismatch")}</p>
               )}
             </div>
 
@@ -157,9 +159,7 @@ export default function RegisterPage() {
                 className="mt-0.5 h-4 w-4 flex-shrink-0 accent-forest"
               />
               <span>
-                Je reconnais que Route 67 <strong>n&apos;est pas un cabinet ni un consultant en
-                immigration agréé</strong>, et que je crée ce compte uniquement pour m&apos;informer
-                sur l&apos;Entrée express — pas pour recevoir un avis juridique individualisé.
+                {t("auth.register.disclaimerPre")} <strong>{t("auth.register.disclaimerBold")}</strong>{t("auth.register.disclaimerPost")}
               </span>
             </label>
 
@@ -174,12 +174,12 @@ export default function RegisterPage() {
               disabled={loading || passwordMismatch}
               className={`w-full ${primaryButtonClasses}`}
             >
-              {loading ? "Création en cours…" : "Créer mon compte"}
+              {loading ? t("auth.register.submitting") : t("auth.register.title")}
             </button>
 
             <p className="flex items-start justify-center gap-1.5 text-xs leading-relaxed text-charcoal/45">
               <span aria-hidden>🔒</span>
-              <span>Tes données personnelles sont chiffrées et ne sont jamais partagées avec des tiers.</span>
+              <span>{t("auth.register.privacyNote")}</span>
             </p>
           </form>
         </div>

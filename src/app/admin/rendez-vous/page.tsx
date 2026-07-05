@@ -5,7 +5,7 @@ import AdminAvailabilityManager from "@/components/admin/AdminAvailabilityManage
 import AdminAppointmentsManager from "@/components/admin/AdminAppointmentsManager";
 
 export default async function AdminAppointmentsPage() {
-  const token = cookies().get(SESSION_COOKIE.name)?.value;
+  const token = (await cookies()).get(SESSION_COOKIE.name)?.value;
   const session = token ? await verifySessionToken(token) : null;
   const viewer = session ? await prisma.user.findUnique({ where: { id: session.userId }, select: { role: true } }) : null;
   const viewerIsAdmin = viewer?.role === "ADMIN";
