@@ -266,7 +266,7 @@ export default async function HomePage() {
           <p className="mb-2"><strong className="text-parchment">Route 67</strong> : plateforme d&apos;information et d&apos;entraide indépendante sur l&apos;Entrée express canadienne.</p>
           <p>
             Route 67 n&apos;est pas un cabinet ni un agent d&apos;immigration agréé et ne fournit pas de
-            conseils juridiques individualisés — notre seul projet est de rendre l&apos;information
+            conseils juridiques individualisés. Notre seul projet est de rendre l&apos;information
             officielle plus accessible. Les informations publiées sont vulgarisées à partir des
             sources officielles d&apos;IRCC à titre informatif. Pour un accompagnement personnalisé et
             réglementé, contacte un consultant agréé (CRCIC : Collège des consultants en
