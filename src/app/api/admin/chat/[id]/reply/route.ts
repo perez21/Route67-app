@@ -3,6 +3,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { getCurrentUser, isStaff } from "@/lib/session";
 import { sendEmail } from "@/lib/mailer";
+import { chatEmailNotificationsEnabled } from "@/lib/site";
 
 const replySchema = z.object({ content: z.string().trim().min(1).max(3000) });
 
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   const recipientEmail = thread.user?.email ?? thread.guestEmail;
   const recipientName = thread.user?.name ?? thread.guestName ?? "";
   let emailSent = false;
-  if (recipientEmail) {
+  if (recipientEmail && chatEmailNotificationsEnabled()) {
     const result = await sendEmail({
       to: recipientEmail,
       subject: `Re : ${thread.subject} — Route 67`,
