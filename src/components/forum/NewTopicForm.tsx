@@ -48,7 +48,7 @@ export default function NewTopicForm({ isAdmin }: { isAdmin: boolean }) {
   if (submittedPending) {
     return (
       <div className="rounded-sm border border-gold/30 bg-gold/10 px-4 py-2.5 text-sm text-charcoal">
-        Sujet envoyé. Il sera visible de tous une fois validé par l&apos;équipe.
+        Sujet envoyé — il sera visible de tous une fois validé par l&apos;équipe.
       </div>
     );
   }

@@ -6,7 +6,8 @@ import { getCurrentUser, isStaff } from "@/lib/session";
 // Suppression d'un sujet — réservée à l'administrateur (ex. sujet en
 // doublon ou hors-charte). Les réponses associées sont supprimées en
 // cascade (voir onDelete: Cascade dans le schéma Prisma).
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const user = await getCurrentUser(request);
   if (!user || !isStaff(user.role)) {
     return NextResponse.json({ error: "Accès refusé." }, { status: 403 });
@@ -19,7 +20,8 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 const moderateSchema = z.object({ status: z.enum(["APPROVED", "REJECTED"]) });
 
 // Valide ou rejette un sujet proposé par un membre Premium.
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const user = await getCurrentUser(request);
   if (!user || !isStaff(user.role)) {
     return NextResponse.json({ error: "Accès refusé." }, { status: 403 });

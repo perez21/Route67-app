@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 import TwoFactorSetup from "@/components/admin/TwoFactorSetup";
 
 export default async function AdminSecurityPage() {
-  const token = cookies().get(SESSION_COOKIE.name)?.value;
+  const token = (await cookies()).get(SESSION_COOKIE.name)?.value;
   const session = token ? await verifySessionToken(token) : null;
   const user = session ? await prisma.user.findUnique({ where: { id: session.userId }, select: { totpEnabled: true } }) : null;
 

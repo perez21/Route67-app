@@ -5,8 +5,9 @@ import { verifySessionToken, SESSION_COOKIE } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import AdminChecklistEditor from "@/components/admin/AdminChecklistEditor";
 
-export default async function AdminUserDetailPage({ params }: { params: { id: string } }) {
-  const token = cookies().get(SESSION_COOKIE.name)?.value;
+export default async function AdminUserDetailPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
+  const token = (await cookies()).get(SESSION_COOKIE.name)?.value;
   const session = token ? await verifySessionToken(token) : null;
   const viewer = session ? await prisma.user.findUnique({ where: { id: session.userId }, select: { role: true } }) : null;
 

@@ -12,7 +12,8 @@ const updateSchema = z.object({
 // Permet à un administrateur de corriger la date d'exécution d'une étape du
 // suivi d'un utilisateur (ex. étape réalisée avant l'inscription sur Route 67,
 // ou erreur de saisie) — utile en support, sans passer par la base directement.
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const admin = await getCurrentUser(request);
   if (!admin || !isStaff(admin.role)) return NextResponse.json({ error: "Accès refusé." }, { status: 403 });
 

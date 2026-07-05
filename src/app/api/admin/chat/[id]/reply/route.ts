@@ -10,7 +10,8 @@ const replySchema = z.object({ content: z.string().trim().min(1).max(3000) });
 // Réponse de l'équipe à un fil — le message reste visible dans
 // /dashboard/chat si la personne est connectée (userId renseigné), ET un
 // email est envoyé à son adresse (compte ou invité) dans tous les cas.
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const admin = await getCurrentUser(request);
   if (!admin || !isStaff(admin.role)) return NextResponse.json({ error: "Accès refusé." }, { status: 403 });
 

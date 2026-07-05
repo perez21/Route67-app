@@ -9,7 +9,7 @@ import ChatWithTeam from "@/components/ChatWithTeam";
 import Disclaimer from "@/components/Disclaimer";
 
 export default async function DashboardChatPage() {
-  const token = cookies().get(SESSION_COOKIE.name)?.value;
+  const token = (await cookies()).get(SESSION_COOKIE.name)?.value;
   const session = token ? await verifySessionToken(token) : null;
   if (!session) redirect("/login");
 

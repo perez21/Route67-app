@@ -8,12 +8,9 @@ import { getSocialLinks } from "@/lib/site";
 import { getMomoNumbers } from "@/lib/mailer";
 import PremiumCtaButton from "@/components/PremiumCtaButton";
 import LocalDateTime from "@/components/LocalDateTime";
+import { HomeHeroText, HomeHeroCtas } from "@/components/home/HomeHero";
 
 export const revalidate = 120; // rafraîchit tirages + actualités toutes les 2 minutes
-
-const EQUIVALENCE_URL =
-  "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/entree-express/documents/evaluer-diplomes-etudes.html";
-const OFFICIAL_CALCULATOR_URL = "https://nvimmigration.ca/67-calculator/";
 
 const PROCEDURE_ITEMS = [
   {
@@ -64,39 +61,12 @@ export default async function HomePage() {
       {/* Hero — compact et mobile-first, façon "une" de journal */}
       <header className="relative overflow-hidden bg-ink px-4 py-10 text-parchment sm:px-6 sm:py-14 md:px-10 md:py-16">
         <div className="mx-auto max-w-5xl">
-          <h1 className="max-w-3xl animate-fadeUp font-display text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">
-            La plateforme qui ouvre la porte{" "}
-            <span className="text-gold2">du VISA.</span>{" "}
-            <span aria-hidden className="inline-block align-middle text-3xl sm:text-4xl md:text-6xl">🇨🇦</span>
-          </h1>
-          <p className="mt-4 max-w-xl animate-fadeUp text-base text-parchment/80 sm:mt-6 sm:text-lg" style={{ animationDelay: "0.1s" }}>
-            Route67 est une source indépendante d&apos;information sur l&apos;immigration au Canada via
-            le système Entrée Express. Nous ne sommes pas affiliés au gouvernement canadien (IRCC)
-            et nous relayons des informations, analyses et actualités à titre informatif uniquement.
-          </p>
+          <HomeHeroText />
 
           {/* Une seule ligne, toujours — défilement horizontal plutôt que
               retour à la ligne, quelle que soit la largeur d'écran. */}
           <div className="scrollbar-hide -mx-4 mt-6 flex flex-nowrap gap-3 overflow-x-auto px-4 pb-2 sm:mt-8 sm:gap-4">
-            <Link href="/simulateur" className="flex-shrink-0 rounded-sm bg-gold px-5 py-3 text-sm font-semibold text-ink sm:px-6">
-              Calculer mon score CRS
-            </Link>
-            <a
-              href={OFFICIAL_CALCULATOR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-shrink-0 rounded-sm bg-cmr-green px-5 py-3 text-sm font-semibold text-white sm:px-6"
-            >
-              Admissibilité Entrée Express ↗
-            </a>
-            <a
-              href={EQUIVALENCE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-shrink-0 rounded-sm border border-parchment/30 px-5 py-3 text-sm font-semibold sm:px-6"
-            >
-              Équivalence des diplômes ↗
-            </a>
+            <HomeHeroCtas />
           </div>
           <p className="mt-3 max-w-xl text-[11px] text-parchment/45">
             L&apos;admissibilité Entrée Express et la page d&apos;équivalence des diplômes ouvrent sur
@@ -226,17 +196,17 @@ export default async function HomePage() {
               </span>
               <h3 className="mb-4 font-display text-xl font-semibold text-ink">Comment contribuer</h3>
               <ul className="mb-5 space-y-2 text-sm text-charcoal/75">
-                <li className="border-t border-charcoal/10 pt-2">Orange Money : <strong>{momo.orange}</strong></li>
-                <li className="border-t border-charcoal/10 pt-2">MTN MoMo : <strong>{momo.mtn}</strong></li>
-                <li className="border-t border-charcoal/10 pt-2">Nom Mobile Money : <strong>{momo.accountName}</strong></li>
+                <li className="border-t border-charcoal/10 pt-2">— Orange Money : <strong>{momo.orange}</strong></li>
+                <li className="border-t border-charcoal/10 pt-2">— MTN MoMo : <strong>{momo.mtn}</strong></li>
+                <li className="border-t border-charcoal/10 pt-2">— Nom Mobile Money : <strong>{momo.accountName}</strong></li>
                 {momo.paypal && (
                   <li className="border-t border-charcoal/10 pt-2">
-                    PayPal : <span className="font-semibold">{momo.paypal}</span>
+                    — PayPal : <span className="font-semibold">{momo.paypal}</span>
                   </li>
                 )}
               </ul>
               <p className="text-xs text-charcoal/50">
-                Un don n&apos;est pas un paiement pour un service individualisé : c&apos;est un soutien
+                Un don n&apos;est pas un paiement pour un service individualisé — c&apos;est un soutien
                 volontaire et anonyme au projet. Si vous trouvez notre action utile et souhaitez nous
                 encourager, vous pouvez faire un don d&apos;un montant de votre choix via les contacts
                 ci-dessus.
@@ -250,10 +220,10 @@ export default async function HomePage() {
               </span>
               <h3 className="mb-4 font-display text-xl font-semibold">Ce que je reçois en devenant utilisateur prémium</h3>
               <ul className="mb-6 flex-grow space-y-2 text-sm">
-                <li className="border-t border-parchment/15 pt-2">Rencontre virtuelle avec l&apos;équipe</li>
-                <li className="border-t border-parchment/15 pt-2">Chat direct avec l&apos;équipe</li>
-                <li className="border-t border-parchment/15 pt-2">Assistant IA disponible 24h/24</li>
-                <li className="border-t border-parchment/15 pt-2">Valable 1 mois</li>
+                <li className="border-t border-parchment/15 pt-2">— Rencontre virtuel avec l&apos;équipe</li>
+                <li className="border-t border-parchment/15 pt-2">— Chat direct avec l&apos;équipe</li>
+                <li className="border-t border-parchment/15 pt-2">— Assistant IA disponible 24h/24</li>
+                <li className="border-t border-parchment/15 pt-2">— Valable 1 mois après confirmation du don</li>
               </ul>
               <PremiumCtaButton />
             </div>
@@ -263,10 +233,10 @@ export default async function HomePage() {
 
       <footer className="bg-[#0E1A30] px-4 py-10 text-xs leading-relaxed text-parchment/55 sm:px-6 md:px-10">
         <div className="mx-auto max-w-5xl">
-          <p className="mb-2"><strong className="text-parchment">Route 67</strong> : plateforme d&apos;information et d&apos;entraide indépendante sur l&apos;Entrée express canadienne.</p>
+          <p className="mb-2"><strong className="text-parchment">Route 67</strong> — plateforme d&apos;information et d&apos;entraide indépendante sur l&apos;Entrée express canadienne.</p>
           <p>
             Route 67 n&apos;est pas un cabinet ni un agent d&apos;immigration agréé et ne fournit pas de
-            conseils juridiques individualisés. Notre seul projet est de rendre l&apos;information
+            conseils juridiques individualisés — notre seul projet est de rendre l&apos;information
             officielle plus accessible. Les informations publiées sont vulgarisées à partir des
             sources officielles d&apos;IRCC à titre informatif. Pour un accompagnement personnalisé et
             réglementé, contacte un consultant agréé (CRCIC : Collège des consultants en

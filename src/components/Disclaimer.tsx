@@ -1,14 +1,9 @@
+"use client";
+
 import { Fragment } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type Variant = "default" | "compact" | "dark";
-
-const MESSAGES: Record<string, string> = {
-  default:
-    "Route 67 n'est pas un cabinet ni un agent d'immigration agréé. Notre projet vise uniquement à rendre l'information officielle plus accessible. Pour un avis qui engage ton dossier, contacte un consultant réglementé (CRCIC : Collège des consultants en immigration et en citoyenneté) ou le site officiel canada.ca.",
-  compact: "Rappel : Route 67 informe, mais n'est pas un agent d'immigration agréé.",
-  procedure:
-    "Ce guide est une vulgarisation à but informatif, rédigée pour rendre la procédure plus claire. Route 67 n'est pas un cabinet d'immigration agréé : vérifie toujours l'information à jour sur canada.ca avant toute démarche officielle.",
-};
 
 // Rend cliquables les mentions "canada.ca" (ou toute URL complète) dans le
 // texte, sans jamais interpréter le reste comme du HTML.
@@ -45,7 +40,10 @@ export default function Disclaimer({
   variant?: Variant | "procedure";
   className?: string;
 }) {
-  const text = MESSAGES[variant] ?? MESSAGES.default;
+  const { t } = useLanguage();
+  const key = `disclaimer.${variant}`;
+  const hasTranslation = variant === "default" || variant === "compact" || variant === "procedure";
+  const text = hasTranslation ? t(key) : t("disclaimer.default");
 
   if (variant === "compact") {
     return <p className={`text-xs text-blue-900/70 ${className}`}>ℹ️ {linkify(text)}</p>;
@@ -53,7 +51,7 @@ export default function Disclaimer({
 
   return (
     <div className={`rounded-sm border border-blue-200 bg-blue-50 px-4 py-3 text-xs leading-relaxed text-blue-900 ${className}`}>
-      <strong className="text-blue-950">À savoir — </strong>
+      <strong className="text-blue-950">{t("disclaimer.label")}</strong>
       {linkify(text)}
     </div>
   );

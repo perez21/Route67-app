@@ -4,19 +4,22 @@ import { useState } from "react";
 import Link from "next/link";
 import NotificationBell from "./NotificationBell";
 import AccountLink from "./AccountLink";
-
-const NAV_LINKS = [
-  { href: "/#actualites", label: "Actualités" },
-  { href: "/#tirages", label: "Tirages" },
-  { href: "/procedure", label: "Procédure" },
-  { href: "/simulateur", label: "Simulateur" },
-  { href: "/contact", label: "Contact" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/#tarifs", label: "Soutenir le projet" },
-];
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
+
+  const NAV_LINKS = [
+    { href: "/#actualites", label: t("nav.actualites") },
+    { href: "/#tirages", label: t("nav.tirages") },
+    { href: "/procedure", label: t("nav.procedure") },
+    { href: "/simulateur", label: t("nav.simulateur") },
+    { href: "/contact", label: t("nav.contact") },
+    { href: "/faq", label: t("nav.faq") },
+    { href: "/#tarifs", label: t("nav.soutenir") },
+  ];
 
   return (
     <div className="sticky top-0 z-30">
@@ -33,13 +36,14 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <LanguageSwitcher />
           <NotificationBell />
           <AccountLink />
           <Link
             href="/register"
             className="hidden rounded-sm bg-gold px-3.5 py-2 text-xs font-semibold text-ink sm:px-5 sm:text-sm lg:inline-block"
           >
-            Créer mon compte
+            {t("nav.creerCompte")}
           </Link>
 
           {/* Bouton hamburger — seul moyen d'accéder au menu en dessous du
@@ -49,7 +53,7 @@ export default function Navbar() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-nav-menu"
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-label={open ? t("nav.fermerMenu") : t("nav.ouvrirMenu")}
             className="flex h-9 w-9 flex-shrink-0 flex-col items-center justify-center gap-[5px] rounded-sm border border-parchment/25 lg:hidden"
           >
             <span className={`h-[2px] w-5 bg-parchment transition-transform ${open ? "translate-y-[7px] rotate-45" : ""}`} />
@@ -84,7 +88,7 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="inline-block rounded-sm bg-gold px-5 py-2.5 text-sm font-semibold text-ink"
               >
-                Créer mon compte
+                {t("nav.creerCompte")}
               </Link>
             </li>
           </ul>

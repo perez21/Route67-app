@@ -9,7 +9,8 @@ const updateSchema = z.object({ approve: z.boolean() });
 // vérification manuelle de la référence Mobile Money par l'admin. En cas
 // d'approbation, le forfait de l'utilisateur est mis à jour immédiatement
 // et une expiration à 30 jours est posée (renouvellement mensuel).
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const admin = await getCurrentUser(request);
   if (!admin || !isStaff(admin.role)) return NextResponse.json({ error: "Accès refusé." }, { status: 403 });
 

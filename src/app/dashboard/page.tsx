@@ -18,7 +18,7 @@ const TIER_LABEL: Record<string, string> = {
 };
 
 export default async function DashboardPage() {
-  const token = cookies().get(SESSION_COOKIE.name)?.value;
+  const token = (await cookies()).get(SESSION_COOKIE.name)?.value;
   const session = token ? await verifySessionToken(token) : null;
   if (!session) redirect("/login");
 

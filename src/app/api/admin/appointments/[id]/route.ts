@@ -13,7 +13,8 @@ const updateSchema = z.object({
 
 // La confirmation, le refus ou l'annulation d'un rendez-vous est réservée à
 // un ADMIN — un modérateur peut voir les demandes mais pas les traiter.
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const user = await getCurrentUser(request);
   if (!user || user.role !== "ADMIN") return NextResponse.json({ error: "Accès refusé." }, { status: 403 });
 

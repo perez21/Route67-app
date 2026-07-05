@@ -7,7 +7,8 @@ import { prisma } from "@/lib/db";
 
 const SEEDS = ["route67-a", "route67-b", "route67-c", "route67-d", "route67-e", "route67-f"];
 
-export default async function NewsDetailPage({ params }: { params: { id: string } }) {
+export default async function NewsDetailPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const item = await prisma.newsItem.findUnique({ where: { id: params.id } });
   if (!item) notFound();
 

@@ -58,7 +58,7 @@ export default function UpgradePanel({
   if (currentTier === "PREMIUM") {
     return (
       <div className="rounded-sm border border-forest/20 bg-forest/5 p-5 text-sm text-forest">
-        Merci pour ton don. Ton accès Premium est actif 🙏
+        Merci pour ton don — ton accès Premium est actif 🙏
       </div>
     );
   }
@@ -72,12 +72,12 @@ export default function UpgradePanel({
   return (
     <div className={`space-y-4 ${formCardClasses}`}>
       <p className="text-sm leading-relaxed text-charcoal/70">
-        Ce montant (15 000 FCFA ou équivalent/mois) sert à couvrir les frais réels du projet :
+        Ce don anonyme (15 000 FCFA ou équivalent/mois) sert à couvrir les frais réels du projet :
         l&apos;hébergement du site pour qu&apos;il reste disponible, la maintenance pour suivre les
         tirages et actualités en temps réel, et un peu de quoi faire vivre l&apos;équipe qui s&apos;en
         occupe. Ce n&apos;est pas un paiement pour un service individualisé de consultation en
-        immigration. C&apos;est un soutien volontaire au projet qui, en retour, débloque pendant 1
-        mois les rendez-vous virtuels et un chat direct avec l&apos;équipe.
+        immigration — c&apos;est un soutien volontaire au projet qui, en retour, débloque pendant 1
+        mois les rendez-vous avec l&apos;équipe.
       </p>
 
       {step === "idle" && (
@@ -97,7 +97,7 @@ export default function UpgradePanel({
               {momo.paypal && <li>PayPal : <strong>{momo.paypal}</strong></li>}
             </ul>
             <p className="text-xs text-charcoal/60">
-              Rien n&apos;est encore envoyé à l&apos;équipe. Remplis le formulaire ci-dessous une fois le
+              Rien n&apos;est encore envoyé à l&apos;équipe — remplis le formulaire ci-dessous une fois le
               don effectué pour valider ta demande.
             </p>
           </div>
