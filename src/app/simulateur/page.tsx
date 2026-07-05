@@ -258,7 +258,7 @@ export default function SimulateurPage() {
             <p className="text-xs leading-relaxed opacity-70">
               {!result
                 ? "Remplis le formulaire pour voir ton score estimé face au dernier seuil publié."
-                : result.score //>= result.threshold
+                : result.score >= result.threshold
             </p>
 
             {result && !result.eligibility.eligible && (
