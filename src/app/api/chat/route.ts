@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { getCurrentUser, isStaff, isTierAtLeast } from "@/lib/session";
 import { sendEmail, getTeamContact } from "@/lib/mailer";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { chatEmailNotificationsEnabled } from "@/lib/site";
 
 function canUseChat(user: { role: "USER" | "MODERATOR" | "ADMIN"; tier: "FREE" | "PREMIUM" }) {
   return isStaff(user.role) || isTierAtLeast(user.tier, "PREMIUM");
@@ -62,7 +63,7 @@ export async function POST(request: NextRequest) {
 
   // Notifie l'équipe uniquement à l'ouverture du fil, pour ne pas spammer
   // une boîte mail à chaque message d'une conversation déjà suivie.
-  if (isNewThread) {
+  if (isNewThread && chatEmailNotificationsEnabled()) {
     const team = getTeamContact();
     await sendEmail({
       to: team.email,
