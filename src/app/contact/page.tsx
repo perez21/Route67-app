@@ -18,7 +18,7 @@ export default async function ContactPage() {
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-rust">Une question ?</p>
         <h1 className="mb-3 font-display text-2xl font-semibold text-ink sm:text-3xl">Contacter l&apos;équipe Route 67</h1>
         <p className="mb-4 max-w-2xl text-sm text-charcoal/65">
-          Une question sur ton dossier, un bug sur le site, une suggestion ? Écris-nous directement —
+          Une question sur ton dossier, un bug sur le site, une suggestion ? Écris-nous directement : 
           un membre de l&apos;équipe te répond personnellement. Regarde aussi notre <Link href="/faq" className="underline">FAQ</Link>.
         </p>
         {session && (
