@@ -27,6 +27,19 @@ function daysRemaining(iso: string | null): number | null {
 export default function AdminUsersTable({ users, viewerIsAdmin, viewerId }: { users: Row[]; viewerIsAdmin: boolean; viewerId: string }) {
   const router = useRouter();
   const [pendingId, setPendingId] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+
+  // Filtre côté client sur le nom ou l'email — suffisant tant que la base
+  // reste de taille raisonnable ; si le nombre d'utilisateurs devient très
+  // important, remplacer par un filtre côté serveur (paramètre de requête +
+  // `where` Prisma sur name/email) pour éviter de charger toute la table à
+  // chaque fois.
+  const filteredUsers = search.trim()
+    ? users.filter((u) => {
+        const q = search.trim().toLowerCase();
+        return u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q);
+      })
+    : users;
 
   async function update(userId: string, data: Partial<{ role: string; tier: string; warned: boolean; warningReason: string }>) {
     setPendingId(userId);
@@ -90,7 +103,22 @@ export default function AdminUsersTable({ users, viewerIsAdmin, viewerId }: { us
   }
 
   return (
-    <div className="overflow-x-auto rounded-sm border border-charcoal/10 bg-white">
+    <div>
+      <div className="mb-3">
+        <input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Rechercher par nom ou email…"
+          className="w-full max-w-sm rounded-sm border border-charcoal/15 bg-white px-3 py-2 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
+        />
+        {search.trim() && (
+          <p className="mt-1.5 text-xs text-charcoal/50">
+            {filteredUsers.length} résultat(s) sur {users.length}
+          </p>
+        )}
+      </div>
+      <div className="overflow-x-auto rounded-sm border border-charcoal/10 bg-white">
       <table className="w-full text-left text-sm">
         <thead>
           <tr className="border-b border-charcoal/10 text-[11px] uppercase tracking-wide text-charcoal/50">
@@ -106,7 +134,14 @@ export default function AdminUsersTable({ users, viewerIsAdmin, viewerId }: { us
           </tr>
         </thead>
         <tbody>
-          {users.map((u) => {
+          {filteredUsers.length === 0 ? (
+            <tr>
+              <td colSpan={9} className="px-4 py-6 text-center text-sm text-charcoal/50">
+                Aucun utilisateur ne correspond à cette recherche.
+              </td>
+            </tr>
+          ) : (
+          filteredUsers.map((u) => {
             // Un modérateur ne voit et ne peut effectuer AUCUNE opération
             // sur un compte administrateur : ces cellules restent vides
             // pour lui plutôt que simplement désactivées.
@@ -124,14 +159,11 @@ export default function AdminUsersTable({ users, viewerIsAdmin, viewerId }: { us
                 </td>
                 <td className="px-4 py-3 text-charcoal/60">
                   {u.email}
-                  <br />
-                  <span
-                    className={`mt-1 inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase ${
-                      u.emailVerified ? "bg-forest/10 text-forest" : "bg-rust/10 text-rust"
-                    }`}
-                  >
-                    {u.emailVerified ? "✓ Vérifié" : "Non vérifié"}
-                  </span>
+                  {u.emailVerified && (
+                    <span title="Email vérifié" aria-label="Email vérifié" className="ml-1.5 text-amber-500">
+                      ★
+                    </span>
+                  )}
                 </td>
                 <td className="px-4 py-3 font-mono">{u.crsScore ?? "—"}</td>
                 <td className="px-4 py-3">
@@ -226,9 +258,10 @@ export default function AdminUsersTable({ users, viewerIsAdmin, viewerId }: { us
                 </td>
               </tr>
             );
-          })}
+          }))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
