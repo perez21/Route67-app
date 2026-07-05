@@ -116,8 +116,8 @@ export default function SimulateurPage() {
         <h1 className="mb-3 font-display text-2xl font-semibold text-ink sm:text-3xl">Simulateur de score CRS complet</h1>
         <p className="mb-4 max-w-2xl text-sm text-charcoal/65">
           Calqué sur la grille officielle du Système de classement global d&apos;IRCC (capital
-          humain, facteurs du conjoint, transférabilité des compétences, points supplémentaires) —
-          la même grille que reproduit l&apos;outil Canadavisa.
+          humain, facteurs du conjoint, transférabilité des compétences, points supplémentaires).
+          La même grille que reproduit l&apos;outil Canadavisa.
         </p>
         <Disclaimer className="mb-8" />
 
@@ -137,7 +137,7 @@ export default function SimulateurPage() {
 
             {/* A. Capital humain */}
             <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
-              <h2 className="font-display text-lg font-semibold text-ink">A — Capital humain (toi)</h2>
+              <h2 className="font-display text-lg font-semibold text-ink">A : Capital humain (toi)</h2>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
@@ -207,7 +207,7 @@ export default function SimulateurPage() {
 
             {/* C. Transférabilité */}
             <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
-              <h2 className="font-display text-lg font-semibold text-ink">C — Transférabilité des compétences</h2>
+              <h2 className="font-display text-lg font-semibold text-ink">C : Transférabilité des compétences</h2>
               <div>
                 <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Expérience de travail à l&apos;étranger</label>
                 <select value={foreignWorkExperienceYears} onChange={(e) => setForeignWorkExperienceYears(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15 sm:w-64">
@@ -222,7 +222,7 @@ export default function SimulateurPage() {
 
             {/* D. Points supplémentaires */}
             <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
-              <h2 className="font-display text-lg font-semibold text-ink">D — Points supplémentaires</h2>
+              <h2 className="font-display text-lg font-semibold text-ink">D : Points supplémentaires</h2>
               <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
                 <span>Frère ou sœur (18 ans+) citoyen/résident permanent au Canada</span>
                 <input type="checkbox" checked={hasSiblingInCanada} onChange={(e) => setHasSiblingInCanada(e.target.checked)} className="h-5 w-5 accent-forest" />
@@ -259,8 +259,8 @@ export default function SimulateurPage() {
               {!result
                 ? "Remplis le formulaire pour voir ton score estimé face au dernier seuil publié."
                 : result.score >= result.threshold
-                ? `Ton score dépasse le seuil du dernier tirage publié (${result.threshold}).`
-                : `Il te manque environ ${result.threshold - result.score} points pour atteindre le seuil du dernier tirage général (${result.threshold}).`}
+                //? `Ton score dépasse le seuil du dernier tirage publié (${result.threshold}).`
+                //: `Il te manque environ ${result.threshold - result.score} points pour atteindre le seuil du dernier tirage général (${result.threshold}).`}
             </p>
 
             {result && !result.eligibility.eligible && (
@@ -292,7 +292,7 @@ export default function SimulateurPage() {
               </p>
             )}
             <p className="border-t border-parchment/15 pt-3 text-[11px] opacity-50">
-              Outil informatif calqué sur la grille officielle IRCC — ne remplace pas le calcul
+              Outil informatif calqué sur la grille officielle IRCC et ne remplace pas le calcul
               fait sur ton compte Entrée express officiel.
             </p>
           </div>
