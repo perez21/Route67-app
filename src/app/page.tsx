@@ -226,12 +226,12 @@ export default async function HomePage() {
               </span>
               <h3 className="mb-4 font-display text-xl font-semibold text-ink">Comment contribuer</h3>
               <ul className="mb-5 space-y-2 text-sm text-charcoal/75">
-                <li className="border-t border-charcoal/10 pt-2">— Orange Money : <strong>{momo.orange}</strong></li>
-                <li className="border-t border-charcoal/10 pt-2">— MTN MoMo : <strong>{momo.mtn}</strong></li>
-                <li className="border-t border-charcoal/10 pt-2">— Nom Mobile Money : <strong>{momo.accountName}</strong></li>
+                <li className="border-t border-charcoal/10 pt-2">Orange Money : <strong>{momo.orange}</strong></li>
+                <li className="border-t border-charcoal/10 pt-2">MTN MoMo : <strong>{momo.mtn}</strong></li>
+                <li className="border-t border-charcoal/10 pt-2">Nom Mobile Money : <strong>{momo.accountName}</strong></li>
                 {momo.paypal && (
                   <li className="border-t border-charcoal/10 pt-2">
-                    — PayPal : <span className="font-semibold">{momo.paypal}</span>
+                    PayPal : <span className="font-semibold">{momo.paypal}</span>
                   </li>
                 )}
               </ul>
@@ -250,10 +250,10 @@ export default async function HomePage() {
               </span>
               <h3 className="mb-4 font-display text-xl font-semibold">Ce que je reçois en devenant utilisateur prémium</h3>
               <ul className="mb-6 flex-grow space-y-2 text-sm">
-                <li className="border-t border-parchment/15 pt-2">— Rencontre virtuel avec l&apos;équipe</li>
-                <li className="border-t border-parchment/15 pt-2">— Chat direct avec l&apos;équipe</li>
-                <li className="border-t border-parchment/15 pt-2">— Assistant IA disponible 24h/24</li>
-                <li className="border-t border-parchment/15 pt-2">— Valable 1 mois après confirmation du don</li>
+                <li className="border-t border-parchment/15 pt-2">Rencontre virtuelle avec l&apos;équipe</li>
+                <li className="border-t border-parchment/15 pt-2">Chat direct avec l&apos;équipe</li>
+                <li className="border-t border-parchment/15 pt-2">Assistant IA disponible 24h/24</li>
+                <li className="border-t border-parchment/15 pt-2">Valable 1 mois</li>
               </ul>
               <PremiumCtaButton />
             </div>
@@ -263,7 +263,7 @@ export default async function HomePage() {
 
       <footer className="bg-[#0E1A30] px-4 py-10 text-xs leading-relaxed text-parchment/55 sm:px-6 md:px-10">
         <div className="mx-auto max-w-5xl">
-          <p className="mb-2"><strong className="text-parchment">Route 67</strong> — plateforme d&apos;information et d&apos;entraide indépendante sur l&apos;Entrée express canadienne.</p>
+          <p className="mb-2"><strong className="text-parchment">Route 67</strong> : plateforme d&apos;information et d&apos;entraide indépendante sur l&apos;Entrée express canadienne.</p>
           <p>
             Route 67 n&apos;est pas un cabinet ni un agent d&apos;immigration agréé et ne fournit pas de
             conseils juridiques individualisés — notre seul projet est de rendre l&apos;information
