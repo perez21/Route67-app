@@ -135,7 +135,7 @@ export default function NotificationBell() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-11 z-40 w-80 rounded-sm border border-charcoal/10 bg-white p-3 shadow-xl">
+        <div className="absolute left-1/2 top-11 z-40 w-80 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-sm border border-charcoal/10 bg-white p-3 shadow-xl">
           <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-charcoal/45">Notifications</p>
           {items.length === 0 ? (
             <p className="text-sm text-charcoal/50">Rien de nouveau pour le moment.</p>

@@ -39,7 +39,7 @@ export default function Navbar() {
             href="/register"
             className="hidden rounded-sm bg-gold px-3.5 py-2 text-xs font-semibold text-ink sm:px-5 sm:text-sm lg:inline-block"
           >
-            Créer mon suivi
+            Créer mon compte
           </Link>
 
           {/* Bouton hamburger — seul moyen d'accéder au menu en dessous du
@@ -84,7 +84,7 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className="inline-block rounded-sm bg-gold px-5 py-2.5 text-sm font-semibold text-ink"
               >
-                Créer mon suivi
+                Créer mon compte
               </Link>
             </li>
           </ul>

@@ -81,7 +81,7 @@ export default function RegisterPage() {
           <Link href="/" className="mb-6 block text-center font-display text-2xl font-bold text-ink lg:hidden">
             <span className="text-cmr-green">Route</span> <span className="text-cmr-yellow">6</span><span className="text-cmr-red">7</span>
           </Link>
-          <h1 className="mb-1 font-display text-2xl font-bold text-ink">Créer mon suivi</h1>
+          <h1 className="mb-1 font-display text-2xl font-bold text-ink">Créer mon compte</h1>
           <p className="mb-6 text-sm text-charcoal/60">
             Déjà un compte ? <Link href="/login" className="font-semibold text-rust hover:underline">Se connecter</Link>
           </p>

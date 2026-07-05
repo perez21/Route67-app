@@ -70,10 +70,9 @@ export default async function HomePage() {
             <span aria-hidden className="inline-block align-middle text-3xl sm:text-4xl md:text-6xl">🇨🇦</span>
           </h1>
           <p className="mt-4 max-w-xl animate-fadeUp text-base text-parchment/80 sm:mt-6 sm:text-lg" style={{ animationDelay: "0.1s" }}>
-            Route 67 traduit les tirages d&apos;Entrée express, les seuils CRS (Comprehensive Ranking
-            System, le système de classement global) et les délais d&apos;IRCC (Immigration, Réfugiés
-            et Citoyenneté Canada) en informations claires — avec un suivi personnalisé pour
-            savoir exactement où vous en êtes.
+            Route67 est une source indépendante d&apos;information sur l&apos;immigration au Canada via
+            le système Entrée Express. Nous ne sommes pas affiliés au gouvernement canadien (IRCC)
+            et nous relayons des informations, analyses et actualités à titre informatif uniquement.
           </p>
 
           {/* Une seule ligne, toujours — défilement horizontal plutôt que
@@ -98,12 +97,6 @@ export default async function HomePage() {
             >
               Équivalence des diplômes ↗
             </a>
-            <Link href="/procedure" className="flex-shrink-0 rounded-sm border border-parchment/30 px-5 py-3 text-sm font-semibold sm:px-6">
-              Procédure
-            </Link>
-            <Link href="/forum" className="flex-shrink-0 rounded-sm bg-cmr-yellow px-5 py-3 text-sm font-semibold text-ink sm:px-6">
-              Forum Entraide
-            </Link>
           </div>
           <p className="mt-3 max-w-xl text-[11px] text-parchment/45">
             L&apos;admissibilité Entrée Express et la page d&apos;équivalence des diplômes ouvrent sur
@@ -244,8 +237,9 @@ export default async function HomePage() {
               </ul>
               <p className="text-xs text-charcoal/50">
                 Un don n&apos;est pas un paiement pour un service individualisé — c&apos;est un soutien
-                volontaire et anonyme au projet, à faire directement via l&apos;un de ces moyens de
-                paiement.
+                volontaire et anonyme au projet. Si vous trouvez notre action utile et souhaitez nous
+                encourager, vous pouvez faire un don d&apos;un montant de votre choix via les contacts
+                ci-dessus.
               </p>
             </div>
 
@@ -254,9 +248,9 @@ export default async function HomePage() {
               <span className="mb-4 inline-block w-fit rounded-full bg-cmr-yellow px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-ink">
                 Avantages Premium
               </span>
-              <h3 className="mb-4 font-display text-xl font-semibold">Ce que ton soutien débloque</h3>
+              <h3 className="mb-4 font-display text-xl font-semibold">Ce que je reçois en devenant utilisateur prémium</h3>
               <ul className="mb-6 flex-grow space-y-2 text-sm">
-                <li className="border-t border-parchment/15 pt-2">— Rendez-vous avec l&apos;équipe (1 par semaine)</li>
+                <li className="border-t border-parchment/15 pt-2">— Rencontre virtuel avec l&apos;équipe</li>
                 <li className="border-t border-parchment/15 pt-2">— Chat direct avec l&apos;équipe</li>
                 <li className="border-t border-parchment/15 pt-2">— Assistant IA disponible 24h/24</li>
                 <li className="border-t border-parchment/15 pt-2">— Valable 1 mois après confirmation du don</li>
@@ -264,11 +258,6 @@ export default async function HomePage() {
               <PremiumCtaButton />
             </div>
           </div>
-
-          <p className="mt-6 text-xs text-charcoal/50">
-            Crée d&apos;abord ton compte gratuit : le signalement de ton don se fait ensuite depuis ton
-            tableau de bord, avec confirmation par notre équipe.
-          </p>
         </div>
       </section>
 

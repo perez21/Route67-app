@@ -87,7 +87,7 @@ export default function ProcedurePage() {
             planifiés avec l&apos;équipe restent réservés aux membres Premium — un soutien qui
             finance directement le fonctionnement du site.
           </p>
-          <Link href="/dashboard#don" className="inline-block rounded-sm bg-gold px-5 py-2.5 text-sm font-semibold text-ink">
+          <Link href="/register" className="inline-block rounded-sm bg-gold px-5 py-2.5 text-sm font-semibold text-ink">
             Devenez membre de Route67
           </Link>
         </div>

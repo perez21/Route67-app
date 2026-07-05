@@ -176,7 +176,7 @@ function LoginForm() {
         href="/register"
         className="block w-full rounded-lg bg-cmr-green py-3.5 text-center text-base font-bold text-white shadow-sm transition-all hover:brightness-95"
       >
-        Créer mon suivi
+        Créer mon compte
       </Link>
 
       <p className="mt-6 flex items-center justify-center gap-1.5 text-xs text-charcoal/45">

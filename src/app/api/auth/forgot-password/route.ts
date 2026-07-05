@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { createVerificationToken } from "@/lib/tokens";
 import { sendEmail } from "@/lib/mailer";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { getSiteUrl } from "@/lib/site";
 
 const schema = z.object({ email: z.string().trim().toLowerCase().email() });
 
@@ -25,7 +26,7 @@ export async function POST(request: NextRequest) {
   if (!user) return genericResponse;
 
   const token = await createVerificationToken(user.id, "PASSWORD_RESET");
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const siteUrl = getSiteUrl();
 
   await sendEmail({
     to: user.email,

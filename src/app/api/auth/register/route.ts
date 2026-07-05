@@ -6,6 +6,7 @@ import { createSessionToken, SESSION_COOKIE } from "@/lib/auth";
 import { FULL_PROCESS_STEPS } from "@/lib/checklistSteps";
 import { createVerificationToken } from "@/lib/tokens";
 import { sendEmail } from "@/lib/mailer";
+import { getSiteUrl } from "@/lib/site";
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
@@ -51,7 +52,7 @@ export async function POST(request: NextRequest) {
   // Vérification d'email — n'empêche pas l'utilisation du compte (pas de
   // blocage d'accès), c'est une confirmation envoyée en tâche de fond.
   const verifyToken = await createVerificationToken(user.id, "EMAIL_VERIFY");
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const siteUrl = getSiteUrl();
   await sendEmail({
     to: user.email,
     subject: "Confirme ton email — Route 67",

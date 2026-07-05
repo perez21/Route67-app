@@ -34,9 +34,7 @@ export default function PremiumCtaButton() {
     );
   }
 
-  return (
-    <Link href="/register" className="block rounded-sm bg-gold py-3 text-center text-sm font-semibold text-ink">
-      Créer mon compte
-    </Link>
-  );
+  // Visiteur non connecté : pas de bouton d'appel à l'action ici, cette
+  // section se contente de présenter les avantages Premium.
+  return null;
 }
