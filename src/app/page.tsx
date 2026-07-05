@@ -236,7 +236,7 @@ export default async function HomePage() {
                 )}
               </ul>
               <p className="text-xs text-charcoal/50">
-                Un don n&apos;est pas un paiement pour un service individualisé — c&apos;est un soutien
+                Un don n&apos;est pas un paiement pour un service individualisé : c&apos;est un soutien
                 volontaire et anonyme au projet. Si vous trouvez notre action utile et souhaitez nous
                 encourager, vous pouvez faire un don d&apos;un montant de votre choix via les contacts
                 ci-dessus.
