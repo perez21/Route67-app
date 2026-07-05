@@ -10,7 +10,7 @@ export default function AiAssistantWidget() {
     {
       role: "assistant",
       content:
-        "Bonjour 👋 Je suis l'assistant Route 67. Pose-moi une question sur l'Entrée express, le score CRS, les documents à préparer ou les délais — je réponds en quelques secondes.",
+        "Bonjour 👋 Je suis l'assistant Route 67. Pose-moi une question sur l'Entrée express, le score CRS, les documents à préparer ou les délais. Je réponds en quelques secondes.",
     },
   ]);
   const [input, setInput] = useState("");
