@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Disclaimer from "@/components/Disclaimer";
 import LanguageSkillsSelect from "@/components/simulateur/LanguageSkillsSelect";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const EDUCATION_OPTIONS = [
   { value: "LT_SECONDARY", label: "Études secondaires non complétées" },
@@ -48,6 +49,7 @@ type Breakdown = {
 };
 
 export default function SimulateurPage() {
+  const { t } = useLanguage();
   const [hasSpouse, setHasSpouse] = useState(false);
   const [age, setAge] = useState(29);
   const [education, setEducation] = useState("BACHELOR");
@@ -112,12 +114,10 @@ export default function SimulateurPage() {
     <main>
       <Navbar />
       <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
-        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-rust">Grille officielle SCG / CRS</p>
-        <h1 className="mb-3 font-display text-2xl font-semibold text-ink sm:text-3xl">Simulateur de score CRS complet</h1>
+        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-rust">{t("sim.eyebrow")}</p>
+        <h1 className="mb-3 font-display text-2xl font-semibold text-ink sm:text-3xl">{t("sim.title")}</h1>
         <p className="mb-4 max-w-2xl text-sm text-charcoal/65">
-          Calqué sur la grille officielle du Système de classement global d&apos;IRCC (capital
-          humain, facteurs du conjoint, transférabilité des compétences, points supplémentaires) —
-          la même grille que reproduit l&apos;outil Canadavisa.
+          {t("sim.intro")}
         </p>
         <Disclaimer className="mb-8" />
 
@@ -126,26 +126,25 @@ export default function SimulateurPage() {
             {/* Situation familiale */}
             <section className="rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
               <label className="flex items-center justify-between text-sm font-semibold text-ink">
-                <span>Inclure un époux ou conjoint(e) de fait qui t&apos;accompagne</span>
+                <span>{t("sim.spouseInclude")}</span>
                 <input type="checkbox" checked={hasSpouse} onChange={(e) => setHasSpouse(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
               <p className="mt-1 text-xs text-charcoal/50">
-                Coche seulement si ton époux/conjoint t&apos;accompagne au Canada et n&apos;est pas
-                déjà citoyen/résident permanent canadien.
+                {t("sim.spouseHint")}
               </p>
             </section>
 
             {/* A. Capital humain */}
             <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
-              <h2 className="font-display text-lg font-semibold text-ink">A — Capital humain (toi)</h2>
+              <h2 className="font-display text-lg font-semibold text-ink">{t("sim.sectionA")}</h2>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Âge</label>
+                  <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">{t("sim.age")}</label>
                   <input type="number" min={16} max={90} value={age} onChange={(e) => setAge(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15" />
                 </div>
                 <div>
-                  <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Niveau d&apos;études le plus élevé</label>
+                  <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">{t("sim.educationLabel")}</label>
                   <select value={education} onChange={(e) => setEducation(e.target.value)} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15">
                     {EDUCATION_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                   </select>
@@ -153,24 +152,24 @@ export default function SimulateurPage() {
               </div>
 
               <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
-                <span>Ma première langue officielle déclarée est le français</span>
+                <span>{t("sim.firstLangIsFrench")}</span>
                 <input type="checkbox" checked={firstLanguageIsFrench} onChange={(e) => setFirstLanguageIsFrench(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
 
               <LanguageSkillsSelect
-                label={`Première langue officielle (${firstLanguageIsFrench ? "français — NCLC" : "anglais — CLB"})`}
+                label={`${t("sim.firstLangLabel")} (${firstLanguageIsFrench ? t("sim.french") : t("sim.english")})`}
                 value={firstLanguage}
                 onChange={(v) => setFirstLanguage(v as typeof firstLanguage)}
                 options={FIRST_LANG_OPTIONS}
               />
 
               <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
-                <span>J&apos;ai aussi passé un test dans ma deuxième langue officielle</span>
+                <span>{t("sim.secondLangTested")}</span>
                 <input type="checkbox" checked={secondLanguageTested} onChange={(e) => setSecondLanguageTested(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
               {secondLanguageTested && (
                 <LanguageSkillsSelect
-                  label={`Deuxième langue officielle (${firstLanguageIsFrench ? "anglais" : "français"})`}
+                  label={`${t("sim.secondLangLabel")} (${firstLanguageIsFrench ? t("sim.english").split(" —")[0] : t("sim.french").split(" —")[0]})`}
                   value={secondLanguage}
                   onChange={(v) => setSecondLanguage(v as typeof secondLanguage)}
                   options={SECOND_LANG_OPTIONS}
@@ -178,7 +177,7 @@ export default function SimulateurPage() {
               )}
 
               <div>
-                <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Expérience de travail au Canada</label>
+                <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">{t("sim.canadianWorkExp")}</label>
                 <select value={canadianWorkExperienceYears} onChange={(e) => setCanadianWorkExperienceYears(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15 sm:w-64">
                   {CDN_WORK_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                 </select>
@@ -188,16 +187,16 @@ export default function SimulateurPage() {
             {/* B. Conjoint */}
             {hasSpouse && (
               <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
-                <h2 className="font-display text-lg font-semibold text-ink">B — Facteurs du conjoint</h2>
+                <h2 className="font-display text-lg font-semibold text-ink">{t("sim.sectionB")}</h2>
                 <div>
-                  <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Études du conjoint</label>
+                  <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">{t("sim.spouseEducation")}</label>
                   <select value={spouseEducation} onChange={(e) => setSpouseEducation(e.target.value)} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15">
                     {EDUCATION_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                   </select>
                 </div>
-                <LanguageSkillsSelect label="Langue officielle du conjoint" value={spouseLanguage} onChange={(v) => setSpouseLanguage(v as typeof spouseLanguage)} options={FIRST_LANG_OPTIONS} />
+                <LanguageSkillsSelect label={t("sim.spouseLangLabel")} value={spouseLanguage} onChange={(v) => setSpouseLanguage(v as typeof spouseLanguage)} options={FIRST_LANG_OPTIONS} />
                 <div>
-                  <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Expérience de travail au Canada du conjoint</label>
+                  <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">{t("sim.spouseWorkExp")}</label>
                   <select value={spouseCanadianWorkExperienceYears} onChange={(e) => setSpouseCanadianWorkExperienceYears(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15 sm:w-64">
                     {CDN_WORK_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                   </select>
@@ -207,47 +206,47 @@ export default function SimulateurPage() {
 
             {/* C. Transférabilité */}
             <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
-              <h2 className="font-display text-lg font-semibold text-ink">C — Transférabilité des compétences</h2>
+              <h2 className="font-display text-lg font-semibold text-ink">{t("sim.sectionC")}</h2>
               <div>
-                <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Expérience de travail à l&apos;étranger</label>
+                <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">{t("sim.foreignWorkExp")}</label>
                 <select value={foreignWorkExperienceYears} onChange={(e) => setForeignWorkExperienceYears(Number(e.target.value))} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15 sm:w-64">
                   {FOREIGN_WORK_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                 </select>
               </div>
               <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
-                <span>J&apos;ai un certificat de compétence (métier spécialisé)</span>
+                <span>{t("sim.hasCertificate")}</span>
                 <input type="checkbox" checked={hasCertificateOfQualification} onChange={(e) => setHasCertificateOfQualification(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
             </section>
 
             {/* D. Points supplémentaires */}
             <section className="space-y-5 rounded-md border border-charcoal/10 bg-white p-5 shadow-sm sm:p-6">
-              <h2 className="font-display text-lg font-semibold text-ink">D — Points supplémentaires</h2>
+              <h2 className="font-display text-lg font-semibold text-ink">{t("sim.sectionD")}</h2>
               <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
-                <span>Frère ou sœur (18 ans+) citoyen/résident permanent au Canada</span>
+                <span>{t("sim.hasSibling")}</span>
                 <input type="checkbox" checked={hasSiblingInCanada} onChange={(e) => setHasSiblingInCanada(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
               <div>
-                <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">Études postsecondaires effectuées au Canada</label>
+                <label className="mb-1.5 block font-mono text-[11px] uppercase tracking-wide text-charcoal/55">{t("sim.canadianStudy")}</label>
                 <select value={canadianStudy} onChange={(e) => setCanadianStudy(e.target.value)} className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15">
-                  <option value="NONE">Aucune</option>
-                  <option value="ONE_OR_TWO_YEARS">Diplôme d&apos;un ou deux ans</option>
-                  <option value="THREE_YEARS_PLUS">Diplôme de trois ans ou plus</option>
+                  <option value="NONE">{t("sim.canadianStudyNone")}</option>
+                  <option value="ONE_OR_TWO_YEARS">{t("sim.canadianStudy1_2")}</option>
+                  <option value="THREE_YEARS_PLUS">{t("sim.canadianStudy3Plus")}</option>
                 </select>
               </div>
               <label className="flex items-center justify-between rounded-sm border border-charcoal/15 bg-white px-3.5 py-3 text-sm transition-colors hover:border-charcoal/30 has-[:focus]:border-rust has-[:focus]:ring-2 has-[:focus]:ring-rust/15">
-                <span>J&apos;ai une désignation de candidat provincial (PCP)</span>
+                <span>{t("sim.hasPCP")}</span>
                 <input type="checkbox" checked={hasProvincialNomination} onChange={(e) => setHasProvincialNomination(e.target.checked)} className="h-5 w-5 accent-forest" />
               </label>
             </section>
 
             <button type="submit" disabled={loading} className="w-full rounded-sm bg-gold py-3.5 text-sm font-semibold text-ink transition-opacity hover:opacity-90 disabled:opacity-60">
-              {loading ? "Calcul en cours…" : "Calculer mon score CRS"}
+              {loading ? t("sim.submitting") : t("sim.submit")}
             </button>
           </form>
 
           <div className="h-fit space-y-4 rounded-sm bg-ink p-6 text-parchment lg:sticky lg:top-6">
-            <p className="font-mono text-xs uppercase tracking-widest text-gold2">Score estimé</p>
+            <p className="font-mono text-xs uppercase tracking-widest text-gold2">{t("sim.estimatedScore")}</p>
             <div>
               <span className="font-mono text-5xl font-semibold">{result ? result.score : 0}</span>
               <span className="ml-1.5 text-sm opacity-50">/ {result?.maxScore ?? 1200}</span>
@@ -258,35 +257,32 @@ export default function SimulateurPage() {
 
             {result && !result.eligibility.eligible && (
               <div className="rounded-sm border border-rust/40 bg-rust/10 p-3 text-xs leading-relaxed text-rust">
-                <p className="mb-1 font-semibold">⚠ Admissibilité non confirmée</p>
+                <p className="mb-1 font-semibold">{t("sim.notEligibleTitle")}</p>
                 <ul className="list-disc space-y-1 pl-4">
                   {result.eligibility.reasons.map((r) => <li key={r}>{r}</li>)}
                 </ul>
                 <p className="mt-2 text-rust/80">
-                  Signal indicatif basé sur des critères plancher courants — pas une évaluation
-                  légale complète. Vérifie ton admissibilité exacte sur ton compte Entrée express
-                  officiel.
+                  {t("sim.notEligibleNote")}
                 </p>
               </div>
             )}
 
             {result && (
               <div className="space-y-2 border-t border-parchment/15 pt-4 font-mono text-xs">
-                <div className="flex justify-between"><span className="opacity-60">A — Capital humain</span><span>{result.breakdown.core.subtotal} / {result.breakdown.core.cap}</span></div>
-                <div className="flex justify-between"><span className="opacity-60">B — Conjoint</span><span>{result.breakdown.spouse.subtotal} / {result.breakdown.spouse.cap}</span></div>
-                <div className="flex justify-between"><span className="opacity-60">C — Transférabilité</span><span>{result.breakdown.transferability.subtotal} / {result.breakdown.transferability.cap}</span></div>
-                <div className="flex justify-between"><span className="opacity-60">D — Points suppl.</span><span>{result.breakdown.additional.subtotal} / {result.breakdown.additional.cap}</span></div>
+                <div className="flex justify-between"><span className="opacity-60">{t("sim.breakdownA")}</span><span>{result.breakdown.core.subtotal} / {result.breakdown.core.cap}</span></div>
+                <div className="flex justify-between"><span className="opacity-60">{t("sim.breakdownB")}</span><span>{result.breakdown.spouse.subtotal} / {result.breakdown.spouse.cap}</span></div>
+                <div className="flex justify-between"><span className="opacity-60">{t("sim.breakdownC")}</span><span>{result.breakdown.transferability.subtotal} / {result.breakdown.transferability.cap}</span></div>
+                <div className="flex justify-between"><span className="opacity-60">{t("sim.breakdownD")}</span><span>{result.breakdown.additional.subtotal} / {result.breakdown.additional.cap}</span></div>
               </div>
             )}
 
             {result?.saved && (
               <p className="border-t border-parchment/15 pt-3 text-xs text-gold2">
-                Score enregistré sur ton tableau de bord.
+                {t("sim.scoreSaved")}
               </p>
             )}
             <p className="border-t border-parchment/15 pt-3 text-[11px] opacity-50">
-              Outil informatif calqué sur la grille officielle IRCC — ne remplace pas le calcul
-              fait sur ton compte Entrée express officiel.
+              {t("sim.footnote")}
             </p>
           </div>
         </div>

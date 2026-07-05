@@ -52,3 +52,8 @@ export function HomeHeroCtas() {
     </>
   );
 }
+
+export function HomeHeroExternalNote() {
+  const { t } = useLanguage();
+  return <p className="mt-3 max-w-xl text-[11px] text-parchment/45">{t("home.hero.externalNote")}</p>;
+}
