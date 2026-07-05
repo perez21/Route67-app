@@ -8,6 +8,17 @@ export function getSiteUrl() {
   return (process.env.NEXT_PUBLIC_SITE_URL || "https://routentrexpress.ca").replace(/\/$/, "");
 }
 
+// Active/désactive l'envoi d'emails liés au chat direct (notification à
+// l'équipe à l'ouverture d'un fil, notification à la personne quand
+// l'équipe répond). Activé par défaut — mets CHAT_EMAIL_NOTIFICATIONS à
+// "false" dans les variables d'environnement pour couper ces emails sans
+// toucher au code (les messages restent visibles dans le chat/l'admin,
+// seul l'envoi d'email est coupé). N'affecte aucun autre email du site
+// (réinitialisation de mot de passe, vérification d'email, contact...).
+export function chatEmailNotificationsEnabled() {
+  return process.env.CHAT_EMAIL_NOTIFICATIONS !== "false";
+}
+
 // Liens vers les réseaux sociaux affichés en pied de page. Toutes les
 // variables sont optionnelles : un réseau sans URL configurée n'est
 // simplement pas affiché plutôt que de pointer vers un lien mort.
