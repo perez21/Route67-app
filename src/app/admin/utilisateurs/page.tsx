@@ -15,7 +15,7 @@ export default async function AdminUsersPage() {
 
   const [users, upgradeRequests] = await Promise.all([
     prisma.user.findMany({
-      select: { id: true, name: true, email: true, role: true, tier: true, tierExpiresAt: true, warned: true, profile: { select: { crsScore: true } } },
+      select: { id: true, name: true, email: true, role: true, tier: true, tierExpiresAt: true, warned: true, emailVerifiedAt: true, profile: { select: { crsScore: true } } },
     }),
     prisma.upgradeRequest.findMany({
       where: { status: "PENDING" },
@@ -52,13 +52,17 @@ export default async function AdminUsersPage() {
       </section>
 
       <section>
-        <h2 className="mb-4 font-mono text-xs font-semibold uppercase tracking-wide text-charcoal/55">
+        <h2 className="mb-1 font-mono text-xs font-semibold uppercase tracking-wide text-charcoal/55">
           Tous les utilisateurs ({sortedUsers.length}) — admins, puis modérateurs, puis utilisateurs (A→Z)
         </h2>
+        <p className="mb-4 text-xs text-charcoal/50">
+          {sortedUsers.filter((u) => u.emailVerifiedAt !== null).length} email(s) vérifié(s) ·{" "}
+          {sortedUsers.filter((u) => u.emailVerifiedAt === null).length} non vérifié(s)
+        </p>
         <AdminUsersTable
           viewerIsAdmin={viewerIsAdmin}
           viewerId={viewerId}
-          users={sortedUsers.map((u: { id: string; name: string; email: string; role: "USER" | "MODERATOR" | "ADMIN"; tier: "FREE" | "PREMIUM"; tierExpiresAt: Date | null; warned: boolean; profile: { crsScore: number } | null }) => ({
+          users={sortedUsers.map((u: { id: string; name: string; email: string; role: "USER" | "MODERATOR" | "ADMIN"; tier: "FREE" | "PREMIUM"; tierExpiresAt: Date | null; warned: boolean; emailVerifiedAt: Date | null; profile: { crsScore: number } | null }) => ({
             id: u.id,
             name: u.name,
             email: u.email,
@@ -66,6 +70,7 @@ export default async function AdminUsersPage() {
             tier: u.tier,
             tierExpiresAt: u.tierExpiresAt ? u.tierExpiresAt.toISOString() : null,
             warned: u.warned,
+            emailVerified: u.emailVerifiedAt !== null,
             crsScore: u.profile?.crsScore ?? null,
           }))}
         />

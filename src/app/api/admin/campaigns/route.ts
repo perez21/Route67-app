@@ -22,8 +22,8 @@ const createSchema = z.object({
   // Peut contenir le gabarit {{name}}, remplacé par le prénom de chaque
   // destinataire (voir personalizeTemplate dans src/lib/mailer.ts).
   body: z.string().trim().min(10).max(5000),
-  // "all" (tous), "premium" (Premium uniquement) ou "free" (Gratuit uniquement).
-  audience: z.enum(["all", "premium", "free"]).default("all"),
+  // "all", "premium", "free", "verified" (email vérifié) ou "unverified" (email non vérifié).
+  audience: z.enum(["all", "premium", "free", "verified", "unverified"]).default("all"),
 });
 
 // Campagne d'emailing simple : un admin/modérateur rédige un message (avec
@@ -41,7 +41,15 @@ export async function POST(request: NextRequest) {
   }
 
   const where =
-    parsed.data.audience === "premium" ? { tier: "PREMIUM" as const } : parsed.data.audience === "free" ? { tier: "FREE" as const } : {};
+    parsed.data.audience === "premium"
+      ? { tier: "PREMIUM" as const }
+      : parsed.data.audience === "free"
+      ? { tier: "FREE" as const }
+      : parsed.data.audience === "verified"
+      ? { emailVerifiedAt: { not: null } }
+      : parsed.data.audience === "unverified"
+      ? { emailVerifiedAt: null }
+      : {};
 
   const recipients = await prisma.user.findMany({ where, select: { name: true, email: true } });
 

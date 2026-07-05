@@ -13,6 +13,7 @@ type Row = {
   tierExpiresAt: string | null;
   crsScore: number | null;
   warned: boolean;
+  emailVerified: boolean;
 };
 
 const ROLE_LABEL: Record<Row["role"], string> = { USER: "Utilisateur", MODERATOR: "Modérateur", ADMIN: "Administrateur" };
@@ -121,7 +122,17 @@ export default function AdminUsersTable({ users, viewerIsAdmin, viewerId }: { us
                   {u.name}
                   {!moderatorBlocked && u.warned && <span className="ml-2 rounded-full bg-rust/15 px-2 py-0.5 text-[10px] font-semibold uppercase text-rust">⚠ averti</span>}
                 </td>
-                <td className="px-4 py-3 text-charcoal/60">{u.email}</td>
+                <td className="px-4 py-3 text-charcoal/60">
+                  {u.email}
+                  <br />
+                  <span
+                    className={`mt-1 inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase ${
+                      u.emailVerified ? "bg-forest/10 text-forest" : "bg-rust/10 text-rust"
+                    }`}
+                  >
+                    {u.emailVerified ? "✓ Vérifié" : "Non vérifié"}
+                  </span>
+                </td>
                 <td className="px-4 py-3 font-mono">{u.crsScore ?? "—"}</td>
                 <td className="px-4 py-3">
                   {viewerIsAdmin && !(isSelf) ? (

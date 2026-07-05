@@ -13,11 +13,11 @@ type Campaign = {
   createdAt: string;
 };
 
-export default function AdminCampaignsManager({ initialCampaigns, userCounts }: { initialCampaigns: Campaign[]; userCounts: { all: number; premium: number; free: number } }) {
+export default function AdminCampaignsManager({ initialCampaigns, userCounts }: { initialCampaigns: Campaign[]; userCounts: { all: number; premium: number; free: number; verified: number; unverified: number } }) {
   const [campaigns, setCampaigns] = useState(initialCampaigns);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
-  const [audience, setAudience] = useState<"all" | "premium" | "free">("all");
+  const [audience, setAudience] = useState<"all" | "premium" | "free" | "verified" | "unverified">("all");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
@@ -66,6 +66,8 @@ export default function AdminCampaignsManager({ initialCampaigns, userCounts }: 
             <option value="all">Tous les utilisateurs ({userCounts.all})</option>
             <option value="premium">Membres Premium ({userCounts.premium})</option>
             <option value="free">Membres Gratuits ({userCounts.free})</option>
+            <option value="verified">Emails vérifiés ({userCounts.verified})</option>
+            <option value="unverified">Emails non vérifiés ({userCounts.unverified})</option>
           </select>
         </div>
         <input

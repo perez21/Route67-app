@@ -2,11 +2,13 @@ import { prisma } from "@/lib/db";
 import AdminCampaignsManager from "@/components/admin/AdminCampaignsManager";
 
 export default async function AdminCampaignsPage() {
-  const [campaigns, allCount, premiumCount, freeCount] = await Promise.all([
+  const [campaigns, allCount, premiumCount, freeCount, verifiedCount, unverifiedCount] = await Promise.all([
     prisma.emailCampaign.findMany({ orderBy: { createdAt: "desc" }, take: 30 }),
     prisma.user.count(),
     prisma.user.count({ where: { tier: "PREMIUM" } }),
     prisma.user.count({ where: { tier: "FREE" } }),
+    prisma.user.count({ where: { emailVerifiedAt: { not: null } } }),
+    prisma.user.count({ where: { emailVerifiedAt: null } }),
   ]);
 
   return (
@@ -26,7 +28,7 @@ export default async function AdminCampaignsPage() {
           sentByName: c.sentByName,
           createdAt: c.createdAt.toISOString(),
         }))}
-        userCounts={{ all: allCount, premium: premiumCount, free: freeCount }}
+        userCounts={{ all: allCount, premium: premiumCount, free: freeCount, verified: verifiedCount, unverified: unverifiedCount }}
       />
     </div>
   );
