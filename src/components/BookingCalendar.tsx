@@ -150,7 +150,7 @@ export default function BookingCalendar({ isPremium, initialAppointments }: { is
 
             {weekLimitReached && (
               <p className="mt-3 rounded-sm border border-gold/30 bg-gold/10 px-3 py-2 text-xs text-charcoal">
-                Tu as déjà {MAX_APPOINTMENTS_PER_WEEK} rendez-vous cette semaine-là — c&apos;est le
+                Tu as déjà {MAX_APPOINTMENTS_PER_WEEK} rendez-vous cette semaine-là. C&apos;est le
                 maximum. Choisis une autre semaine, ou reviens ici si l&apos;un de tes rendez-vous est
                 refusé/annulé.
               </p>
