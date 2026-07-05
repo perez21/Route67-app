@@ -259,6 +259,8 @@ export default function SimulateurPage() {
               {!result
                 ? "Remplis le formulaire pour voir ton score estimé face au dernier seuil publié."
                 : result.score >= result.threshold
+                ? `Ton score dépasse le seuil du dernier tirage publié (${result.threshold}).`
+                : `Il te manque environ ${result.threshold - result.score} points pour atteindre le seuil du dernier tirage général (${result.threshold}).`}
             </p>
 
             {result && !result.eligibility.eligible && (
