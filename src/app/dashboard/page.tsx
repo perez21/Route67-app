@@ -34,7 +34,6 @@ export default async function DashboardPage() {
   if (!user) redirect("/login");
 
   const score = profile?.crsScore ?? 0;
-  const gap = LAST_KNOWN_THRESHOLD - score;
   const progressPct = Math.min(100, Math.round((score / LAST_KNOWN_THRESHOLD) * 100));
   const isPremium = user.tier === "PREMIUM";
 
@@ -124,13 +123,11 @@ export default async function DashboardPage() {
                 </span>
               )}
             </div>
-            <p className="mb-5 text-sm text-charcoal/60">
-              {score === 0
-                ? "Passe le simulateur pour calculer et enregistrer ton score."
-                : gap > 0
-                ? `Le seuil du dernier tirage était de ${LAST_KNOWN_THRESHOLD} points. Il te manque ${gap} points.`
-                : `Ton score dépasse le seuil du dernier tirage publié (${LAST_KNOWN_THRESHOLD}).`}
-            </p>
+            {score === 0 && (
+              <p className="mb-5 text-sm text-charcoal/60">
+                Passe le simulateur pour calculer et enregistrer ton score.
+              </p>
+            )}
             <div className="h-2 overflow-hidden rounded-full bg-parchment2">
               <div className="h-full bg-gradient-to-r from-gold to-gold2" style={{ width: `${progressPct}%` }} />
             </div>
