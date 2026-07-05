@@ -3,6 +3,7 @@ import { verifySessionToken, SESSION_COOKIE } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import AdminUsersTable from "@/components/admin/AdminUsersTable";
 import UpgradeRequestsList from "@/components/admin/UpgradeRequestsList";
+import ResendVerificationButton from "@/components/admin/ResendVerificationButton";
 
 const ROLE_ORDER: Record<string, number> = { ADMIN: 0, MODERATOR: 1, USER: 2 };
 
@@ -59,6 +60,7 @@ export default async function AdminUsersPage() {
           {sortedUsers.filter((u) => u.emailVerifiedAt !== null).length} email(s) vérifié(s) ·{" "}
           {sortedUsers.filter((u) => u.emailVerifiedAt === null).length} non vérifié(s)
         </p>
+        <ResendVerificationButton unverifiedCount={sortedUsers.filter((u) => u.emailVerifiedAt === null).length} />
         <AdminUsersTable
           viewerIsAdmin={viewerIsAdmin}
           viewerId={viewerId}
