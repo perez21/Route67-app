@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 
 export const dynamic = "force-dynamic";
 
-function VerifyEmailContent() {
+//function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<"loading" | "ok" | "error">("loading");
   const [error, setError] = useState<string | null>(null);
