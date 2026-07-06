@@ -22,7 +22,46 @@ export default function AdminCampaignsManager({ initialCampaigns, userCounts }: 
   const [loading, setLoading] = useState(false);
   const [confirming, setConfirming] = useState(false);
 
+  // Envoi à une seule personne — indépendant du formulaire de campagne de
+  // masse ci-dessus, avec sa propre adresse email libre (pas forcément un
+  // compte existant) et son propre état de chargement/erreur.
+  const [singleName, setSingleName] = useState("");
+  const [singleTo, setSingleTo] = useState("");
+  const [singleSubject, setSingleSubject] = useState("");
+  const [singleBody, setSingleBody] = useState("");
+  const [singleError, setSingleError] = useState<string | null>(null);
+  const [singleSuccess, setSingleSuccess] = useState<string | null>(null);
+  const [singleLoading, setSingleLoading] = useState(false);
+
   const audienceCount = userCounts[audience];
+
+  async function sendSingle() {
+    setSingleError(null);
+    setSingleSuccess(null);
+    setSingleLoading(true);
+
+    const res = await fetch("/api/admin/campaigns/single", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: singleName, to: singleTo, subject: singleSubject, body: singleBody }),
+    });
+
+    setSingleLoading(false);
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setSingleError(data.error ?? "Une erreur est survenue.");
+      return;
+    }
+
+    const data = await res.json();
+    setCampaigns((prev) => [data.campaign, ...prev]);
+    setSingleSuccess(`Email envoyé à ${singleTo}.`);
+    setSingleName("");
+    setSingleTo("");
+    setSingleSubject("");
+    setSingleBody("");
+  }
 
   async function send() {
     setError(null);
@@ -108,6 +147,56 @@ export default function AdminCampaignsManager({ initialCampaigns, userCounts }: 
           </div>
         )}
       </form>
+
+      <div className="space-y-3 rounded-sm border border-charcoal/10 bg-white p-5">
+        <h2 className="font-mono text-xs font-semibold uppercase tracking-wide text-charcoal/55">
+          Envoyer à une seule personne
+        </h2>
+        <p className="text-xs text-charcoal/55">
+          Pour répondre à quelqu&apos;un individuellement (adresse libre, pas forcément un compte existant).
+        </p>
+        <form
+          onSubmit={(e) => { e.preventDefault(); sendSingle(); }}
+          className="space-y-3"
+        >
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <input
+              value={singleName}
+              onChange={(e) => setSingleName(e.target.value)}
+              placeholder="Prénom (optionnel, pour {{name}})"
+              className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15 sm:w-1/3"
+            />
+            <input
+              value={singleTo}
+              onChange={(e) => setSingleTo(e.target.value)}
+              type="email"
+              placeholder="adresse@exemple.com"
+              required
+              className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15 sm:flex-1"
+            />
+          </div>
+          <input
+            value={singleSubject}
+            onChange={(e) => setSingleSubject(e.target.value)}
+            placeholder="Objet de l'email"
+            required
+            className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
+          />
+          <textarea
+            value={singleBody}
+            onChange={(e) => setSingleBody(e.target.value)}
+            placeholder={"Bonjour {{name}},\n\n..."}
+            rows={5}
+            required
+            className="w-full rounded-sm border border-charcoal/15 bg-white px-3 py-2.5 text-sm transition-colors focus:border-rust focus:outline-none focus:ring-2 focus:ring-rust/15"
+          />
+          {singleError && <p role="alert" className="rounded-sm bg-rust/10 px-3 py-2 text-sm text-rust">{singleError}</p>}
+          {singleSuccess && <p className="rounded-sm bg-green-50 px-3 py-2 text-sm text-green-700">{singleSuccess}</p>}
+          <button type="submit" disabled={singleLoading} className="rounded-sm bg-gold px-4 py-2 text-sm font-semibold text-ink disabled:opacity-60">
+            {singleLoading ? "Envoi en cours…" : "Envoyer"}
+          </button>
+        </form>
+      </div>
 
       <div>
         <h2 className="mb-3 font-mono text-xs font-semibold uppercase tracking-wide text-charcoal/55">
