@@ -58,7 +58,7 @@ export default function UpgradePanel({
   if (currentTier === "PREMIUM") {
     return (
       <div className="rounded-sm border border-forest/20 bg-forest/5 p-5 text-sm text-forest">
-        Merci pour ton don — ton accès Premium est actif 🙏
+        Merci pour ton don. Ton accès Premium est actif 🙏
       </div>
     );
   }
@@ -67,7 +67,7 @@ export default function UpgradePanel({
   const whatsappLink = contact.whatsapp
     ? `https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(confirmationText)}`
     : null;
-  const mailtoLink = `mailto:${contact.email}?subject=${encodeURIComponent("Confirmation de don — Route 67")}&body=${encodeURIComponent(confirmationText)}`;
+  const mailtoLink = `mailto:${contact.email}?subject=${encodeURIComponent("Confirmation de don : Route 67")}&body=${encodeURIComponent(confirmationText)}`;
 
   return (
     <div className={`space-y-4 ${formCardClasses}`}>
@@ -76,7 +76,7 @@ export default function UpgradePanel({
         l&apos;hébergement du site pour qu&apos;il reste disponible, la maintenance pour suivre les
         tirages et actualités en temps réel, et un peu de quoi faire vivre l&apos;équipe qui s&apos;en
         occupe. Ce n&apos;est pas un paiement pour un service individualisé de consultation en
-        immigration — c&apos;est un soutien volontaire au projet qui, en retour, débloque pendant 1
+        immigration. C&apos;est un soutien volontaire au projet qui, en retour, débloque pendant 1
         mois les rendez-vous avec l&apos;équipe.
       </p>
 
@@ -97,7 +97,7 @@ export default function UpgradePanel({
               {momo.paypal && <li>PayPal : <strong>{momo.paypal}</strong></li>}
             </ul>
             <p className="text-xs text-charcoal/60">
-              Rien n&apos;est encore envoyé à l&apos;équipe — remplis le formulaire ci-dessous une fois le
+              Rien n&apos;est encore envoyé à l&apos;équipe. Remplis le formulaire ci-dessous une fois le
               don effectué pour valider ta demande.
             </p>
           </div>
