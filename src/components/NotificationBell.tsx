@@ -34,6 +34,7 @@ export default function NotificationBell() {
       setLoggedIn(true);
 
       const collected: NotifItem[] = [];
+      const unreadIds = new Set<string>();
       let anyNew = false;
 
       // Expiration du forfait Premium — affichée dès 5 jours avant, et
@@ -54,7 +55,10 @@ export default function NotificationBell() {
             at: new Date().toISOString(),
           });
           const lastSeenDay = window.localStorage.getItem(STORAGE_KEYS.premium);
-          if (lastSeenDay !== todayKey) anyNew = true;
+          if (lastSeenDay !== todayKey) {
+            anyNew = true;
+            unreadIds.add("premium-premium-expiry");
+          }
         }
       }
 
@@ -65,7 +69,12 @@ export default function NotificationBell() {
         const news = (data.news ?? []).slice(0, 3);
         for (const n of news) collected.push({ id: n.id, kind: "news", label: n.title, href: "/#actualites", at: n.publishedAt });
         const lastSeen = window.localStorage.getItem(STORAGE_KEYS.news);
-        if (news[0] && (!lastSeen || new Date(news[0].publishedAt).getTime() > new Date(lastSeen).getTime())) anyNew = true;
+        for (const n of news) {
+          if (!lastSeen || new Date(n.publishedAt).getTime() > new Date(lastSeen).getTime()) {
+            anyNew = true;
+            unreadIds.add(`news-${n.id}`);
+          }
+        }
       }
 
       // Tirages
@@ -75,7 +84,12 @@ export default function NotificationBell() {
         const draws = (data.draws ?? []).slice(0, 2);
         for (const d of draws) collected.push({ id: d.id, kind: "draw", label: `Tirage #${d.number} — ${d.category}`, href: "/#tirages", at: d.createdAt });
         const lastSeen = window.localStorage.getItem(STORAGE_KEYS.draws);
-        if (draws[0] && (!lastSeen || new Date(draws[0].createdAt).getTime() > new Date(lastSeen).getTime())) anyNew = true;
+        for (const d of draws) {
+          if (!lastSeen || new Date(d.createdAt).getTime() > new Date(lastSeen).getTime()) {
+            anyNew = true;
+            unreadIds.add(`draw-${d.id}`);
+          }
+        }
       }
 
       // Sujets de forum — accessible à tout membre connecté
@@ -85,12 +99,21 @@ export default function NotificationBell() {
         const topics = (data.topics ?? []).filter((t: { status: string }) => t.status === "APPROVED").slice(0, 3);
         for (const t of topics) collected.push({ id: t.id, kind: "forum", label: `Nouveau sujet : ${t.title}`, href: `/forum/${t.id}`, at: t.createdAt });
         const lastSeen = window.localStorage.getItem(STORAGE_KEYS.forum);
-        if (topics[0] && (!lastSeen || new Date(topics[0].createdAt).getTime() > new Date(lastSeen).getTime())) anyNew = true;
+        for (const t of topics) {
+          if (!lastSeen || new Date(t.createdAt).getTime() > new Date(lastSeen).getTime()) {
+            anyNew = true;
+            unreadIds.add(`forum-${t.id}`);
+          }
+        }
       }
 
       if (cancelled) return;
-      collected.sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime());
-      setItems(collected.slice(0, 8));
+
+      // On ne garde que la dernière notification non lue (la plus récente),
+      // par compte connecté.
+      const unread = collected.filter((item) => unreadIds.has(`${item.kind}-${item.id}`));
+      unread.sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime());
+      setItems(unread.slice(0, 1));
       setHasNew(anyNew);
     }
 
@@ -136,7 +159,7 @@ export default function NotificationBell() {
 
       {open && (
         <div className="absolute left-1/2 top-11 z-40 w-80 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-sm border border-charcoal/10 bg-white p-3 shadow-xl">
-          <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-charcoal/45">Notifications</p>
+          <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-charcoal/45">Dernière notification</p>
           {items.length === 0 ? (
             <p className="text-sm text-charcoal/50">Rien de nouveau pour le moment.</p>
           ) : (

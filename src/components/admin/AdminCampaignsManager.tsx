@@ -13,8 +13,11 @@ type Campaign = {
   createdAt: string;
 };
 
+const BODY_PREVIEW_LENGTH = 180;
+
 export default function AdminCampaignsManager({ initialCampaigns, userCounts }: { initialCampaigns: Campaign[]; userCounts: { all: number; premium: number; free: number; verified: number; unverified: number } }) {
   const [campaigns, setCampaigns] = useState(initialCampaigns);
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [audience, setAudience] = useState<"all" | "premium" | "free" | "verified" | "unverified">("all");
@@ -206,16 +209,30 @@ export default function AdminCampaignsManager({ initialCampaigns, userCounts }: 
           <p className="rounded-sm border border-charcoal/10 bg-white p-5 text-sm text-charcoal/55">Aucune campagne envoyée pour le moment.</p>
         ) : (
           <div className="space-y-3">
-            {campaigns.map((c) => (
-              <div key={c.id} className="rounded-sm border border-charcoal/10 bg-white p-4">
-                <p className="font-semibold text-ink">{c.subject}</p>
-                <p className="mb-2 text-xs text-charcoal/50">
-                  Envoyée par {c.sentByName} le {new Date(c.createdAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })}
-                  {" · "}{c.sentCount}/{c.recipientCount} envoyés{c.failedCount > 0 && `, ${c.failedCount} échec(s)`}
-                </p>
-                <p className="whitespace-pre-wrap text-sm text-charcoal/70">{c.body}</p>
-              </div>
-            ))}
+            {campaigns.map((c) => {
+              const isLong = c.body.length > BODY_PREVIEW_LENGTH;
+              const isOpen = !!expanded[c.id];
+              const displayedBody = isLong && !isOpen ? `${c.body.slice(0, BODY_PREVIEW_LENGTH).trimEnd()}…` : c.body;
+              return (
+                <div key={c.id} className="rounded-sm border border-charcoal/10 bg-white p-4">
+                  <p className="font-semibold text-ink">{c.subject}</p>
+                  <p className="mb-2 text-xs text-charcoal/50">
+                    Envoyée par {c.sentByName} le {new Date(c.createdAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+                    {" · "}{c.sentCount}/{c.recipientCount} envoyés{c.failedCount > 0 && `, ${c.failedCount} échec(s)`}
+                  </p>
+                  <p className="whitespace-pre-wrap text-sm text-charcoal/70">{displayedBody}</p>
+                  {isLong && (
+                    <button
+                      type="button"
+                      onClick={() => setExpanded((prev) => ({ ...prev, [c.id]: !isOpen }))}
+                      className="mt-1.5 font-mono text-[11px] uppercase tracking-wide text-rust hover:underline"
+                    >
+                      {isOpen ? "Réduire" : "Voir plus"}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
