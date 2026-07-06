@@ -150,7 +150,7 @@ export default function BookingCalendar({ isPremium, initialAppointments }: { is
 
             {weekLimitReached && (
               <p className="mt-3 rounded-sm border border-gold/30 bg-gold/10 px-3 py-2 text-xs text-charcoal">
-                Tu as déjà {MAX_APPOINTMENTS_PER_WEEK} rendez-vous cette semaine-là — c&apos;est le
+                Tu as déjà {MAX_APPOINTMENTS_PER_WEEK} rendez-vous cette semaine-là. C&apos;est le
                 maximum. Choisis une autre semaine, ou reviens ici si l&apos;un de tes rendez-vous est
                 refusé/annulé.
               </p>
@@ -159,7 +159,7 @@ export default function BookingCalendar({ isPremium, initialAppointments }: { is
             <div className="mt-4">
               {slotsForSelectedDate.length === 0 ? (
                 <p className="rounded-sm border border-charcoal/10 bg-white p-4 text-sm text-charcoal/55">
-                  Aucun créneau ouvert ce jour-là — choisis une autre date.
+                  Aucun créneau ouvert ce jour-là. choisis une autre date.
                 </p>
               ) : (
                 <div className="flex flex-wrap gap-2">
