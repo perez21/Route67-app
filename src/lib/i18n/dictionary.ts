@@ -90,13 +90,13 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "home.support.donAccountName": "Nom Mobile Money",
     "home.support.donPaypal": "PayPal",
     "home.support.donDisclaimer":
-      "Un don n'est pas un paiement pour un service individualisé — c'est un soutien volontaire et anonyme au projet. Si vous trouvez notre action utile et souhaitez nous encourager, vous pouvez faire un don d'un montant de votre choix via les contacts ci-dessus.",
+      "Un don n'est pas un paiement pour un service individualisé. C'est un soutien volontaire et anonyme au projet. Si vous trouvez notre action utile et souhaitez nous encourager, vous pouvez faire un don d'un montant de votre choix via les contacts ci-dessus.",
     "home.support.premiumBadge": "Avantages Premium",
     "home.support.premiumTitle": "Ce que je reçois en devenant utilisateur prémium",
-    "home.support.premiumItem1": "Rencontre virtuel avec l'équipe",
+    "home.support.premiumItem1": "Rencontre virtuelle avec l'équipe",
     "home.support.premiumItem2": "Chat direct avec l'équipe",
     "home.support.premiumItem3": "Assistant IA disponible 24h/24",
-    "home.support.premiumItem4": "Valable 1 mois après confirmation du don",
+    "home.support.premiumItem4": "Valable 1 mois",
     "home.support.premiumCta": "Devenir Premium",
 
     // Pied de page
