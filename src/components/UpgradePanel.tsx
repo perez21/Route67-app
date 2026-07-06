@@ -149,7 +149,7 @@ export default function UpgradePanel({
 
       {step === "confirmed" && (
         <div className="rounded-sm border border-forest/20 bg-forest/5 p-4 text-sm text-forest">
-          Demande envoyée — notre équipe vérifie ton don et active ton accès sous peu.
+          Demande envoyée. Notre équipe vérifie ton don et active ton accès sous peu.
         </div>
       )}
     </div>
