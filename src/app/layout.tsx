@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     description:
       "Informations en temps réel sur l'Entrée express canadienne et suivi personnalisé pour les candidats du Cameroun et d'Afrique centrale.",
   },
+  verification: {
+    google: "pHmNfxtamP0g-jdrj1nbz1jpQQEBKuejYJ4rEgSmBpU",
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
