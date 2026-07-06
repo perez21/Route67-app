@@ -4,6 +4,19 @@ import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LOCALE_COOKIE, type Locale } from "@/lib/i18n/dictionary";
 
+import { Analytics } from '@vercel/analytics/next';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Analytics />
+      </body>
+    </html>
+  );
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://routentrexpress.ca"),
   title: {
