@@ -108,10 +108,10 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "footer.rights": "Tous droits réservés.",
 
     // Disclaimer partagé
-    "disclaimer.label": "À savoir — ",
+    "disclaimer.label": "À savoir : ",
     "disclaimer.default":
-      "Route 67 n'est pas un cabinet ni un agent d'immigration agréé. Notre projet vise uniquement à rendre l'information officielle plus accessible — pour un avis qui engage ton dossier, contacte un consultant réglementé (CRCIC : Collège des consultants en immigration et en citoyenneté) ou le site officiel canada.ca.",
-    "disclaimer.compact": "Rappel : Route 67 informe, mais n'est pas un agent d'immigration agréé.",
+      "Route 67 n'est pas un cabinet ni un agent d'immigration agréé. Notre projet vise uniquement à rendre l'information officielle plus accessible. Pour un avis qui engage ton dossier, contacte un consultant réglementé (CRCIC : Collège des consultants en immigration et en citoyenneté) ou le site officiel canada.ca.",
+    "disclaimer.compact": "Route 67 informe, mais n'est pas un agent d'immigration agréé.",
     "disclaimer.procedure":
       "Ce guide est une vulgarisation à but informatif, rédigée pour rendre la procédure plus claire. Route 67 n'est pas un cabinet d'immigration agréé : vérifie toujours l'information à jour sur canada.ca avant toute démarche officielle.",
 
