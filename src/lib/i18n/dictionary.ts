@@ -100,9 +100,9 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "home.support.premiumCta": "Devenir Premium",
 
     // Pied de page
-    "footer.tagline": "Route 67 — plateforme d'information et d'entraide indépendante sur l'Entrée express canadienne.",
+    "footer.tagline": "Route 67 : Plateforme d'information et d'entraide indépendante sur l'Entrée express canadienne.",
     "footer.disclaimer":
-      "Route 67 n'est pas un cabinet ni un agent d'immigration agréé et ne fournit pas de conseils juridiques individualisés — notre seul projet est de rendre l'information officielle plus accessible. Les informations publiées sont vulgarisées à partir des sources officielles d'IRCC à titre informatif. Pour un accompagnement personnalisé et réglementé, contacte un consultant agréé (CRCIC : Collège des consultants en immigration et en citoyenneté) ou un avocat membre d'un barreau.",
+      "Route 67 n'est pas un cabinet ni un agent d'immigration agréé et ne fournit pas de conseils juridiques individualisés. Notre seul projet est de rendre l'information officielle plus accessible. Les informations publiées sont vulgarisées à partir des sources officielles d'IRCC à titre informatif. Pour un accompagnement personnalisé et réglementé, contacte un consultant agréé (CRCIC : Collège des consultants en immigration et en citoyenneté) ou un avocat membre d'un barreau.",
     "footer.contact": "Nous contacter",
     "footer.procedure": "Procédure complète",
     "footer.rights": "Tous droits réservés.",
@@ -117,7 +117,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
 
     // Authentification — connexion
     "auth.login.tagline":
-      "La plateforme qui traduit l'Entrée express canadienne en informations claires — avec un suivi personnalisé pour savoir exactement où tu en es.",
+      "La plateforme qui traduit l'Entrée express canadienne en informations claires avec un suivi personnalisé pour savoir exactement où tu en es.",
     "auth.login.2faTitle": "Vérification en deux étapes",
     "auth.login.2faSubtitle": "Ce compte est protégé par une double authentification. Ouvre ton application d'authentification et saisis le code à 6 chiffres.",
     "auth.login.2faVerifying": "Vérification…",
@@ -129,7 +129,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "auth.login.forgotPassword": "Mot de passe oublié ?",
     "auth.or": "ou",
     "auth.login.createAccount": "Créer mon compte",
-    "auth.login.secureNote": "Connexion sécurisée — tes identifiants sont chiffrés.",
+    "auth.login.secureNote": "Connexion sécurisée : tes identifiants sont chiffrés.",
     "auth.genericError": "Une erreur est survenue. Réessaie.",
 
     // Authentification — inscription
@@ -148,7 +148,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "auth.register.passwordMismatch": "Les mots de passe ne correspondent pas.",
     "auth.register.disclaimerPre": "Je reconnais que Route 67",
     "auth.register.disclaimerBold": "n'est pas un cabinet ni un consultant en immigration agréé",
-    "auth.register.disclaimerPost": ", et que je crée ce compte uniquement pour m'informer sur l'Entrée express — pas pour recevoir un avis juridique individualisé.",
+    "auth.register.disclaimerPost": ", et que je crée ce compte uniquement pour m'informer sur l'Entrée express, pas pour recevoir un avis juridique individualisé.",
     "auth.register.submitting": "Création en cours…",
     "auth.register.privacyNote": "Tes données personnelles sont chiffrées et ne sont jamais partagées avec des tiers.",
     "auth.register.errorDisclaimer": "Merci de cocher la case pour confirmer que tu as compris ce point avant de continuer.",
@@ -157,7 +157,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     // Simulateur CRS
     "sim.eyebrow": "Grille officielle SCG / CRS",
     "sim.title": "Simulateur de score CRS complet",
-    "sim.intro": "Calqué sur la grille officielle du Système de classement global d'IRCC (capital humain, facteurs du conjoint, transférabilité des compétences, points supplémentaires) — la même grille que reproduit l'outil Canadavisa.",
+    "sim.intro": "Calqué sur la grille officielle du Système de classement global d'IRCC (capital humain, facteurs du conjoint, transférabilité des compétences, points supplémentaires). La même grille que reproduit l'outil Canadavisa.",
     "sim.spouseInclude": "Inclure un époux ou conjoint(e) de fait qui t'accompagne",
     "sim.spouseHint": "Coche seulement si ton époux/conjoint t'accompagne au Canada et n'est pas déjà citoyen/résident permanent canadien.",
     "sim.age": "Âge",
@@ -188,18 +188,18 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "sim.submit": "Calculer mon score CRS",
     "sim.estimatedScore": "Score estimé",
     "sim.notEligibleTitle": "⚠ Admissibilité non confirmée",
-    "sim.notEligibleNote": "Signal indicatif basé sur des critères plancher courants — pas une évaluation légale complète. Vérifie ton admissibilité exacte sur ton compte Entrée express officiel.",
+    "sim.notEligibleNote": "Signal indicatif basé sur des critères plancher courants, pas une évaluation légale complète. Vérifie ton admissibilité exacte sur ton compte Entrée express officiel.",
     "sim.breakdownA": "A — Capital humain",
     "sim.breakdownB": "B — Conjoint",
     "sim.breakdownC": "C — Transférabilité",
     "sim.breakdownD": "D — Points suppl.",
     "sim.scoreSaved": "Score enregistré sur ton tableau de bord.",
-    "sim.footnote": "Outil informatif calqué sur la grille officielle IRCC — ne remplace pas le calcul fait sur ton compte Entrée express officiel.",
+    "sim.footnote": "Outil informatif calqué sur la grille officielle IRCC ne remplace pas le calcul fait sur ton compte Entrée express officiel.",
 
     // Contact
     "contact.eyebrow": "Une question ?",
     "contact.title": "Contacter l'équipe Route 67",
-    "contact.intro": "Une question sur ton dossier, un bug sur le site, une suggestion ? Écris-nous directement — un membre de l'équipe te répond personnellement. Regarde aussi notre",
+    "contact.intro": "Une question sur ton dossier, un bug sur le site, une suggestion ? Écris-nous directement, un membre de l'équipe te répond personnellement. Regarde aussi notre",
     "contact.faqLink": "FAQ",
     "contact.loggedInPre": "Tu es connecté : ce message rejoindra ton",
     "contact.loggedInChatLink": "chat avec l'équipe",
@@ -291,7 +291,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "home.support.donAccountName": "Mobile Money name",
     "home.support.donPaypal": "PayPal",
     "home.support.donDisclaimer":
-      "A donation is not payment for an individualized service — it's voluntary, anonymous support for the project. If you find our work useful and want to support us, you can make a donation of any amount via the contacts above.",
+      "A donation is not payment for an individualized service. It's voluntary, anonymous support for the project. If you find our work useful and want to support us, you can make a donation of any amount via the contacts above.",
     "home.support.premiumBadge": "Premium benefits",
     "home.support.premiumTitle": "What I get by becoming a premium user",
     "home.support.premiumItem1": "Virtual meeting with the team",
@@ -301,24 +301,24 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "home.support.premiumCta": "Become Premium",
 
     // Pied de page
-    "footer.tagline": "Route 67 — independent information and peer-support platform on Canadian Express Entry.",
+    "footer.tagline": "Route 67 : Independent information and peer-support platform on Canadian Express Entry.",
     "footer.disclaimer":
-      "Route 67 is not a licensed immigration firm or consultant and does not provide individualized legal advice — our only aim is to make official information more accessible. Published information is a simplified summary of official IRCC sources for informational purposes. For personalized, regulated support, contact a licensed consultant (CICC: College of Immigration and Citizenship Consultants) or a lawyer member of a bar association.",
+      "Route 67 is not a licensed immigration firm or consultant and does not provide individualized legal advice. Our only aim is to make official information more accessible. Published information is a simplified summary of official IRCC sources for informational purposes. For personalized, regulated support, contact a licensed consultant (CICC: College of Immigration and Citizenship Consultants) or a lawyer member of a bar association.",
     "footer.contact": "Contact us",
     "footer.procedure": "Full process",
     "footer.rights": "All rights reserved.",
 
     // Disclaimer partagé
-    "disclaimer.label": "Good to know — ",
+    "disclaimer.label": "Good to know  ",
     "disclaimer.default":
-      "Route 67 is not a licensed immigration firm or consultant. Our project only aims to make official information more accessible — for advice that affects your file, contact a regulated consultant (CICC: College of Immigration and Citizenship Consultants) or the official canada.ca website.",
+      "Route 67 is not a licensed immigration firm or consultant. Our project only aims to make official information more accessible for advice that affects your file, contact a regulated consultant (CICC: College of Immigration and Citizenship Consultants) or the official canada.ca website.",
     "disclaimer.compact": "Reminder: Route 67 informs, but is not a licensed immigration consultant.",
     "disclaimer.procedure":
       "This guide is a simplified, informational summary written to make the process clearer. Route 67 is not a licensed immigration firm: always check the up-to-date information on canada.ca before any official step.",
 
     // Authentification — connexion
     "auth.login.tagline":
-      "The platform that translates Canadian Express Entry into clear information — with personalized tracking so you know exactly where you stand.",
+      "The platform that translates Canadian Express Entry into clear information with personalized tracking so you know exactly where you stand.",
     "auth.login.2faTitle": "Two-step verification",
     "auth.login.2faSubtitle": "This account is protected by two-factor authentication. Open your authenticator app and enter the 6-digit code.",
     "auth.login.2faVerifying": "Verifying…",
@@ -330,7 +330,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "auth.login.forgotPassword": "Forgot your password?",
     "auth.or": "or",
     "auth.login.createAccount": "Create my account",
-    "auth.login.secureNote": "Secure sign-in — your credentials are encrypted.",
+    "auth.login.secureNote": "Secure sign-in : your credentials are encrypted.",
     "auth.genericError": "Something went wrong. Please try again.",
 
     // Authentification — inscription
@@ -349,7 +349,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "auth.register.passwordMismatch": "Passwords don't match.",
     "auth.register.disclaimerPre": "I acknowledge that Route 67",
     "auth.register.disclaimerBold": "is not a licensed immigration firm or consultant",
-    "auth.register.disclaimerPost": ", and that I'm creating this account only to learn about Express Entry — not to receive individualized legal advice.",
+    "auth.register.disclaimerPost": ", and that I'm creating this account only to learn about Express Entry, not to receive individualized legal advice.",
     "auth.register.submitting": "Creating account…",
     "auth.register.privacyNote": "Your personal data is encrypted and never shared with third parties.",
     "auth.register.errorDisclaimer": "Please check the box to confirm you understood this point before continuing.",
@@ -358,7 +358,7 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     // Simulateur CRS
     "sim.eyebrow": "Official CRS grid",
     "sim.title": "Full CRS score calculator",
-    "sim.intro": "Modeled on IRCC's official Comprehensive Ranking System grid (human capital, spouse factors, skill transferability, additional points) — the same grid reproduced by the Canadavisa tool.",
+    "sim.intro": "Modeled on IRCC's official Comprehensive Ranking System grid (human capital, spouse factors, skill transferability, additional points). The same grid reproduced by the Canadavisa tool.",
     "sim.spouseInclude": "Include a spouse or common-law partner accompanying you",
     "sim.spouseHint": "Only check this if your spouse/partner is accompanying you to Canada and is not already a Canadian citizen/permanent resident.",
     "sim.age": "Age",
@@ -389,18 +389,18 @@ export const dictionaries: Record<Locale, Record<string, string>> = {
     "sim.submit": "Calculate my CRS score",
     "sim.estimatedScore": "Estimated score",
     "sim.notEligibleTitle": "⚠ Eligibility not confirmed",
-    "sim.notEligibleNote": "Indicative signal based on common baseline criteria — not a full legal assessment. Check your exact eligibility on your official Express Entry account.",
+    "sim.notEligibleNote": "Indicative signal based on common baseline criteria, not a full legal assessment. Check your exact eligibility on your official Express Entry account.",
     "sim.breakdownA": "A — Human capital",
     "sim.breakdownB": "B — Spouse",
     "sim.breakdownC": "C — Transferability",
     "sim.breakdownD": "D — Add'l points",
     "sim.scoreSaved": "Score saved to your dashboard.",
-    "sim.footnote": "Informational tool modeled on the official IRCC grid — does not replace the calculation on your official Express Entry account.",
+    "sim.footnote": "Informational tool modeled on the official IRCC grid does not replace the calculation on your official Express Entry account.",
 
     // Contact
     "contact.eyebrow": "A question?",
     "contact.title": "Contact the Route 67 team",
-    "contact.intro": "A question about your file, a bug on the site, a suggestion? Write to us directly — a team member replies to you personally. Also check our",
+    "contact.intro": "A question about your file, a bug on the site, a suggestion? Write to us directly. A team member replies to you personally. Also check our",
     "contact.faqLink": "FAQ",
     "contact.loggedInPre": "You're signed in: this message will join your",
     "contact.loggedInChatLink": "chat with the team",
