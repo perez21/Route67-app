@@ -1,6 +1,13 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Disclaimer from "@/components/Disclaimer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Équivalence des diplômes (EDE/ECA) pour l'Entrée express",
+  description:
+    "WES, ICAS, IQAS, ICES, CES : quel organisme choisir pour ton évaluation des diplômes d'études (EDE), documents à fournir, délais et validité de 5 ans.",
+};
 
 const EQUIVALENCE_URL =
   "https://www.canada.ca/fr/immigration-refugies-citoyennete/services/immigrer-canada/entree-express/documents/evaluer-diplomes-etudes.html";

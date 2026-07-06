@@ -3,6 +3,13 @@ import FaqAccordion from "@/components/FaqAccordion";
 import Disclaimer from "@/components/Disclaimer";
 import { FaqHeader, FaqContactCta } from "@/components/FaqHeader";
 import { prisma } from "@/lib/db";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "FAQ — Questions fréquentes sur l'Entrée express",
+  description: "Les réponses aux questions les plus fréquentes sur l'Entrée express canadienne et sur Route 67.",
+};
+
 export const dynamic = "force-dynamic";
 
 export const revalidate = 300;

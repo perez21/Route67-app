@@ -4,8 +4,32 @@ import Navbar from "@/components/Navbar";
 import Disclaimer from "@/components/Disclaimer";
 import LocalDateTime from "@/components/LocalDateTime";
 import { prisma } from "@/lib/db";
+import type { Metadata } from "next";
 
 const SEEDS = ["route67-a", "route67-b", "route67-c", "route67-d", "route67-e", "route67-f"];
+
+// Titre et description propres à chaque actualité (au lieu du titre
+// générique du site) — important pour le référencement puisque ce sont
+// les pages les plus fraîches et les plus recherchées du site (annonces
+// de tirages, actualités IRCC...).
+export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const params = await props.params;
+  const item = await prisma.newsItem.findUnique({ where: { id: params.id } });
+  if (!item) return {};
+
+  const description = item.summary.slice(0, 160);
+  return {
+    title: item.title,
+    description,
+    openGraph: {
+      title: item.title,
+      description,
+      type: "article",
+      publishedTime: item.publishedAt.toISOString(),
+      images: item.imageUrl ? [item.imageUrl] : undefined,
+    },
+  };
+}
 
 export default async function NewsDetailPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;

@@ -12,6 +12,13 @@ import {
   HomeSupport,
   HomeFooter,
 } from "@/components/home/HomeSections";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Entrée express Canada : tirages, seuils CRS et simulateur",
+  description:
+    "Suis les derniers tirages Entrée express, calcule ton score CRS et comprends la procédure d'immigration canadienne étape par étape — gratuit, indépendant, à jour.",
+};
 
 export const revalidate = 120; // rafraîchit tirages + actualités toutes les 2 minutes
 

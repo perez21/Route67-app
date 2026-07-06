@@ -3,6 +3,13 @@ import Navbar from "@/components/Navbar";
 import Accordion from "@/components/Accordion";
 import Disclaimer from "@/components/Disclaimer";
 import { FULL_PROCESS_STEPS } from "@/lib/checklistSteps";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Procédure Entrée express : toutes les étapes vers le visa",
+  description:
+    "Test de langue, équivalence des diplômes, création du profil, tirages, ITA, biométrie... la procédure complète de l'Entrée express canadienne expliquée étape par étape.",
+};
 
 const STEP_DURATIONS = [
   "1 à 4 semaines de préparation + résultats sous 2 à 4 semaines",

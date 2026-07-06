@@ -5,6 +5,12 @@ import ContactForm from "@/components/ContactForm";
 import Disclaimer from "@/components/Disclaimer";
 import { ContactHeader } from "@/components/ContactHeader";
 import { getTeamContact } from "@/lib/mailer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description: "Une question sur ton dossier Entrée express ou sur Route 67 ? Écris-nous directement, un membre de l'équipe te répond personnellement.",
+};
 
 export default async function ContactPage() {
   const contact = getTeamContact();

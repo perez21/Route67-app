@@ -5,9 +5,27 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { LOCALE_COOKIE, type Locale } from "@/lib/i18n/dictionary";
 
 export const metadata: Metadata = {
-  title: "Route 67 — Suivi de l'Entrée express Canada",
+  metadataBase: new URL("https://routentrexpress.ca"),
+  title: {
+    default: "Route 67 — Suivi de l'Entrée express Canada",
+    template: "%s | Route 67",
+  },
   description:
     "Informations en temps réel sur l'Entrée express canadienne et suivi personnalisé pour les candidats du Cameroun et d'Afrique centrale.",
+  openGraph: {
+    type: "website",
+    siteName: "Route 67",
+    locale: "fr_FR",
+    title: "Route 67 — Suivi de l'Entrée express Canada",
+    description:
+      "Informations en temps réel sur l'Entrée express canadienne et suivi personnalisé pour les candidats du Cameroun et d'Afrique centrale.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Route 67 — Suivi de l'Entrée express Canada",
+    description:
+      "Informations en temps réel sur l'Entrée express canadienne et suivi personnalisé pour les candidats du Cameroun et d'Afrique centrale.",
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
