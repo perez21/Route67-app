@@ -43,6 +43,21 @@ export default function RegisterPage() {
     e.preventDefault();
     setError(null);
 
+    if (!name.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+      setError(t("auth.fillAllFields"));
+      return;
+    }
+
+    if (name.trim().length < 2) {
+      setError(t("auth.register.errorNameTooShort"));
+      return;
+    }
+
+    if (password.length < 10) {
+      setError(t("auth.register.errorPasswordTooShort"));
+      return;
+    }
+
     if (!acceptedDisclaimer) {
       setError(t("auth.register.errorDisclaimer"));
       return;
@@ -94,8 +109,6 @@ export default function RegisterPage() {
               <input
                 id="name"
                 type="text"
-                required
-                minLength={2}
                 autoComplete="nickname"
                 placeholder={t("auth.register.namePlaceholder")}
                 value={name}
@@ -107,8 +120,7 @@ export default function RegisterPage() {
               <label htmlFor="email" className={labelClasses}>{t("auth.register.emailLabel")}</label>
               <input
                 id="email"
-                type="email"
-                required
+                type="text" inputMode="email"
                 autoComplete="email"
                 placeholder="ton@email.com"
                 value={email}
@@ -121,8 +133,6 @@ export default function RegisterPage() {
               <input
                 id="password"
                 type="password"
-                required
-                minLength={10}
                 autoComplete="new-password"
                 placeholder={t("auth.register.passwordPlaceholder")}
                 value={password}
@@ -137,8 +147,6 @@ export default function RegisterPage() {
               <input
                 id="confirmPassword"
                 type="password"
-                required
-                minLength={10}
                 autoComplete="new-password"
                 placeholder={t("auth.register.confirmPasswordPlaceholder")}
                 value={confirmPassword}
@@ -155,7 +163,6 @@ export default function RegisterPage() {
                 type="checkbox"
                 checked={acceptedDisclaimer}
                 onChange={(e) => setAcceptedDisclaimer(e.target.checked)}
-                required
                 className="mt-0.5 h-4 w-4 flex-shrink-0 accent-forest"
               />
               <span>

@@ -9,10 +9,18 @@ export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setError(null);
+
+    if (!email.trim()) {
+      setError("Merci de renseigner ton adresse email.");
+      return;
+    }
+
     setLoading(true);
 
     const res = await fetch("/api/auth/forgot-password", {
@@ -48,14 +56,14 @@ export default function ForgotPasswordPage() {
               </label>
               <input
                 id="email"
-                type="email"
-                required
+                type="text" inputMode="email"
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={inputClasses}
               />
             </div>
+            {error && <p role="alert" className="rounded-lg bg-rust/10 px-4 py-2.5 text-sm text-rust">{error}</p>}
             <button type="submit" disabled={loading} className={`w-full ${primaryButtonClasses}`}>
               {loading ? "Envoi…" : "Envoyer le lien de réinitialisation"}
             </button>

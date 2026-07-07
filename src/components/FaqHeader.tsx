@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { HelpCircle } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export function FaqHeader() {
@@ -8,7 +9,10 @@ export function FaqHeader() {
   return (
     <>
       <p className="mb-2 font-mono text-xs uppercase tracking-widest text-rust">{t("faq.eyebrow")}</p>
-      <h1 className="mb-3 font-display text-2xl font-semibold text-ink sm:text-3xl">FAQ</h1>
+      <h1 className="mb-3 flex items-center gap-2 font-display text-2xl font-semibold text-ink sm:text-3xl">
+        <HelpCircle className="h-6 w-6 text-rust" aria-hidden />
+        FAQ
+      </h1>
       <p className="mb-4 max-w-2xl text-sm text-charcoal/65">{t("faq.intro")}</p>
     </>
   );

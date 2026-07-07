@@ -50,6 +50,12 @@ function LoginForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+
+    if (!email.trim() || !password.trim()) {
+      setError(t("auth.fillAllFields"));
+      return;
+    }
+
     setLoading(true);
 
     const res = await fetch("/api/auth/login", {
@@ -77,6 +83,12 @@ function LoginForm() {
   async function handleVerify2FA(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+
+    if (code.length !== 6) {
+      setError(t("auth.fillAllFields"));
+      return;
+    }
+
     setLoading(true);
 
     const res = await fetch("/api/auth/verify-2fa", {
@@ -109,7 +121,6 @@ function LoginForm() {
             onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
             inputMode="numeric"
             placeholder="123456"
-            required
             autoFocus
             className={`${inputClasses} text-center font-mono text-2xl tracking-[0.5em]`}
           />
@@ -131,8 +142,7 @@ function LoginForm() {
       <form onSubmit={handleSubmit} className="space-y-3.5">
         <input
           id="email"
-          type="email"
-          required
+          type="text" inputMode="email"
           autoComplete="email"
           placeholder={t("auth.emailPlaceholder")}
           aria-label="Email"
@@ -143,7 +153,6 @@ function LoginForm() {
         <input
           id="password"
           type="password"
-          required
           autoComplete="current-password"
           placeholder={t("auth.passwordPlaceholder")}
           aria-label="Mot de passe"

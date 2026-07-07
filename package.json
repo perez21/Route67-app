@@ -17,6 +17,7 @@
     "@vercel/analytics": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "jose": "^5.6.3",
+    "lucide-react": "^1.23.0",
     "next": "^16.2.10",
     "otplib": "^13.4.1",
     "qrcode": "^1.5.4",
