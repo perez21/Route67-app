@@ -5,6 +5,19 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import Accordion from "@/components/Accordion";
 import PremiumCtaButton from "@/components/PremiumCtaButton";
 import LocalDateTime from "@/components/LocalDateTime";
+import {
+  Trophy,
+  Languages,
+  GraduationCap,
+  UserPlus,
+  Search,
+  FileCheck2,
+  BellRing,
+  Users,
+  MessageCircleQuestion,
+  Gift,
+  Crown,
+} from "lucide-react";
 
 type Draw = {
   id: string;
@@ -38,7 +51,10 @@ export function HomeDraws({ draws }: { draws: Draw[] }) {
   const { t } = useLanguage();
   return (
     <section id="tirages" className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
-      <h2 className="mb-4 font-display text-xl font-bold text-ink sm:text-2xl">{t("home.tirages.title")}</h2>
+      <h2 className="mb-4 flex items-center gap-2 font-display text-xl font-bold text-ink sm:text-2xl">
+        <Trophy className="h-5 w-5 text-gold" aria-hidden />
+        {t("home.tirages.title")}
+      </h2>
       <div className="overflow-hidden rounded-sm border border-charcoal/10 bg-ink">
         {draws.length === 0 ? (
           <p className="px-5 py-8 text-sm text-parchment/60">{t("home.tirages.empty")}</p>
@@ -78,9 +94,9 @@ export function HomeDraws({ draws }: { draws: Draw[] }) {
 export function HomeProcedureTeaser() {
   const { t } = useLanguage();
   const items = [
-    { title: t("home.procedureTeaser.step1.title"), eyebrow: t("home.procedureTeaser.step1.eyebrow"), description: t("home.procedureTeaser.step1.description"), href: "/procedure/test-de-langue" },
-    { title: t("home.procedureTeaser.step2.title"), eyebrow: t("home.procedureTeaser.step2.eyebrow"), description: t("home.procedureTeaser.step2.description"), href: "/procedure/equivalence-diplome" },
-    { title: t("home.procedureTeaser.step3.title"), eyebrow: t("home.procedureTeaser.step3.eyebrow"), description: t("home.procedureTeaser.step3.description"), href: "/procedure/creation-compte" },
+    { title: t("home.procedureTeaser.step1.title"), eyebrow: t("home.procedureTeaser.step1.eyebrow"), description: t("home.procedureTeaser.step1.description"), href: "/procedure/test-de-langue", icon: <Languages className="h-5 w-5" aria-hidden /> },
+    { title: t("home.procedureTeaser.step2.title"), eyebrow: t("home.procedureTeaser.step2.eyebrow"), description: t("home.procedureTeaser.step2.description"), href: "/procedure/equivalence-diplome", icon: <GraduationCap className="h-5 w-5" aria-hidden /> },
+    { title: t("home.procedureTeaser.step3.title"), eyebrow: t("home.procedureTeaser.step3.eyebrow"), description: t("home.procedureTeaser.step3.description"), href: "/procedure/creation-compte", icon: <UserPlus className="h-5 w-5" aria-hidden /> },
   ];
   return (
     <section id="procedure" className="bg-white px-4 py-10 sm:px-6 sm:py-14">
@@ -92,7 +108,7 @@ export function HomeProcedureTeaser() {
           </div>
           <Link href="/procedure" className="text-sm font-semibold text-rust underline">{t("home.procedureTeaser.link")}</Link>
         </div>
-        <Accordion items={items} />
+        <Accordion items={items} linkText={t("procedure.guideLinkText")} />
       </div>
     </section>
   );
@@ -100,6 +116,7 @@ export function HomeProcedureTeaser() {
 
 export function HomeHowItWorks() {
   const { t } = useLanguage();
+  const stepIcons = [Search, FileCheck2, BellRing, Users];
   const steps = [
     { title: t("home.howItWorks.step1.title"), text: t("home.howItWorks.step1.text") },
     { title: t("home.howItWorks.step2.title"), text: t("home.howItWorks.step2.text") },
@@ -113,13 +130,21 @@ export function HomeHowItWorks() {
         <p className="mt-2 max-w-md text-sm text-charcoal/65">{t("home.howItWorks.subtitle")}</p>
       </div>
       <div className="grid gap-6 border-t border-charcoal/10 pt-6 sm:grid-cols-2 sm:gap-8 md:grid-cols-4">
-        {steps.map((step, i) => (
-          <div key={step.title}>
-            <div className="mb-2 font-mono text-xs font-semibold text-gold">{String(i + 1).padStart(2, "0")}</div>
-            <h3 className="mb-1.5 font-display text-base font-semibold text-ink">{step.title}</h3>
-            <p className="text-sm leading-relaxed text-charcoal/70">{step.text}</p>
-          </div>
-        ))}
+        {steps.map((step, i) => {
+          const Icon = stepIcons[i];
+          return (
+            <div key={step.title}>
+              <div className="mb-3 flex items-center gap-2">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gold/15 text-rust">
+                  <Icon className="h-5 w-5" aria-hidden />
+                </span>
+                <span className="font-mono text-xs font-semibold text-gold">{String(i + 1).padStart(2, "0")}</span>
+              </div>
+              <h3 className="mb-1.5 font-display text-base font-semibold text-ink">{step.title}</h3>
+              <p className="text-sm leading-relaxed text-charcoal/70">{step.text}</p>
+            </div>
+          );
+        })}
       </div>
       <Link href="/procedure" className="mt-6 inline-block text-sm font-semibold text-rust underline">
         {t("home.howItWorks.link")}
@@ -133,7 +158,10 @@ export function HomeContactTeaser() {
   return (
     <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 md:px-10">
       <div className="rounded-sm border border-charcoal/10 bg-white p-6 sm:p-8">
-        <h2 className="mb-2 font-display text-xl font-bold text-ink">{t("home.contactTeaser.title")}</h2>
+        <h2 className="mb-2 flex items-center gap-2 font-display text-xl font-bold text-ink">
+          <MessageCircleQuestion className="h-5 w-5 text-rust" aria-hidden />
+          {t("home.contactTeaser.title")}
+        </h2>
         <p className="mb-5 max-w-xl text-sm text-charcoal/65">
           {t("home.contactTeaser.description")} <Link href="/faq" className="underline">{t("home.contactTeaser.faqLink")}</Link>.
         </p>
@@ -145,7 +173,7 @@ export function HomeContactTeaser() {
   );
 }
 
-export function HomeSupport({ momo }: { momo: Momo }) {
+export function HomeSupport({ momo, premiumPrice }: { momo: Momo; premiumPrice?: string }) {
   const { t } = useLanguage();
   return (
     <section id="tarifs" className="bg-parchment2/50 px-4 py-10 sm:px-6 sm:py-14 md:px-10">
@@ -157,17 +185,18 @@ export function HomeSupport({ momo }: { momo: Momo }) {
 
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-sm border border-charcoal/10 bg-white p-6 sm:p-8">
-            <span className="mb-4 inline-block w-fit rounded-full bg-gold px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-ink">
+            <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-gold px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-ink">
+              <Gift className="h-3.5 w-3.5" aria-hidden />
               {t("home.support.donBadge")}
             </span>
             <h3 className="mb-4 font-display text-xl font-semibold text-ink">{t("home.support.donTitle")}</h3>
             <ul className="mb-5 space-y-2 text-sm text-charcoal/75">
-              <li className="border-t border-charcoal/10 pt-2">— {t("home.support.donOrange")} : <strong>{momo.orange}</strong></li>
-              <li className="border-t border-charcoal/10 pt-2">— {t("home.support.donMtn")} : <strong>{momo.mtn}</strong></li>
-              <li className="border-t border-charcoal/10 pt-2">— {t("home.support.donAccountName")} : <strong>{momo.accountName}</strong></li>
+              <li className="border-t border-charcoal/10 pt-2">{t("home.support.donOrange")} : <strong>{momo.orange}</strong></li>
+              <li className="border-t border-charcoal/10 pt-2">{t("home.support.donMtn")} : <strong>{momo.mtn}</strong></li>
+              <li className="border-t border-charcoal/10 pt-2">{t("home.support.donAccountName")} : <strong>{momo.accountName}</strong></li>
               {momo.paypal && (
                 <li className="border-t border-charcoal/10 pt-2">
-                  — {t("home.support.donPaypal")} : <span className="font-semibold">{momo.paypal}</span>
+                  {t("home.support.donPaypal")} : <span className="font-semibold">{momo.paypal}</span>
                 </li>
               )}
             </ul>
@@ -175,16 +204,23 @@ export function HomeSupport({ momo }: { momo: Momo }) {
           </div>
 
           <div className="flex flex-col rounded-sm bg-ink p-6 text-parchment sm:p-8">
-            <span className="mb-4 inline-block w-fit rounded-full bg-cmr-yellow px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-ink">
+            <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-cmr-yellow px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-ink">
+              <Crown className="h-3.5 w-3.5" aria-hidden />
               {t("home.support.premiumBadge")}
             </span>
-            <h3 className="mb-4 font-display text-xl font-semibold">{t("home.support.premiumTitle")}</h3>
-            <ul className="mb-6 flex-grow space-y-2 text-sm">
-              <li className="border-t border-parchment/15 pt-2">— {t("home.support.premiumItem1")}</li>
-              <li className="border-t border-parchment/15 pt-2">— {t("home.support.premiumItem2")}</li>
-              <li className="border-t border-parchment/15 pt-2">— {t("home.support.premiumItem3")}</li>
-              <li className="border-t border-parchment/15 pt-2">— {t("home.support.premiumItem4")}</li>
+            <h3 className="mb-1 font-display text-xl font-semibold">{t("home.support.premiumTitle")}</h3>
+            {premiumPrice && (
+              <p className="mb-4 text-sm text-cmr-yellow">
+                {t("home.support.premiumPricePrefix")} <strong>{premiumPrice}</strong> {t("home.support.premiumPriceSuffix")}
+              </p>
+            )}
+            <ul className="mb-4 flex-grow space-y-2 text-sm">
+              <li className="border-t border-parchment/15 pt-2">{t("home.support.premiumItem1")}</li>
+              <li className="border-t border-parchment/15 pt-2">{t("home.support.premiumItem2")}</li>
+              <li className="border-t border-parchment/15 pt-2">{t("home.support.premiumItem3")}</li>
+              <li className="border-t border-parchment/15 pt-2">{t("home.support.premiumItem4")}</li>
             </ul>
+            <p className="mb-4 text-xs text-parchment/60">{t("home.support.premiumProcess")}</p>
             <PremiumCtaButton />
           </div>
         </div>
@@ -199,13 +235,15 @@ export function HomeFooter({ social }: { social: Social }) {
   return (
     <footer className="bg-[#0E1A30] px-4 py-10 text-xs leading-relaxed text-parchment/55 sm:px-6 md:px-10">
       <div className="mx-auto max-w-5xl">
-        <p className="mb-2"><strong className="text-parchment">Route 67</strong> — {t("footer.tagline")}</p>
+        <p className="mb-2"><strong className="text-parchment">Route 67</strong> {t("footer.tagline")}</p>
         <p>{t("footer.disclaimer")}</p>
 
         <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-parchment/10 pt-5">
           <p>
+            <Link href="/qui-sommes-nous" className="underline">{t("footer.apropos")}</Link> ·{" "}
             <Link href="/contact" className="underline">{t("footer.contact")}</Link> ·{" "}
-            <Link href="/procedure" className="underline">{t("footer.procedure")}</Link>
+            <Link href="/procedure" className="underline">{t("footer.procedure")}</Link> ·{" "}
+            <Link href="/confidentialite" className="underline">{t("footer.confidentialite")}</Link>
           </p>
           {hasSocial && (
             <div className="flex gap-4">

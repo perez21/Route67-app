@@ -19,6 +19,14 @@ export function chatEmailNotificationsEnabled() {
   return process.env.CHAT_EMAIL_NOTIFICATIONS !== "false";
 }
 
+// Montant suggéré pour débloquer les avantages Premium (rendez-vous avec
+// l'équipe, etc.). Affiché sur la page d'accueil et dans le panneau de don
+// du tableau de bord. Reste un don libre — ce montant n'est qu'une
+// indication pour clarifier ce qui active concrètement les avantages.
+export function getPremiumPrice() {
+  return process.env.PREMIUM_PRICE || "";
+}
+
 // Liens vers les réseaux sociaux affichés en pied de page. Toutes les
 // variables sont optionnelles : un réseau sans URL configurée n'est
 // simplement pas affiché plutôt que de pointer vers un lien mort.

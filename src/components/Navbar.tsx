@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import NotificationBell from "./NotificationBell";
 import AccountLink from "./AccountLink";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -10,8 +11,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { t } = useLanguage();
+  const pathname = usePathname();
 
   const NAV_LINKS = [
+    { href: "/", label: t("nav.accueil") },
+    { href: "/qui-sommes-nous", label: t("nav.apropos") },
     { href: "/#actualites", label: t("nav.actualites") },
     { href: "/#tirages", label: t("nav.tirages") },
     { href: "/procedure", label: t("nav.procedure") },
@@ -20,6 +24,15 @@ export default function Navbar() {
     { href: "/faq", label: t("nav.faq") },
     { href: "/#tarifs", label: t("nav.soutenir") },
   ];
+
+  // Un lien est actif s'il correspond exactement à la page courante.
+  // Les ancres (/#section) ne sont considérées actives que sur la page
+  // d'accueil elle-même, sans quoi elles resteraient allumées partout.
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    if (href.startsWith("/#")) return false;
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   return (
     <div className="sticky top-0 z-30">
@@ -31,7 +44,18 @@ export default function Navbar() {
 
         <ul className="hidden gap-6 text-sm lg:flex">
           {NAV_LINKS.map((link) => (
-            <li key={link.href}><Link href={link.href}>{link.label}</Link></li>
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={`border-b-2 pb-1 transition-colors ${
+                  isActive(link.href)
+                    ? "border-gold text-gold"
+                    : "border-transparent text-parchment/85 hover:text-parchment"
+                }`}
+              >
+                {link.label}
+              </Link>
+            </li>
           ))}
         </ul>
 
@@ -77,7 +101,15 @@ export default function Navbar() {
           <ul className="flex flex-col px-4 py-2 text-sm text-parchment sm:px-6">
             {NAV_LINKS.map((link) => (
               <li key={link.href} className="border-t border-parchment/10 first:border-t-0">
-                <Link href={link.href} className="block py-3" onClick={() => setOpen(false)}>
+                <Link
+                  href={link.href}
+                  className={`block border-l-2 py-3 pl-3 ${
+                    isActive(link.href)
+                      ? "border-gold bg-parchment/5 font-semibold text-gold"
+                      : "border-transparent text-parchment"
+                  }`}
+                  onClick={() => setOpen(false)}
+                >
                   {link.label}
                 </Link>
               </li>

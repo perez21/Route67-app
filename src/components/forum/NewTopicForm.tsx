@@ -17,6 +17,12 @@ export default function NewTopicForm({ isAdmin }: { isAdmin: boolean }) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+
+    if (!title.trim()) {
+      setError("Merci de renseigner un titre avant d'envoyer.");
+      return;
+    }
+
     setLoading(true);
 
     const res = await fetch("/api/forum/topics", {
@@ -75,7 +81,6 @@ export default function NewTopicForm({ isAdmin }: { isAdmin: boolean }) {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Titre du sujet"
-        required
         className={inputClasses}
       />
       <textarea

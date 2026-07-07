@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import NewsCarousel from "@/components/NewsCarousel";
 import { prisma } from "@/lib/db";
-import { getSocialLinks } from "@/lib/site";
+import { getSocialLinks, getPremiumPrice } from "@/lib/site";
 import { getMomoNumbers } from "@/lib/mailer";
 import { HomeHeroText, HomeHeroCtas, HomeHeroExternalNote } from "@/components/home/HomeHero";
 import {
@@ -42,6 +42,7 @@ export default async function HomePage() {
   const [draws, news] = await Promise.all([getDraws(), getNews()]);
   const social = getSocialLinks();
   const momo = getMomoNumbers();
+  const premiumPrice = getPremiumPrice();
 
   return (
     <main>
@@ -77,7 +78,7 @@ export default async function HomePage() {
       <HomeContactTeaser />
 
       {/* Soutenir le projet — don anonyme et avantages Premium */}
-      <HomeSupport momo={momo} />
+      <HomeSupport momo={momo} premiumPrice={premiumPrice} />
 
       <HomeFooter social={social} />
     </main>

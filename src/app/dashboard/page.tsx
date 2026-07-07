@@ -6,6 +6,7 @@ import { expirePremiumIfNeeded, isStaff } from "@/lib/session";
 import { prisma } from "@/lib/db";
 import { LAST_KNOWN_THRESHOLD } from "@/lib/crs";
 import { getMomoNumbers, getTeamContact } from "@/lib/mailer";
+import { getPremiumPrice } from "@/lib/site";
 import LogoutButton from "@/components/LogoutButton";
 import ChecklistWidget from "@/components/ChecklistWidget";
 import UpgradePanel from "@/components/UpgradePanel";
@@ -165,7 +166,7 @@ export default async function DashboardPage() {
           <h2 className="mb-3 font-mono text-xs font-semibold uppercase tracking-wide text-charcoal/55">
             Faire un don / soutenir Route 67
           </h2>
-          <UpgradePanel currentTier={user.tier} hasPending={Boolean(pendingUpgrade)} momo={getMomoNumbers()} contact={getTeamContact()} />
+          <UpgradePanel currentTier={user.tier} hasPending={Boolean(pendingUpgrade)} momo={getMomoNumbers()} contact={getTeamContact()} premiumPrice={getPremiumPrice()} />
         </div>
 
         <div className="rounded-sm border border-charcoal/10 bg-white p-6">

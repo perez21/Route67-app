@@ -20,12 +20,20 @@ function ResetPasswordForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    if (!password.trim() || !confirm.trim()) {
+      setError("Merci de remplir les deux champs.");
+      return;
+    }
+    if (password.length < 10) {
+      setError("Ton mot de passe doit contenir au moins 10 caractères.");
+      return;
+    }
     if (password !== confirm) {
       setError("Les deux mots de passe ne correspondent pas.");
       return;
     }
     if (!token) {
-      setError("Lien de réinitialisation invalide — redemande un lien.");
+      setError("Lien de réinitialisation invalide, redemande un lien.");
       return;
     }
     setLoading(true);
@@ -62,14 +70,13 @@ function ResetPasswordForm() {
         <form onSubmit={handleSubmit} className={`space-y-5 ${formCardClasses}`}>
           <div>
             <label className={labelClasses}>Nouveau mot de passe</label>
-            <input type="password" required minLength={10} autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} className={inputClasses} />
+            <input type="password" autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} className={inputClasses} />
             <p className="mt-1.5 text-xs text-charcoal/50">Au moins 10 caractères, avec une majuscule et un chiffre.</p>
           </div>
           <div>
             <label className={labelClasses}>Confirmer</label>
             <input
               type="password"
-              required
               autoComplete="new-password"
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}

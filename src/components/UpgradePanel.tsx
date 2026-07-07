@@ -13,11 +13,13 @@ export default function UpgradePanel({
   hasPending,
   momo,
   contact,
+  premiumPrice,
 }: {
   currentTier: Tier;
   hasPending: boolean;
   momo: MomoInfo;
   contact: ContactInfo;
+  premiumPrice?: string;
 }) {
   // "instructions" ne crée RIEN en base — c'est un simple affichage local.
   // Seul l'envoi du formulaire (submitReference) crée la demande.
@@ -58,7 +60,7 @@ export default function UpgradePanel({
   if (currentTier === "PREMIUM") {
     return (
       <div className="rounded-sm border border-forest/20 bg-forest/5 p-5 text-sm text-forest">
-        Merci pour ton don. Ton accès Premium est actif 🙏
+        Merci pour ton don — ton accès Premium est actif 🙏
       </div>
     );
   }
@@ -67,17 +69,18 @@ export default function UpgradePanel({
   const whatsappLink = contact.whatsapp
     ? `https://wa.me/${contact.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(confirmationText)}`
     : null;
-  const mailtoLink = `mailto:${contact.email}?subject=${encodeURIComponent("Confirmation de don : Route 67")}&body=${encodeURIComponent(confirmationText)}`;
+  const mailtoLink = `mailto:${contact.email}?subject=${encodeURIComponent("Confirmation de don — Route 67")}&body=${encodeURIComponent(confirmationText)}`;
 
   return (
     <div className={`space-y-4 ${formCardClasses}`}>
       <p className="text-sm leading-relaxed text-charcoal/70">
-        Ce don anonyme (15 000 FCFA ou équivalent/mois) sert à couvrir les frais réels du projet :
-        l&apos;hébergement du site pour qu&apos;il reste disponible, la maintenance pour suivre les
-        tirages et actualités en temps réel, et un peu de quoi faire vivre l&apos;équipe qui s&apos;en
-        occupe. Ce n&apos;est pas un paiement pour un service individualisé de consultation en
-        immigration. C&apos;est un soutien volontaire au projet qui, en retour, débloque pendant 1
-        mois les rendez-vous avec l&apos;équipe.
+        Ce don anonyme ({premiumPrice ? premiumPrice : "montant libre"} ou équivalent par mois) sert à
+        couvrir les frais réels du projet : l&apos;hébergement du site pour qu&apos;il reste disponible,
+        la maintenance pour suivre les tirages et actualités en temps réel, et un peu de quoi faire
+        vivre l&apos;équipe qui s&apos;en occupe. Ce n&apos;est pas un paiement pour un service
+        individualisé de consultation en immigration, c&apos;est un soutien volontaire au projet qui,
+        en retour, débloque pendant 1 mois les rendez-vous avec l&apos;équipe. Aucune démarche
+        préalable n&apos;est nécessaire : fais le don, puis confirme-le directement ci-dessous.
       </p>
 
       {step === "idle" && (
@@ -97,7 +100,7 @@ export default function UpgradePanel({
               {momo.paypal && <li>PayPal : <strong>{momo.paypal}</strong></li>}
             </ul>
             <p className="text-xs text-charcoal/60">
-              Rien n&apos;est encore envoyé à l&apos;équipe. Remplis le formulaire ci-dessous une fois le
+              Rien n&apos;est encore envoyé à l&apos;équipe — remplis le formulaire ci-dessous une fois le
               don effectué pour valider ta demande.
             </p>
           </div>
@@ -113,7 +116,6 @@ export default function UpgradePanel({
               value={reference}
               onChange={(e) => setReference(e.target.value)}
               placeholder="Référence de la transaction (SMS ou reçu PayPal)"
-              required
               className={inputClasses}
             />
             <input
@@ -149,7 +151,7 @@ export default function UpgradePanel({
 
       {step === "confirmed" && (
         <div className="rounded-sm border border-forest/20 bg-forest/5 p-4 text-sm text-forest">
-          Demande envoyée. Notre équipe vérifie ton don et active ton accès sous peu.
+          Demande envoyée — notre équipe vérifie ton don et active ton accès sous peu.
         </div>
       )}
     </div>
