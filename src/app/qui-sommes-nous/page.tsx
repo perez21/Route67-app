@@ -61,10 +61,7 @@ export default function AboutPage() {
               {/* TODO : remplace par les vraies informations de l'équipe. Si vous êtes une seule
                   personne pour l'instant, ce n'est pas un problème à cacher : la transparence renforce
                   la confiance plus qu'un flou. */}
-              [Ton nom / le nom de l&apos;équipe]. [Une ou deux phrases sur ton parcours ou celui de
-              l&apos;équipe : ce que vous avez vécu ou étudié qui vous a amené à créer Route 67 — par
-              exemple ta propre expérience de la procédure Entrée express, un parcours en développement
-              web, ou une expérience communautaire.] Nous ne sommes pas des consultants en immigration
+              Verdier Fofack. Analyste systèmes d'information, j'ai pendant plusieurs années travaillé dans les projets de déveleppement web, support technique informatique avant de me lancer dans l'enseignement des TICs. Aujourd'hui résidant au Canada, je suis déterminé à centraliser la bonne information afin d'éviter aux autres de commettre les erreurs que j'ai commise en faisant ma procédure. Nous (l'équipe et moi) ne sommes pas des consultants en immigration
               agréés (voir l&apos;encadré ci-dessus) : notre valeur ajoutée est de rendre l&apos;information
               claire, à jour et gratuite, pas de remplacer un accompagnement réglementé.
             </p>
