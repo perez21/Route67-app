@@ -62,17 +62,20 @@ export default async function HomePage() {
         </div>
       </header>
 
-      {/* À la une — remonté juste sous le hero, avec images, défilement horizontal sur mobile */}
-      <NewsCarousel news={news} />
-
-      {/* Derniers tirages */}
+      {/* Derniers tirages — l'info la plus recherchée par les visiteurs venant de Google,
+          remontée juste sous le hero pour réduire le taux de rebond */}
       <HomeDraws draws={draws} />
 
-      {/* Procédure Entrée express — bande déroulante */}
+      {/* Comment ça marche — pour les nouveaux visiteurs qui découvrent l'Entrée express,
+          avant les articles qui supposent déjà une certaine connaissance du système */}
+      <HomeHowItWorks />
+
+      {/* Procédure Entrée express — étape logique suivante une fois le fonctionnement compris */}
       <HomeProcedureTeaser />
 
-      {/* Comment ça marche */}
-      <HomeHowItWorks />
+      {/* À la une — descendu après les infos essentielles ; les articles servent
+          à approfondir plutôt qu'à répondre à une recherche urgente */}
+      <NewsCarousel news={news} />
 
       {/* Contact teaser */}
       <HomeContactTeaser />
