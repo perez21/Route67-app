@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
-import { sendEmail, getMomoNumbers, getTeamContact } from "@/lib/mailer";
+import { sendEmail, getMomoNumbers, getTeamContact, escapeHtml } from "@/lib/mailer";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 // MVP : aucune passerelle de paiement Mobile Money automatisée n'est branchée
 // ici (voir README). Le flux est volontairement simple et humain, et ne crée
@@ -24,6 +25,16 @@ export async function POST(request: NextRequest) {
 
   if (user.tier === "PREMIUM") {
     return NextResponse.json({ error: "Tu es déjà Premium — merci pour ton soutien !" }, { status: 409 });
+  }
+
+  // Limite les demandes répétées par compte (référence de paiement erronée
+  // envoyée en boucle, par exemple).
+  const allowed = checkRateLimit(`upgrade:${user.id}`, 5, 60 * 60 * 1000);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Trop de demandes envoyées récemment. Réessaie dans un moment." },
+      { status: 429 }
+    );
   }
 
   const body = await request.json().catch(() => null);
@@ -56,7 +67,7 @@ export async function POST(request: NextRequest) {
     html: `
       <p>Bonjour ${user.name},</p>
       <p>Merci pour ton don ! Nous avons bien reçu ta demande, avec la référence
-      <strong>${parsed.data.momoReference}</strong>.</p>
+      <strong>${escapeHtml(parsed.data.momoReference)}</strong>.</p>
       <p>Notre équipe vérifie le don et active ton accès Premium (rendez-vous + chat direct) sous peu.
       Pour toute question, écris-nous à ${contact.email}.</p>
       <p>— L'équipe Route 67</p>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { getCurrentUser, isStaff } from "@/lib/session";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 export async function GET(request: NextRequest, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -36,6 +37,15 @@ export async function POST(request: NextRequest, props: { params: Promise<{ id: 
     return NextResponse.json(
       { error: "Ton compte a reçu un avertissement : tu ne peux plus écrire sur le forum. Contacte l'équipe pour en savoir plus." },
       { status: 403 }
+    );
+  }
+
+  // Limite la publication de messages par compte pour freiner le spam.
+  const allowed = checkRateLimit(`forum-post:${user.id}`, 20, 60 * 60 * 1000);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Trop de messages envoyés récemment. Réessaie dans un moment." },
+      { status: 429 }
     );
   }
 

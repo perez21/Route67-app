@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { getCurrentUser, isTierAtLeast } from "@/lib/session";
+import { checkRateLimit } from "@/lib/rateLimit";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
@@ -40,6 +41,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { error: "Ton compte a reçu un avertissement : tu ne peux plus prendre rendez-vous avec l'équipe. Contacte-nous pour en savoir plus." },
       { status: 403 }
+    );
+  }
+
+  // Limite les tentatives de réservation répétées par compte (au-delà de la
+  // règle métier "1 rendez-vous/semaine" plus bas, qui protège la base mais
+  // n'empêche pas un client de marteler l'endpoint).
+  const allowed = checkRateLimit(`appointments:${user.id}`, 15, 60 * 60 * 1000);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Trop de tentatives de réservation récentes. Réessaie dans un moment." },
+      { status: 429 }
     );
   }
 

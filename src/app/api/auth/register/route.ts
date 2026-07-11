@@ -5,10 +5,22 @@ import { registerSchema } from "@/lib/validation";
 import { createSessionToken, SESSION_COOKIE } from "@/lib/auth";
 import { FULL_PROCESS_STEPS } from "@/lib/checklistSteps";
 import { createVerificationToken } from "@/lib/tokens";
-import { sendEmail } from "@/lib/mailer";
+import { sendEmail, escapeHtml } from "@/lib/mailer";
 import { getSiteUrl } from "@/lib/site";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 export async function POST(request: NextRequest) {
+  // Limite les créations de compte par IP pour ralentir la création en
+  // masse (bots, abus du flux d'inscription).
+  const ip = request.headers.get("x-forwarded-for") ?? "anonymous";
+  const allowed = checkRateLimit(`register:${ip}`, 5, 60 * 60 * 1000);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Trop de comptes créés récemment depuis cette adresse. Réessaie dans un moment." },
+      { status: 429 }
+    );
+  }
+
   const body = await request.json().catch(() => null);
   const parsed = registerSchema.safeParse(body);
 
@@ -57,7 +69,7 @@ export async function POST(request: NextRequest) {
     to: user.email,
     subject: "Confirme ton email — Route 67",
     html: `
-      <p>Bonjour ${user.name},</p>
+      <p>Bonjour ${escapeHtml(user.name)},</p>
       <p>Merci de rejoindre Route 67 ! Confirme ton adresse email en cliquant sur ce lien (valide 24h) :</p>
       <p><a href="${siteUrl}/verifier-email?token=${verifyToken}">${siteUrl}/verifier-email?token=${verifyToken}</a></p>
       <p>Si tu n'es pas à l'origine de cette inscription, ignore cet email.</p>

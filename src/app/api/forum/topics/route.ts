@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { getCurrentUser, isStaff } from "@/lib/session";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 // Le forum (lecture et participation) est accessible à tout membre inscrit
 // et connecté — ce n'est plus un avantage réservé aux membres Premium.
@@ -45,6 +46,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { error: "Ton compte a reçu un avertissement : tu ne peux plus publier sur le forum. Contacte l'équipe pour en savoir plus." },
       { status: 403 }
+    );
+  }
+
+  // Limite la création de sujets par compte pour freiner le spam.
+  const allowed = checkRateLimit(`forum-topic:${user.id}`, 10, 60 * 60 * 1000);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Trop de sujets créés récemment. Réessaie dans un moment." },
+      { status: 429 }
     );
   }
 
