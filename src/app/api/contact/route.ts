@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { verifySessionToken, SESSION_COOKIE } from "@/lib/auth";
-import { sendEmail, getTeamContact } from "@/lib/mailer";
+import { sendEmail, getTeamContact, escapeHtml } from "@/lib/mailer";
 import { checkRateLimit } from "@/lib/rateLimit";
 
 const contactSchema = z.object({
@@ -60,10 +60,10 @@ export async function POST(request: NextRequest) {
     to: team.email,
     subject: `[Route 67 · Contact] ${parsed.data.subject}`,
     html: `
-      <p><strong>De :</strong> ${parsed.data.name} (${parsed.data.email})</p>
-      <p><strong>Sujet :</strong> ${parsed.data.subject}</p>
+      <p><strong>De :</strong> ${escapeHtml(parsed.data.name)} (${escapeHtml(parsed.data.email)})</p>
+      <p><strong>Sujet :</strong> ${escapeHtml(parsed.data.subject)}</p>
       <p><strong>Message :</strong></p>
-      <p>${parsed.data.message.replace(/\n/g, "<br/>")}</p>
+      <p>${escapeHtml(parsed.data.message).replace(/\n/g, "<br/>")}</p>
     `,
   });
 

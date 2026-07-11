@@ -6,6 +6,19 @@
 
 const RESEND_URL = "https://api.resend.com/emails";
 
+// Échappe les caractères spéciaux HTML avant d'insérer une donnée fournie
+// par l'utilisateur (nom, message, référence...) dans un email en HTML —
+// évite qu'un champ contenant par ex. "<img src=x onerror=...>" ne soit
+// interprété comme du HTML par le client de messagerie du destinataire.
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export type SendEmailResult = { sent: boolean; reason?: string };
 
 export async function sendEmail(params: {

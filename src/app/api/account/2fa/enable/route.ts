@@ -3,12 +3,23 @@ import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { verifyTotpToken } from "@/lib/twoFactor";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 const schema = z.object({ code: z.string().trim().min(6).max(6) });
 
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser(request);
   if (!user) return NextResponse.json({ error: "Non authentifié." }, { status: 401 });
+
+  // Limite les tentatives par compte pour empêcher le bourrage du code TOTP
+  // à 6 chiffres (même logique que /auth/verify-2fa).
+  const allowed = checkRateLimit(`2fa-enable:${user.id}`, 8, 10 * 60 * 1000);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Trop de tentatives. Réessaie dans quelques minutes." },
+      { status: 429 }
+    );
+  }
 
   const body = await request.json().catch(() => null);
   const parsed = schema.safeParse(body);

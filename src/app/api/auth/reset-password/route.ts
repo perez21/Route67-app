@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { consumeVerificationToken } from "@/lib/tokens";
+import { checkRateLimit } from "@/lib/rateLimit";
 
 const passwordSchema = z
   .string()
@@ -13,6 +14,17 @@ const passwordSchema = z
 const schema = z.object({ token: z.string().min(10), password: passwordSchema });
 
 export async function POST(request: NextRequest) {
+  // Limite les tentatives par IP pour ralentir le bourrage de jetons de
+  // réinitialisation (tentatives de deviner un token valide).
+  const ip = request.headers.get("x-forwarded-for") ?? "anonymous";
+  const allowed = checkRateLimit(`reset-password:${ip}`, 10, 60 * 60 * 1000);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Trop de tentatives. Réessaie dans quelques minutes." },
+      { status: 429 }
+    );
+  }
+
   const body = await request.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) {
